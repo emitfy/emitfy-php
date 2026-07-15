@@ -82,15 +82,15 @@ function contentHash(base) {
     hash.update('\0')
   }
 
-  const srcDir = join(base, 'src')
+  const dirs = ['src', 'generated'].map((name) => join(base, name)).filter((dir) => existsSync(dir))
 
-  if (!existsSync(srcDir)) {
-    throw new Error(`src/ missing in ${base}`)
+  if (dirs.length === 0) {
+    throw new Error(`src/ or generated/ missing in ${base}`)
   }
 
-  const files = walkFiles(srcDir).sort((a, b) =>
-    relative(base, a).localeCompare(relative(base, b))
-  )
+  const files = dirs
+    .flatMap((dir) => walkFiles(dir))
+    .sort((a, b) => relative(base, a).localeCompare(relative(base, b)))
 
   for (const file of files) {
     const rel = relative(base, file).replaceAll('\\', '/')

@@ -1,29 +1,39 @@
-# emitfy/sdk (PHP)
+# emitfy/sdk
 
-SDK oficial da API Emitfy para PHP.
+SDK oficial da API Emitfy para PHP (tipado via OpenAPI).
+
+## Install
 
 ```bash
 composer require emitfy/sdk
 ```
 
+## Uso (facade)
+
 ```php
+<?php
 use Emitfy\Emitfy;
+use Emitfy\Generated\Model\WebhookCreate;
 
 $emitfy = new Emitfy([
   'apiKey' => getenv('EMITFY_API_KEY'),
   'apiSecret' => getenv('EMITFY_API_SECRET'),
 ]);
 
-$emitfy->webhooks->create([
-  'url' => 'https://seu-sistema.com/webhooks/emitfy',
-  'events' => ['invoice' => ['nfse.authorized'], 'cte' => []],
-]);
-
 $company = $emitfy->company(getenv('EMITFY_COMPANY_ID'));
-$company->nfse->create([
-  'serviceDescription' => 'Serviço de software',
-  'amount' => 100,
-]);
+$company->nfse->create(['serviceDescription' => 'Serviço', 'amount' => 100], 'pedido-001');
 ```
 
-Docs: https://api.emitfy.com/docs/sdks
+## Tipagem OpenAPI
+
+Modelos e APIs em `Emitfy\Generated\*` (regenerados com `pnpm run sdk:generate` no monorepo):
+
+```php
+$api = $emitfy->webhooksApi();
+$body = new WebhookCreate();
+$body->setUrl('https://seu-sistema.com/webhooks/emitfy');
+$api->webhooksCreate($body);
+```
+
+Docs: https://api.emitfy.com/docs/sdks  
+OpenAPI: https://api.emitfy.com/openapi.yaml

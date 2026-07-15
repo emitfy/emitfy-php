@@ -1,16 +1,18 @@
 {
   "name": "emitfy/sdk",
-  "description": "Official Emitfy API SDK for PHP",
+  "description": "Official Emitfy API SDK for PHP (OpenAPI-typed)",
   "type": "library",
   "license": "MIT",
   "require": {
     "php": ">=8.1",
     "ext-json": "*",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "guzzlehttp/guzzle": "^7.8"
   },
   "autoload": {
     "psr-4": {
-      "Emitfy\\": "src/"
+      "Emitfy\\": "src/",
+      "Emitfy\\Generated\\": "generated/lib/"
     }
   },
   "keywords": [
@@ -19,7 +21,8 @@
     "nfse",
     "fiscal",
     "brazil",
-    "sdk"
+    "sdk",
+    "openapi"
   ],
   "homepage": "https://api.emitfy.com/docs/sdks",
   "support": {

@@ -172,8 +172,12 @@ async function downloadAndExtractZip(url, destDir) {
   const zipPath = join(destDir, 'pkg.zip')
   writeFileSync(zipPath, buffer)
 
-  // GitHub zipballs → uma pasta raiz (tar do Windows/Linux abre .zip)
-  execSync(`tar -xf "${zipPath}" -C "${destDir}"`, { stdio: 'pipe' })
+  // GitHub zipballs → uma pasta raiz (GNU tar no Linux não abre zip)
+  try {
+    execSync(`unzip -qo "${zipPath}" -d "${destDir}"`, { stdio: 'pipe' })
+  } catch {
+    execSync(`tar -xf "${zipPath}" -C "${destDir}"`, { stdio: 'pipe' })
+  }
 
   const entries = readdirSync(destDir).filter((name) => name !== 'pkg.zip')
   const folder = entries.find((name) => statSync(join(destDir, name)).isDirectory())

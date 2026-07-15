@@ -67,18 +67,25 @@ function sortKeys(value) {
 }
 
 /**
- * Hash estável: src/ + composer.json (Packagist não usa "version" no composer.json).
+ * Hash estável: README + src/ + composer.json (Packagist não usa "version" no composer.json).
  * @param {string} base
  */
 function contentHash(base) {
   const hash = createHash('sha256')
   const composerPath = join(base, 'composer.json')
+  const readmePath = join(base, 'README.md')
 
   if (existsSync(composerPath)) {
     const parsed = JSON.parse(readFileSync(composerPath, 'utf8'))
     delete parsed.version
     hash.update('composer.json\0')
     hash.update(JSON.stringify(sortKeys(parsed)))
+    hash.update('\0')
+  }
+
+  if (existsSync(readmePath)) {
+    hash.update('README.md\0')
+    hash.update(readFileSync(readmePath, 'utf8').replaceAll('\r\n', '\n'))
     hash.update('\0')
   }
 

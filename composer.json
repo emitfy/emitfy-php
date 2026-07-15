@@ -13,7 +13,14 @@
       "Emitfy\\": "src/"
     }
   },
-  "keywords": ["emitfy", "nfe", "nfse", "fiscal", "brazil", "sdk"],
+  "keywords": [
+    "emitfy",
+    "nfe",
+    "nfse",
+    "fiscal",
+    "brazil",
+    "sdk"
+  ],
   "homepage": "https://api.emitfy.com/docs/sdks",
   "support": {
     "docs": "https://api.emitfy.com/docs",

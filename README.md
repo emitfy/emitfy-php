@@ -26,7 +26,7 @@ $company->nfse->create(['serviceDescription' => 'Serviço', 'amount' => 100], 'p
 
 ## Tipagem OpenAPI
 
-Modelos e APIs em `Emitfy\Generated\*` (regenerados com `pnpm run sdk:generate` no monorepo):
+Modelos e APIs tipados em `Emitfy\Generated\*`:
 
 ```php
 $api = $emitfy->webhooksApi();

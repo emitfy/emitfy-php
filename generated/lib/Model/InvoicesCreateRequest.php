@@ -1,6 +1,6 @@
 <?php
 /**
- * ErrorBody
+ * InvoicesCreateRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * ErrorBody Class Doc Comment
+ * InvoicesCreateRequest Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
+class InvoicesCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'ErrorBody';
+    protected static $openAPIModelName = 'invoicesCreate_request';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'error' => '\EmitfyGenerated\Model\ErrorBodyError'
+        'type' => 'string',
+        'issueMode' => 'string',
+        'commercial' => 'array<string,mixed>',
+        'externalId' => 'string',
+        'sourceKey' => 'string'
     ];
 
     /**
@@ -69,8 +72,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'error' => null
+        'type' => null,
+        'issueMode' => null,
+        'commercial' => null,
+        'externalId' => null,
+        'sourceKey' => null
     ];
 
     /**
@@ -79,8 +85,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'error' => false
+        'type' => false,
+        'issueMode' => false,
+        'commercial' => false,
+        'externalId' => false,
+        'sourceKey' => false
     ];
 
     /**
@@ -169,8 +178,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'error' => 'error'
+        'type' => 'type',
+        'issueMode' => 'issueMode',
+        'commercial' => 'commercial',
+        'externalId' => 'externalId',
+        'sourceKey' => 'sourceKey'
     ];
 
     /**
@@ -179,8 +191,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'error' => 'setError'
+        'type' => 'setType',
+        'issueMode' => 'setIssueMode',
+        'commercial' => 'setCommercial',
+        'externalId' => 'setExternalId',
+        'sourceKey' => 'setSourceKey'
     ];
 
     /**
@@ -189,8 +204,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'error' => 'getError'
+        'type' => 'getType',
+        'issueMode' => 'getIssueMode',
+        'commercial' => 'getCommercial',
+        'externalId' => 'getExternalId',
+        'sourceKey' => 'getSourceKey'
     ];
 
     /**
@@ -234,17 +252,38 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_FALSE = 'false';
+    public const TYPE_NFSE = 'nfse';
+    public const TYPE_NFE = 'nfe';
+    public const TYPE_NFCE = 'nfce';
+    public const ISSUE_MODE_DRAFT = 'draft';
+    public const ISSUE_MODE_IMMEDIATE = 'immediate';
+    public const ISSUE_MODE_SCHEDULED = 'scheduled';
 
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getSuccessAllowableValues()
+    public function getTypeAllowableValues()
     {
         return [
-            self::SUCCESS_FALSE,
+            self::TYPE_NFSE,
+            self::TYPE_NFE,
+            self::TYPE_NFCE,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getIssueModeAllowableValues()
+    {
+        return [
+            self::ISSUE_MODE_DRAFT,
+            self::ISSUE_MODE_IMMEDIATE,
+            self::ISSUE_MODE_SCHEDULED,
         ];
     }
 
@@ -263,8 +302,11 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('error', $data ?? [], null);
+        $this->setIfExists('type', $data ?? [], null);
+        $this->setIfExists('issueMode', $data ?? [], null);
+        $this->setIfExists('commercial', $data ?? [], null);
+        $this->setIfExists('externalId', $data ?? [], null);
+        $this->setIfExists('sourceKey', $data ?? [], null);
     }
 
     /**
@@ -294,20 +336,29 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
+        if ($this->container['type'] === null) {
+            $invalidProperties[] = "'type' can't be null";
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
+                "invalid value '%s' for 'type', must be one of '%s'",
+                $this->container['type'],
                 implode("', '", $allowedValues)
             );
         }
 
-        if ($this->container['error'] === null) {
-            $invalidProperties[] = "'error' can't be null";
+        $allowedValues = $this->getIssueModeAllowableValues();
+        if (!is_null($this->container['issueMode']) && !in_array($this->container['issueMode'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'issueMode', must be one of '%s'",
+                $this->container['issueMode'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if ($this->container['commercial'] === null) {
+            $invalidProperties[] = "'commercial' can't be null";
         }
         return $invalidProperties;
     }
@@ -325,65 +376,156 @@ class ErrorBody implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets success
+     * Gets type
      *
-     * @return bool
+     * @return string
      */
-    public function getSuccess()
+    public function getType()
     {
-        return $this->container['success'];
+        return $this->container['type'];
     }
 
     /**
-     * Sets success
+     * Sets type
      *
-     * @param bool $success success
+     * @param string $type type
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setType($type)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($type)) {
+            throw new \InvalidArgumentException('non-nullable type cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!in_array($type, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
+                    "Invalid value '%s' for 'type', must be one of '%s'",
+                    $type,
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['success'] = $success;
+        $this->container['type'] = $type;
 
         return $this;
     }
 
     /**
-     * Gets error
+     * Gets issueMode
      *
-     * @return \EmitfyGenerated\Model\ErrorBodyError
+     * @return string|null
      */
-    public function getError()
+    public function getIssueMode()
     {
-        return $this->container['error'];
+        return $this->container['issueMode'];
     }
 
     /**
-     * Sets error
+     * Sets issueMode
      *
-     * @param \EmitfyGenerated\Model\ErrorBodyError $error error
+     * @param string|null $issueMode issueMode
      *
      * @return self
      */
-    public function setError($error)
+    public function setIssueMode($issueMode)
     {
-        if (is_null($error)) {
-            throw new \InvalidArgumentException('non-nullable error cannot be null');
+        if (is_null($issueMode)) {
+            throw new \InvalidArgumentException('non-nullable issueMode cannot be null');
         }
-        $this->container['error'] = $error;
+        $allowedValues = $this->getIssueModeAllowableValues();
+        if (!in_array($issueMode, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'issueMode', must be one of '%s'",
+                    $issueMode,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['issueMode'] = $issueMode;
+
+        return $this;
+    }
+
+    /**
+     * Gets commercial
+     *
+     * @return array<string,mixed>
+     */
+    public function getCommercial()
+    {
+        return $this->container['commercial'];
+    }
+
+    /**
+     * Sets commercial
+     *
+     * @param array<string,mixed> $commercial commercial
+     *
+     * @return self
+     */
+    public function setCommercial($commercial)
+    {
+        if (is_null($commercial)) {
+            throw new \InvalidArgumentException('non-nullable commercial cannot be null');
+        }
+        $this->container['commercial'] = $commercial;
+
+        return $this;
+    }
+
+    /**
+     * Gets externalId
+     *
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->container['externalId'];
+    }
+
+    /**
+     * Sets externalId
+     *
+     * @param string|null $externalId externalId
+     *
+     * @return self
+     */
+    public function setExternalId($externalId)
+    {
+        if (is_null($externalId)) {
+            throw new \InvalidArgumentException('non-nullable externalId cannot be null');
+        }
+        $this->container['externalId'] = $externalId;
+
+        return $this;
+    }
+
+    /**
+     * Gets sourceKey
+     *
+     * @return string|null
+     */
+    public function getSourceKey()
+    {
+        return $this->container['sourceKey'];
+    }
+
+    /**
+     * Sets sourceKey
+     *
+     * @param string|null $sourceKey sourceKey
+     *
+     * @return self
+     */
+    public function setSourceKey($sourceKey)
+    {
+        if (is_null($sourceKey)) {
+            throw new \InvalidArgumentException('non-nullable sourceKey cannot be null');
+        }
+        $this->container['sourceKey'] = $sourceKey;
 
         return $this;
     }

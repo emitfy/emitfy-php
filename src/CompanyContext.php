@@ -12,7 +12,6 @@ final class CompanyContext
     public readonly CompanyResource $cte;
     public readonly CompanyResource $customers;
     public readonly CompanyResource $products;
-    public readonly CompanyResource $sales;
     public readonly CompanyResource $invoices;
     public readonly CompanyResource $receivedNfes;
 
@@ -27,7 +26,6 @@ final class CompanyContext
         $this->cte = new CompanyResource($http, $prefix . '/cte');
         $this->customers = new CompanyResource($http, $prefix . '/customers');
         $this->products = new CompanyResource($http, $prefix . '/products');
-        $this->sales = new CompanyResource($http, $prefix . '/sales');
         $this->invoices = new CompanyResource($http, $prefix . '/invoices');
         $this->receivedNfes = new CompanyResource($http, $prefix . '/received-nfes');
     }

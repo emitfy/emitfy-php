@@ -1,6 +1,6 @@
 <?php
 /**
- * SuccessEnvelope
+ * NfeCreateRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * SuccessEnvelope Class Doc Comment
+ * NfeCreateRequest Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SuccessEnvelope';
+    protected static $openAPIModelName = 'nfeCreate_request';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => 'mixed'
+        'transport' => '\EmitfyGenerated\Model\NfeCreateRequestTransport'
     ];
 
     /**
@@ -69,8 +68,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'transport' => null
     ];
 
     /**
@@ -79,8 +77,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => true
+        'transport' => false
     ];
 
     /**
@@ -169,8 +166,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'transport' => 'transport'
     ];
 
     /**
@@ -179,8 +175,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'transport' => 'setTransport'
     ];
 
     /**
@@ -189,8 +184,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'transport' => 'getTransport'
     ];
 
     /**
@@ -234,19 +228,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +244,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('transport', $data ?? [], null);
     }
 
     /**
@@ -294,18 +274,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
-        }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -322,72 +290,28 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets success
+     * Gets transport
      *
-     * @return bool
+     * @return \EmitfyGenerated\Model\NfeCreateRequestTransport|null
      */
-    public function getSuccess()
+    public function getTransport()
     {
-        return $this->container['success'];
+        return $this->container['transport'];
     }
 
     /**
-     * Sets success
+     * Sets transport
      *
-     * @param bool $success success
+     * @param \EmitfyGenerated\Model\NfeCreateRequestTransport|null $transport transport
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setTransport($transport)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($transport)) {
+            throw new \InvalidArgumentException('non-nullable transport cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
-
-        return $this;
-    }
-
-    /**
-     * Gets data
-     *
-     * @return mixed|null
-     */
-    public function getData()
-    {
-        return $this->container['data'];
-    }
-
-    /**
-     * Sets data
-     *
-     * @param mixed|null $data data
-     *
-     * @return self
-     */
-    public function setData($data)
-    {
-        if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
-        }
-        $this->container['data'] = $data;
+        $this->container['transport'] = $transport;
 
         return $this;
     }

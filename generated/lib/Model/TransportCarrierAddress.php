@@ -1,6 +1,6 @@
 <?php
 /**
- * SuccessEnvelope
+ * TransportCarrierAddress
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * SuccessEnvelope Class Doc Comment
+ * TransportCarrierAddress Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
+class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SuccessEnvelope';
+    protected static $openAPIModelName = 'TransportCarrier_address';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => 'mixed'
+        'street' => 'string',
+        'city' => 'string',
+        'state' => 'string'
     ];
 
     /**
@@ -69,8 +70,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'street' => null,
+        'city' => null,
+        'state' => null
     ];
 
     /**
@@ -79,8 +81,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => true
+        'street' => false,
+        'city' => false,
+        'state' => false
     ];
 
     /**
@@ -169,8 +172,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'street' => 'street',
+        'city' => 'city',
+        'state' => 'state'
     ];
 
     /**
@@ -179,8 +183,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'street' => 'setStreet',
+        'city' => 'setCity',
+        'state' => 'setState'
     ];
 
     /**
@@ -189,8 +194,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'street' => 'getStreet',
+        'city' => 'getCity',
+        'state' => 'getState'
     ];
 
     /**
@@ -234,19 +240,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +256,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('street', $data ?? [], null);
+        $this->setIfExists('city', $data ?? [], null);
+        $this->setIfExists('state', $data ?? [], null);
     }
 
     /**
@@ -294,18 +288,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
-        }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -322,72 +304,82 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets success
+     * Gets street
      *
-     * @return bool
+     * @return string|null
      */
-    public function getSuccess()
+    public function getStreet()
     {
-        return $this->container['success'];
+        return $this->container['street'];
     }
 
     /**
-     * Sets success
+     * Sets street
      *
-     * @param bool $success success
+     * @param string|null $street street
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setStreet($street)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($street)) {
+            throw new \InvalidArgumentException('non-nullable street cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
+        $this->container['street'] = $street;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets city
      *
-     * @return mixed|null
+     * @return string|null
      */
-    public function getData()
+    public function getCity()
     {
-        return $this->container['data'];
+        return $this->container['city'];
     }
 
     /**
-     * Sets data
+     * Sets city
      *
-     * @param mixed|null $data data
+     * @param string|null $city city
      *
      * @return self
      */
-    public function setData($data)
+    public function setCity($city)
     {
-        if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($city)) {
+            throw new \InvalidArgumentException('non-nullable city cannot be null');
         }
-        $this->container['data'] = $data;
+        $this->container['city'] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Gets state
+     *
+     * @return string|null
+     */
+    public function getState()
+    {
+        return $this->container['state'];
+    }
+
+    /**
+     * Sets state
+     *
+     * @param string|null $state state
+     *
+     * @return self
+     */
+    public function setState($state)
+    {
+        if (is_null($state)) {
+            throw new \InvalidArgumentException('non-nullable state cannot be null');
+        }
+        $this->container['state'] = $state;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * SuccessEnvelope
+ * TransportCarrierVehicle
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * SuccessEnvelope Class Doc Comment
+ * TransportCarrierVehicle Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
+class TransportCarrierVehicle implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SuccessEnvelope';
+    protected static $openAPIModelName = 'TransportCarrier_vehicle';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => 'mixed'
+        'plate' => 'string',
+        'state' => 'string',
+        'rntc' => 'string'
     ];
 
     /**
@@ -69,8 +70,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'plate' => null,
+        'state' => null,
+        'rntc' => null
     ];
 
     /**
@@ -79,8 +81,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => true
+        'plate' => false,
+        'state' => false,
+        'rntc' => false
     ];
 
     /**
@@ -169,8 +172,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'plate' => 'plate',
+        'state' => 'state',
+        'rntc' => 'rntc'
     ];
 
     /**
@@ -179,8 +183,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'plate' => 'setPlate',
+        'state' => 'setState',
+        'rntc' => 'setRntc'
     ];
 
     /**
@@ -189,8 +194,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'plate' => 'getPlate',
+        'state' => 'getState',
+        'rntc' => 'getRntc'
     ];
 
     /**
@@ -234,19 +240,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +256,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('plate', $data ?? [], null);
+        $this->setIfExists('state', $data ?? [], null);
+        $this->setIfExists('rntc', $data ?? [], null);
     }
 
     /**
@@ -294,18 +288,9 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
+        if ($this->container['plate'] === null) {
+            $invalidProperties[] = "'plate' can't be null";
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -322,72 +307,82 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets success
+     * Gets plate
      *
-     * @return bool
+     * @return string
      */
-    public function getSuccess()
+    public function getPlate()
     {
-        return $this->container['success'];
+        return $this->container['plate'];
     }
 
     /**
-     * Sets success
+     * Sets plate
      *
-     * @param bool $success success
+     * @param string $plate plate
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setPlate($plate)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($plate)) {
+            throw new \InvalidArgumentException('non-nullable plate cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
+        $this->container['plate'] = $plate;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets state
      *
-     * @return mixed|null
+     * @return string|null
      */
-    public function getData()
+    public function getState()
     {
-        return $this->container['data'];
+        return $this->container['state'];
     }
 
     /**
-     * Sets data
+     * Sets state
      *
-     * @param mixed|null $data data
+     * @param string|null $state state
      *
      * @return self
      */
-    public function setData($data)
+    public function setState($state)
     {
-        if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($state)) {
+            throw new \InvalidArgumentException('non-nullable state cannot be null');
         }
-        $this->container['data'] = $data;
+        $this->container['state'] = $state;
+
+        return $this;
+    }
+
+    /**
+     * Gets rntc
+     *
+     * @return string|null
+     */
+    public function getRntc()
+    {
+        return $this->container['rntc'];
+    }
+
+    /**
+     * Sets rntc
+     *
+     * @param string|null $rntc rntc
+     *
+     * @return self
+     */
+    public function setRntc($rntc)
+    {
+        if (is_null($rntc)) {
+            throw new \InvalidArgumentException('non-nullable rntc cannot be null');
+        }
+        $this->container['rntc'] = $rntc;
 
         return $this;
     }

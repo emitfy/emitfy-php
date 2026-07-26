@@ -1,6 +1,6 @@
 <?php
 /**
- * SuccessEnvelope
+ * TransportCarrier
  *
  * PHP version 8.1
  *
@@ -32,15 +32,16 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * SuccessEnvelope Class Doc Comment
+ * TransportCarrier Class Doc Comment
  *
  * @category Class
+ * @description Transportadora informada inline na emissão (não há cadastro de transportadora — os dados ficam congelados no snapshot da nota)
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
+class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +50,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SuccessEnvelope';
+    protected static $openAPIModelName = 'TransportCarrier';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +58,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => 'mixed'
+        'name' => 'string',
+        'taxId' => 'string',
+        'stateRegistration' => 'string',
+        'address' => '\EmitfyGenerated\Model\TransportCarrierAddress',
+        'vehicle' => '\EmitfyGenerated\Model\TransportCarrierVehicle'
     ];
 
     /**
@@ -69,8 +73,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'name' => null,
+        'taxId' => null,
+        'stateRegistration' => null,
+        'address' => null,
+        'vehicle' => null
     ];
 
     /**
@@ -79,8 +86,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => true
+        'name' => false,
+        'taxId' => false,
+        'stateRegistration' => false,
+        'address' => false,
+        'vehicle' => false
     ];
 
     /**
@@ -169,8 +179,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'name' => 'name',
+        'taxId' => 'taxId',
+        'stateRegistration' => 'stateRegistration',
+        'address' => 'address',
+        'vehicle' => 'vehicle'
     ];
 
     /**
@@ -179,8 +192,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'name' => 'setName',
+        'taxId' => 'setTaxId',
+        'stateRegistration' => 'setStateRegistration',
+        'address' => 'setAddress',
+        'vehicle' => 'setVehicle'
     ];
 
     /**
@@ -189,8 +205,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'name' => 'getName',
+        'taxId' => 'getTaxId',
+        'stateRegistration' => 'getStateRegistration',
+        'address' => 'getAddress',
+        'vehicle' => 'getVehicle'
     ];
 
     /**
@@ -234,19 +253,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +269,11 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('taxId', $data ?? [], null);
+        $this->setIfExists('stateRegistration', $data ?? [], null);
+        $this->setIfExists('address', $data ?? [], null);
+        $this->setIfExists('vehicle', $data ?? [], null);
     }
 
     /**
@@ -294,18 +303,12 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
+        if ($this->container['name'] === null) {
+            $invalidProperties[] = "'name' can't be null";
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
+        if ($this->container['taxId'] === null) {
+            $invalidProperties[] = "'taxId' can't be null";
         }
-
         return $invalidProperties;
     }
 
@@ -322,72 +325,136 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets success
+     * Gets name
      *
-     * @return bool
+     * @return string
      */
-    public function getSuccess()
+    public function getName()
     {
-        return $this->container['success'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets success
+     * Sets name
      *
-     * @param bool $success success
+     * @param string $name name
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setName($name)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($name)) {
+            throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
+        $this->container['name'] = $name;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets taxId
      *
-     * @return mixed|null
+     * @return string
      */
-    public function getData()
+    public function getTaxId()
     {
-        return $this->container['data'];
+        return $this->container['taxId'];
     }
 
     /**
-     * Sets data
+     * Sets taxId
      *
-     * @param mixed|null $data data
+     * @param string $taxId CNPJ ou CPF válido da transportadora
      *
      * @return self
      */
-    public function setData($data)
+    public function setTaxId($taxId)
     {
-        if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($taxId)) {
+            throw new \InvalidArgumentException('non-nullable taxId cannot be null');
         }
-        $this->container['data'] = $data;
+        $this->container['taxId'] = $taxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets stateRegistration
+     *
+     * @return string|null
+     */
+    public function getStateRegistration()
+    {
+        return $this->container['stateRegistration'];
+    }
+
+    /**
+     * Sets stateRegistration
+     *
+     * @param string|null $stateRegistration stateRegistration
+     *
+     * @return self
+     */
+    public function setStateRegistration($stateRegistration)
+    {
+        if (is_null($stateRegistration)) {
+            throw new \InvalidArgumentException('non-nullable stateRegistration cannot be null');
+        }
+        $this->container['stateRegistration'] = $stateRegistration;
+
+        return $this;
+    }
+
+    /**
+     * Gets address
+     *
+     * @return \EmitfyGenerated\Model\TransportCarrierAddress|null
+     */
+    public function getAddress()
+    {
+        return $this->container['address'];
+    }
+
+    /**
+     * Sets address
+     *
+     * @param \EmitfyGenerated\Model\TransportCarrierAddress|null $address address
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        if (is_null($address)) {
+            throw new \InvalidArgumentException('non-nullable address cannot be null');
+        }
+        $this->container['address'] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets vehicle
+     *
+     * @return \EmitfyGenerated\Model\TransportCarrierVehicle|null
+     */
+    public function getVehicle()
+    {
+        return $this->container['vehicle'];
+    }
+
+    /**
+     * Sets vehicle
+     *
+     * @param \EmitfyGenerated\Model\TransportCarrierVehicle|null $vehicle vehicle
+     *
+     * @return self
+     */
+    public function setVehicle($vehicle)
+    {
+        if (is_null($vehicle)) {
+            throw new \InvalidArgumentException('non-nullable vehicle cannot be null');
+        }
+        $this->container['vehicle'] = $vehicle;
 
         return $this;
     }

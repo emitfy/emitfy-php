@@ -1,6 +1,6 @@
 <?php
 /**
- * SuccessEnvelope
+ * NfeGet200Response
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * SuccessEnvelope Class Doc Comment
+ * NfeGet200Response Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfeGet200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SuccessEnvelope';
+    protected static $openAPIModelName = 'nfeGet_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -58,7 +58,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $openAPITypes = [
         'success' => 'bool',
-        'data' => 'mixed'
+        'data' => '\EmitfyGenerated\Model\NfeGet200ResponseData'
     ];
 
     /**
@@ -80,7 +80,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static array $openAPINullables = [
         'success' => false,
-        'data' => true
+        'data' => false
     ];
 
     /**
@@ -294,9 +294,6 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['success'] === null) {
-            $invalidProperties[] = "'success' can't be null";
-        }
         $allowedValues = $this->getSuccessAllowableValues();
         if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -324,7 +321,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets success
      *
-     * @return bool
+     * @return bool|null
      */
     public function getSuccess()
     {
@@ -334,7 +331,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets success
      *
-     * @param bool $success success
+     * @param bool|null $success success
      *
      * @return self
      */
@@ -361,7 +358,7 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets data
      *
-     * @return mixed|null
+     * @return \EmitfyGenerated\Model\NfeGet200ResponseData|null
      */
     public function getData()
     {
@@ -371,21 +368,14 @@ class SuccessEnvelope implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets data
      *
-     * @param mixed|null $data data
+     * @param \EmitfyGenerated\Model\NfeGet200ResponseData|null $data data
      *
      * @return self
      */
     public function setData($data)
     {
         if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+            throw new \InvalidArgumentException('non-nullable data cannot be null');
         }
         $this->container['data'] = $data;
 

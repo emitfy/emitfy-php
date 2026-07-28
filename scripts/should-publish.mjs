@@ -2,8 +2,8 @@
  * Decide se emitfy/sdk (PHP) deve ganhar nova tag/release (Packagist).
  *
  * exit 0  → publicar (criar tag)
- * exit 10 → pular (SDK igual ao latest no Packagist)
- * exit 1  → erro (mudou mas a versão em VERSION já foi tagueada)
+ * exit 10 → pular (igual ou versão já no Packagist)
+ * exit 1  → erro inesperado
  *
  * Env:
  *   SDK_VERSION — opcional; senão lê ../VERSION
@@ -220,10 +220,10 @@ try {
   }
 
   if (remote.version === version) {
-    console.error(
-      `SDK source changed, but ${packageName}@${version} already exists on Packagist. Bump sdks/php/VERSION.`
+    console.log(
+      `SDK source changed, but ${packageName}@${version} already on Packagist — skip (bump VERSION to publish).`
     )
-    process.exit(1)
+    process.exit(10)
   }
 
   console.log(

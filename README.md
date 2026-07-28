@@ -35,5 +35,5 @@ $body->setUrl('https://seu-sistema.com/webhooks/emitfy');
 $api->webhooksCreate($body);
 ```
 
-Docs: https://api.emitfy.com/docs/sdks  
+Docs: https://docs.emitfy.com/sdks  
 OpenAPI: https://api.emitfy.com/openapi.yaml

@@ -1,6 +1,6 @@
 <?php
 /**
- * TransportCarrier
+ * NfseCreateRequestBorrower
  *
  * PHP version 8.1
  *
@@ -32,16 +32,15 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * TransportCarrier Class Doc Comment
+ * NfseCreateRequestBorrower Class Doc Comment
  *
  * @category Class
- * @description Transportadora informada inline na emissão (não há cadastro de transportadora — os dados ficam congelados no snapshot da nota)
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'TransportCarrier';
+    protected static $openAPIModelName = 'NfseCreateRequest_borrower';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -58,11 +57,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'name' => 'string',
         'taxId' => 'string',
-        'stateRegistration' => 'string',
-        'address' => '\EmitfyGenerated\Model\TransportCarrierAddress',
-        'vehicle' => '\EmitfyGenerated\Model\TransportCarrierVehicle'
+        'name' => 'string',
+        'email' => 'string',
+        'phone' => 'string',
+        'address' => 'array<string,mixed>'
     ];
 
     /**
@@ -73,11 +72,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'name' => null,
         'taxId' => null,
-        'stateRegistration' => null,
-        'address' => null,
-        'vehicle' => null
+        'name' => null,
+        'email' => null,
+        'phone' => null,
+        'address' => null
     ];
 
     /**
@@ -86,11 +85,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'name' => false,
         'taxId' => false,
-        'stateRegistration' => false,
-        'address' => false,
-        'vehicle' => false
+        'name' => false,
+        'email' => false,
+        'phone' => false,
+        'address' => false
     ];
 
     /**
@@ -179,11 +178,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
         'taxId' => 'taxId',
-        'stateRegistration' => 'stateRegistration',
-        'address' => 'address',
-        'vehicle' => 'vehicle'
+        'name' => 'name',
+        'email' => 'email',
+        'phone' => 'phone',
+        'address' => 'address'
     ];
 
     /**
@@ -192,11 +191,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
         'taxId' => 'setTaxId',
-        'stateRegistration' => 'setStateRegistration',
-        'address' => 'setAddress',
-        'vehicle' => 'setVehicle'
+        'name' => 'setName',
+        'email' => 'setEmail',
+        'phone' => 'setPhone',
+        'address' => 'setAddress'
     ];
 
     /**
@@ -205,11 +204,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
         'taxId' => 'getTaxId',
-        'stateRegistration' => 'getStateRegistration',
-        'address' => 'getAddress',
-        'vehicle' => 'getVehicle'
+        'name' => 'getName',
+        'email' => 'getEmail',
+        'phone' => 'getPhone',
+        'address' => 'getAddress'
     ];
 
     /**
@@ -269,11 +268,11 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('taxId', $data ?? [], null);
-        $this->setIfExists('stateRegistration', $data ?? [], null);
+        $this->setIfExists('name', $data ?? [], null);
+        $this->setIfExists('email', $data ?? [], null);
+        $this->setIfExists('phone', $data ?? [], null);
         $this->setIfExists('address', $data ?? [], null);
-        $this->setIfExists('vehicle', $data ?? [], null);
     }
 
     /**
@@ -306,9 +305,6 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
-        if ($this->container['taxId'] === null) {
-            $invalidProperties[] = "'taxId' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -323,6 +319,33 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets taxId
+     *
+     * @return string|null
+     */
+    public function getTaxId()
+    {
+        return $this->container['taxId'];
+    }
+
+    /**
+     * Sets taxId
+     *
+     * @param string|null $taxId taxId
+     *
+     * @return self
+     */
+    public function setTaxId($taxId)
+    {
+        if (is_null($taxId)) {
+            throw new \InvalidArgumentException('non-nullable taxId cannot be null');
+        }
+        $this->container['taxId'] = $taxId;
+
+        return $this;
+    }
 
     /**
      * Gets name
@@ -352,55 +375,55 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets taxId
+     * Gets email
      *
-     * @return string
+     * @return string|null
      */
-    public function getTaxId()
+    public function getEmail()
     {
-        return $this->container['taxId'];
+        return $this->container['email'];
     }
 
     /**
-     * Sets taxId
+     * Sets email
      *
-     * @param string $taxId CNPJ ou CPF válido da transportadora
+     * @param string|null $email email
      *
      * @return self
      */
-    public function setTaxId($taxId)
+    public function setEmail($email)
     {
-        if (is_null($taxId)) {
-            throw new \InvalidArgumentException('non-nullable taxId cannot be null');
+        if (is_null($email)) {
+            throw new \InvalidArgumentException('non-nullable email cannot be null');
         }
-        $this->container['taxId'] = $taxId;
+        $this->container['email'] = $email;
 
         return $this;
     }
 
     /**
-     * Gets stateRegistration
+     * Gets phone
      *
      * @return string|null
      */
-    public function getStateRegistration()
+    public function getPhone()
     {
-        return $this->container['stateRegistration'];
+        return $this->container['phone'];
     }
 
     /**
-     * Sets stateRegistration
+     * Sets phone
      *
-     * @param string|null $stateRegistration stateRegistration
+     * @param string|null $phone phone
      *
      * @return self
      */
-    public function setStateRegistration($stateRegistration)
+    public function setPhone($phone)
     {
-        if (is_null($stateRegistration)) {
-            throw new \InvalidArgumentException('non-nullable stateRegistration cannot be null');
+        if (is_null($phone)) {
+            throw new \InvalidArgumentException('non-nullable phone cannot be null');
         }
-        $this->container['stateRegistration'] = $stateRegistration;
+        $this->container['phone'] = $phone;
 
         return $this;
     }
@@ -408,7 +431,7 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets address
      *
-     * @return \EmitfyGenerated\Model\TransportCarrierAddress|null
+     * @return array<string,mixed>|null
      */
     public function getAddress()
     {
@@ -418,7 +441,7 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets address
      *
-     * @param \EmitfyGenerated\Model\TransportCarrierAddress|null $address address
+     * @param array<string,mixed>|null $address address
      *
      * @return self
      */
@@ -428,33 +451,6 @@ class TransportCarrier implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable address cannot be null');
         }
         $this->container['address'] = $address;
-
-        return $this;
-    }
-
-    /**
-     * Gets vehicle
-     *
-     * @return \EmitfyGenerated\Model\TransportCarrierVehicle|null
-     */
-    public function getVehicle()
-    {
-        return $this->container['vehicle'];
-    }
-
-    /**
-     * Sets vehicle
-     *
-     * @param \EmitfyGenerated\Model\TransportCarrierVehicle|null $vehicle vehicle
-     *
-     * @return self
-     */
-    public function setVehicle($vehicle)
-    {
-        if (is_null($vehicle)) {
-            throw new \InvalidArgumentException('non-nullable vehicle cannot be null');
-        }
-        $this->container['vehicle'] = $vehicle;
 
         return $this;
     }

@@ -21,7 +21,14 @@ $emitfy = new Emitfy([
 ]);
 
 $company = $emitfy->company(getenv('EMITFY_COMPANY_ID'));
-$company->nfse->create(['serviceDescription' => 'Serviço', 'amount' => 100], 'pedido-001');
+$company->nfse->create([
+  'name' => 'Consultoria',
+  'category' => 'consulting',
+  'serviceDescription' => 'Consultoria em tecnologia',
+  'cityServiceCode' => '02800',
+  'amount' => 100,
+  'borrower' => ['name' => 'Cliente LTDA', 'taxId' => '12.345.678/0001-90'],
+], 'pedido-001');
 ```
 
 ## Tipagem OpenAPI

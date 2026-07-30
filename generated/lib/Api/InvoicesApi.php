@@ -139,7 +139,7 @@ class InvoicesApi
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \EmitfyGenerated\Model\NfeGet200Response
+     * @return \EmitfyGenerated\Model\InvoicesGet200Response
      */
     public function invoicesGet($companyId, $id, string $contentType = self::contentTypes['invoicesGet'][0])
     {
@@ -158,7 +158,7 @@ class InvoicesApi
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \EmitfyGenerated\Model\NfeGet200Response, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoicesGet200Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function invoicesGetWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesGet'][0])
     {
@@ -190,7 +190,7 @@ class InvoicesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\EmitfyGenerated\Model\NfeGet200Response',
+                        '\EmitfyGenerated\Model\InvoicesGet200Response',
                         $request,
                         $response,
                     );
@@ -212,7 +212,7 @@ class InvoicesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\EmitfyGenerated\Model\NfeGet200Response',
+                '\EmitfyGenerated\Model\InvoicesGet200Response',
                 $request,
                 $response,
             );
@@ -221,7 +221,7 @@ class InvoicesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\EmitfyGenerated\Model\NfeGet200Response',
+                        '\EmitfyGenerated\Model\InvoicesGet200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -269,7 +269,7 @@ class InvoicesApi
      */
     public function invoicesGetAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesGet'][0])
     {
-        $returnType = '\EmitfyGenerated\Model\NfeGet200Response';
+        $returnType = '\EmitfyGenerated\Model\InvoicesGet200Response';
         $request = $this->invoicesGetRequest($companyId, $id, $contentType);
 
         return $this->client

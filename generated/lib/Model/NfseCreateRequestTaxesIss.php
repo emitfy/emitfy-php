@@ -1,6 +1,6 @@
 <?php
 /**
- * NfseCreateRequestBorrower
+ * NfseCreateRequestTaxesIss
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * NfseCreateRequestBorrower Class Doc Comment
+ * NfseCreateRequestTaxesIss Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      *
      * @var string
      */
-    protected static $openAPIModelName = 'NfseCreateRequest_borrower';
+    protected static $openAPIModelName = 'NfseCreateRequest_taxes_iss';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,11 +57,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $openAPITypes = [
-        'taxId' => 'string',
-        'name' => 'string',
-        'email' => 'string',
-        'phone' => 'string',
-        'address' => 'array<string,mixed>'
+        'rate' => 'float',
+        'isWithheld' => 'bool'
     ];
 
     /**
@@ -72,11 +69,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'taxId' => null,
-        'name' => null,
-        'email' => null,
-        'phone' => null,
-        'address' => null
+        'rate' => null,
+        'isWithheld' => null
     ];
 
     /**
@@ -85,11 +79,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'taxId' => false,
-        'name' => false,
-        'email' => false,
-        'phone' => false,
-        'address' => false
+        'rate' => false,
+        'isWithheld' => false
     ];
 
     /**
@@ -178,11 +169,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
-        'taxId' => 'taxId',
-        'name' => 'name',
-        'email' => 'email',
-        'phone' => 'phone',
-        'address' => 'address'
+        'rate' => 'rate',
+        'isWithheld' => 'isWithheld'
     ];
 
     /**
@@ -191,11 +179,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
-        'taxId' => 'setTaxId',
-        'name' => 'setName',
-        'email' => 'setEmail',
-        'phone' => 'setPhone',
-        'address' => 'setAddress'
+        'rate' => 'setRate',
+        'isWithheld' => 'setIsWithheld'
     ];
 
     /**
@@ -204,11 +189,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
-        'taxId' => 'getTaxId',
-        'name' => 'getName',
-        'email' => 'getEmail',
-        'phone' => 'getPhone',
-        'address' => 'getAddress'
+        'rate' => 'getRate',
+        'isWithheld' => 'getIsWithheld'
     ];
 
     /**
@@ -268,11 +250,8 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('taxId', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('email', $data ?? [], null);
-        $this->setIfExists('phone', $data ?? [], null);
-        $this->setIfExists('address', $data ?? [], null);
+        $this->setIfExists('rate', $data ?? [], null);
+        $this->setIfExists('isWithheld', $data ?? [], null);
     }
 
     /**
@@ -302,12 +281,17 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
+        if ($this->container['rate'] === null) {
+            $invalidProperties[] = "'rate' can't be null";
         }
-        if ($this->container['email'] === null) {
-            $invalidProperties[] = "'email' can't be null";
+        if (($this->container['rate'] > 100)) {
+            $invalidProperties[] = "invalid value for 'rate', must be smaller than or equal to 100.";
         }
+
+        if (($this->container['rate'] < 0)) {
+            $invalidProperties[] = "invalid value for 'rate', must be bigger than or equal to 0.";
+        }
+
         return $invalidProperties;
     }
 
@@ -324,136 +308,62 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
 
 
     /**
-     * Gets taxId
+     * Gets rate
      *
-     * @return string|null
+     * @return float
      */
-    public function getTaxId()
+    public function getRate()
     {
-        return $this->container['taxId'];
+        return $this->container['rate'];
     }
 
     /**
-     * Sets taxId
+     * Sets rate
      *
-     * @param string|null $taxId taxId
+     * @param float $rate rate
      *
      * @return self
      */
-    public function setTaxId($taxId)
+    public function setRate($rate)
     {
-        if (is_null($taxId)) {
-            throw new \InvalidArgumentException('non-nullable taxId cannot be null');
+        if (is_null($rate)) {
+            throw new \InvalidArgumentException('non-nullable rate cannot be null');
         }
-        $this->container['taxId'] = $taxId;
+        if (($rate > 100)) {
+            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestTaxesIss., must be smaller than or equal to 100.');
+        }
+        if (($rate < 0)) {
+            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestTaxesIss., must be bigger than or equal to 0.');
+        }
+
+        $this->container['rate'] = $rate;
 
         return $this;
     }
 
     /**
-     * Gets name
+     * Gets isWithheld
      *
-     * @return string
+     * @return bool|null
      */
-    public function getName()
+    public function getIsWithheld()
     {
-        return $this->container['name'];
+        return $this->container['isWithheld'];
     }
 
     /**
-     * Sets name
+     * Sets isWithheld
      *
-     * @param string $name name
+     * @param bool|null $isWithheld isWithheld
      *
      * @return self
      */
-    public function setName($name)
+    public function setIsWithheld($isWithheld)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($isWithheld)) {
+            throw new \InvalidArgumentException('non-nullable isWithheld cannot be null');
         }
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->container['email'];
-    }
-
-    /**
-     * Sets email
-     *
-     * @param string $email email
-     *
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        if (is_null($email)) {
-            throw new \InvalidArgumentException('non-nullable email cannot be null');
-        }
-        $this->container['email'] = $email;
-
-        return $this;
-    }
-
-    /**
-     * Gets phone
-     *
-     * @return string|null
-     */
-    public function getPhone()
-    {
-        return $this->container['phone'];
-    }
-
-    /**
-     * Sets phone
-     *
-     * @param string|null $phone phone
-     *
-     * @return self
-     */
-    public function setPhone($phone)
-    {
-        if (is_null($phone)) {
-            throw new \InvalidArgumentException('non-nullable phone cannot be null');
-        }
-        $this->container['phone'] = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Gets address
-     *
-     * @return array<string,mixed>|null
-     */
-    public function getAddress()
-    {
-        return $this->container['address'];
-    }
-
-    /**
-     * Sets address
-     *
-     * @param array<string,mixed>|null $address address
-     *
-     * @return self
-     */
-    public function setAddress($address)
-    {
-        if (is_null($address)) {
-            throw new \InvalidArgumentException('non-nullable address cannot be null');
-        }
-        $this->container['address'] = $address;
+        $this->container['isWithheld'] = $isWithheld;
 
         return $this;
     }

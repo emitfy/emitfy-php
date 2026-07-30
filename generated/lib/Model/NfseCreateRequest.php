@@ -73,7 +73,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => 'string',
         'serviceLocation' => 'string',
         'municipalityOfIncidence' => 'string',
-        'taxes' => 'array<string,mixed>',
+        'taxes' => '\EmitfyGenerated\Model\NfseCreateRequestTaxes',
         'amount' => 'float',
         'issueDate' => '\DateTime',
         'externalId' => 'string',
@@ -441,6 +441,15 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             $invalidProperties[] = "invalid value for 'guarantee', must be bigger than or equal to 1.";
         }
 
+        if ($this->container['cityServiceCode'] === null) {
+            $invalidProperties[] = "'cityServiceCode' can't be null";
+        }
+        if ($this->container['serviceItemCode'] === null) {
+            $invalidProperties[] = "'serviceItemCode' can't be null";
+        }
+        if ($this->container['taxes'] === null) {
+            $invalidProperties[] = "'taxes' can't be null";
+        }
         if ($this->container['amount'] === null) {
             $invalidProperties[] = "'amount' can't be null";
         }
@@ -621,7 +630,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets cityServiceCode
      *
-     * @return string|null
+     * @return string
      */
     public function getCityServiceCode()
     {
@@ -631,7 +640,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets cityServiceCode
      *
-     * @param string|null $cityServiceCode cityServiceCode
+     * @param string $cityServiceCode Código municipal do serviço (obrigatório; alias legado serviceCode ainda aceito na API)
      *
      * @return self
      */
@@ -675,7 +684,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets serviceItemCode
      *
-     * @return string|null
+     * @return string
      */
     public function getServiceItemCode()
     {
@@ -685,7 +694,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets serviceItemCode
      *
-     * @param string|null $serviceItemCode serviceItemCode
+     * @param string $serviceItemCode Item LC 116
      *
      * @return self
      */
@@ -918,7 +927,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets taxes
      *
-     * @return array<string,mixed>|null
+     * @return \EmitfyGenerated\Model\NfseCreateRequestTaxes
      */
     public function getTaxes()
     {
@@ -928,7 +937,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets taxes
      *
-     * @param array<string,mixed>|null $taxes taxes
+     * @param \EmitfyGenerated\Model\NfseCreateRequestTaxes $taxes taxes
      *
      * @return self
      */

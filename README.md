@@ -26,8 +26,14 @@ $company->nfse->create([
   'category' => 'consulting',
   'serviceDescription' => 'Consultoria em tecnologia',
   'cityServiceCode' => '02800',
+  'serviceItemCode' => '01.05',
+  'taxes' => ['iss' => ['rate' => 2.9, 'isWithheld' => false]],
   'amount' => 100,
-  'borrower' => ['name' => 'Cliente LTDA', 'taxId' => '12.345.678/0001-90'],
+  'borrower' => [
+    'name' => 'Cliente LTDA',
+    'taxId' => '12.345.678/0001-90',
+    'email' => 'financeiro@cliente.com.br',
+  ],
 ], 'pedido-001');
 ```
 

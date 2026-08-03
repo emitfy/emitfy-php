@@ -1,6 +1,6 @@
 <?php
 /**
- * InvoicesGet200Response
+ * PublicInvoiceResourceAssets
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * InvoicesGet200Response Class Doc Comment
+ * PublicInvoiceResourceAssets Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerializable
+class PublicInvoiceResourceAssets implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      *
      * @var string
      */
-    protected static $openAPIModelName = 'invoicesGet_200_response';
+    protected static $openAPIModelName = 'PublicInvoiceResource_assets';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => '\EmitfyGenerated\Model\PublicInvoiceResource'
+        'pdf' => 'string',
+        'xml' => 'string',
+        'verificationUrl' => 'string'
     ];
 
     /**
@@ -69,8 +70,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'pdf' => 'uri',
+        'xml' => 'uri',
+        'verificationUrl' => 'uri'
     ];
 
     /**
@@ -79,8 +81,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => false
+        'pdf' => false,
+        'xml' => false,
+        'verificationUrl' => false
     ];
 
     /**
@@ -169,8 +172,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'pdf' => 'pdf',
+        'xml' => 'xml',
+        'verificationUrl' => 'verificationUrl'
     ];
 
     /**
@@ -179,8 +183,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'pdf' => 'setPdf',
+        'xml' => 'setXml',
+        'verificationUrl' => 'setVerificationUrl'
     ];
 
     /**
@@ -189,8 +194,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'pdf' => 'getPdf',
+        'xml' => 'getXml',
+        'verificationUrl' => 'getVerificationUrl'
     ];
 
     /**
@@ -234,19 +240,6 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +256,9 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('pdf', $data ?? [], null);
+        $this->setIfExists('xml', $data ?? [], null);
+        $this->setIfExists('verificationUrl', $data ?? [], null);
     }
 
     /**
@@ -294,15 +288,6 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -319,65 +304,82 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
 
 
     /**
-     * Gets success
+     * Gets pdf
      *
-     * @return bool|null
+     * @return string|null
      */
-    public function getSuccess()
+    public function getPdf()
     {
-        return $this->container['success'];
+        return $this->container['pdf'];
     }
 
     /**
-     * Sets success
+     * Sets pdf
      *
-     * @param bool|null $success success
+     * @param string|null $pdf pdf
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setPdf($pdf)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($pdf)) {
+            throw new \InvalidArgumentException('non-nullable pdf cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
+        $this->container['pdf'] = $pdf;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets xml
      *
-     * @return \EmitfyGenerated\Model\PublicInvoiceResource|null
+     * @return string|null
      */
-    public function getData()
+    public function getXml()
     {
-        return $this->container['data'];
+        return $this->container['xml'];
     }
 
     /**
-     * Sets data
+     * Sets xml
      *
-     * @param \EmitfyGenerated\Model\PublicInvoiceResource|null $data data
+     * @param string|null $xml xml
      *
      * @return self
      */
-    public function setData($data)
+    public function setXml($xml)
     {
-        if (is_null($data)) {
-            throw new \InvalidArgumentException('non-nullable data cannot be null');
+        if (is_null($xml)) {
+            throw new \InvalidArgumentException('non-nullable xml cannot be null');
         }
-        $this->container['data'] = $data;
+        $this->container['xml'] = $xml;
+
+        return $this;
+    }
+
+    /**
+     * Gets verificationUrl
+     *
+     * @return string|null
+     */
+    public function getVerificationUrl()
+    {
+        return $this->container['verificationUrl'];
+    }
+
+    /**
+     * Sets verificationUrl
+     *
+     * @param string|null $verificationUrl verificationUrl
+     *
+     * @return self
+     */
+    public function setVerificationUrl($verificationUrl)
+    {
+        if (is_null($verificationUrl)) {
+            throw new \InvalidArgumentException('non-nullable verificationUrl cannot be null');
+        }
+        $this->container['verificationUrl'] = $verificationUrl;
 
         return $this;
     }

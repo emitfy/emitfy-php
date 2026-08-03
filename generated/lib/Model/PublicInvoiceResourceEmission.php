@@ -1,6 +1,6 @@
 <?php
 /**
- * InvoicesGet200ResponseData
+ * PublicInvoiceResourceEmission
  *
  * PHP version 8.1
  *
@@ -32,15 +32,16 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * InvoicesGet200ResponseData Class Doc Comment
+ * PublicInvoiceResourceEmission Class Doc Comment
  *
  * @category Class
+ * @description Política de emissão. &#x60;scheduledFor&#x60; só quando mode&#x3D;scheduled.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSerializable
+class PublicInvoiceResourceEmission implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +50,7 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      *
      * @var string
      */
-    protected static $openAPIModelName = 'invoicesGet_200_response_data';
+    protected static $openAPIModelName = 'PublicInvoiceResource_emission';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +58,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $openAPITypes = [
-        'externalId' => 'string',
-        'transport' => '\EmitfyGenerated\Model\TransportDetail'
+        'mode' => 'string',
+        'scheduledFor' => '\DateTime'
     ];
 
     /**
@@ -69,8 +70,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'externalId' => null,
-        'transport' => null
+        'mode' => null,
+        'scheduledFor' => 'date-time'
     ];
 
     /**
@@ -79,8 +80,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'externalId' => false,
-        'transport' => false
+        'mode' => false,
+        'scheduledFor' => false
     ];
 
     /**
@@ -169,8 +170,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $attributeMap = [
-        'externalId' => 'externalId',
-        'transport' => 'transport'
+        'mode' => 'mode',
+        'scheduledFor' => 'scheduledFor'
     ];
 
     /**
@@ -179,8 +180,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $setters = [
-        'externalId' => 'setExternalId',
-        'transport' => 'setTransport'
+        'mode' => 'setMode',
+        'scheduledFor' => 'setScheduledFor'
     ];
 
     /**
@@ -189,8 +190,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $getters = [
-        'externalId' => 'getExternalId',
-        'transport' => 'getTransport'
+        'mode' => 'getMode',
+        'scheduledFor' => 'getScheduledFor'
     ];
 
     /**
@@ -234,6 +235,23 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
         return self::$openAPIModelName;
     }
 
+    public const MODE_DRAFT = 'draft';
+    public const MODE_IMMEDIATE = 'immediate';
+    public const MODE_SCHEDULED = 'scheduled';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getModeAllowableValues()
+    {
+        return [
+            self::MODE_DRAFT,
+            self::MODE_IMMEDIATE,
+            self::MODE_SCHEDULED,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -250,8 +268,8 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('externalId', $data ?? [], null);
-        $this->setIfExists('transport', $data ?? [], null);
+        $this->setIfExists('mode', $data ?? [], null);
+        $this->setIfExists('scheduledFor', $data ?? [], null);
     }
 
     /**
@@ -281,6 +299,15 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
     {
         $invalidProperties = [];
 
+        $allowedValues = $this->getModeAllowableValues();
+        if (!is_null($this->container['mode']) && !in_array($this->container['mode'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'mode', must be one of '%s'",
+                $this->container['mode'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -297,55 +324,65 @@ class InvoicesGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSe
 
 
     /**
-     * Gets externalId
+     * Gets mode
      *
      * @return string|null
      */
-    public function getExternalId()
+    public function getMode()
     {
-        return $this->container['externalId'];
+        return $this->container['mode'];
     }
 
     /**
-     * Sets externalId
+     * Sets mode
      *
-     * @param string|null $externalId ID externo do pedido/ordem (API ou integração)
+     * @param string|null $mode mode
      *
      * @return self
      */
-    public function setExternalId($externalId)
+    public function setMode($mode)
     {
-        if (is_null($externalId)) {
-            throw new \InvalidArgumentException('non-nullable externalId cannot be null');
+        if (is_null($mode)) {
+            throw new \InvalidArgumentException('non-nullable mode cannot be null');
         }
-        $this->container['externalId'] = $externalId;
+        $allowedValues = $this->getModeAllowableValues();
+        if (!in_array($mode, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'mode', must be one of '%s'",
+                    $mode,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['mode'] = $mode;
 
         return $this;
     }
 
     /**
-     * Gets transport
+     * Gets scheduledFor
      *
-     * @return \EmitfyGenerated\Model\TransportDetail|null
+     * @return \DateTime|null
      */
-    public function getTransport()
+    public function getScheduledFor()
     {
-        return $this->container['transport'];
+        return $this->container['scheduledFor'];
     }
 
     /**
-     * Sets transport
+     * Sets scheduledFor
      *
-     * @param \EmitfyGenerated\Model\TransportDetail|null $transport transport
+     * @param \DateTime|null $scheduledFor scheduledFor
      *
      * @return self
      */
-    public function setTransport($transport)
+    public function setScheduledFor($scheduledFor)
     {
-        if (is_null($transport)) {
-            throw new \InvalidArgumentException('non-nullable transport cannot be null');
+        if (is_null($scheduledFor)) {
+            throw new \InvalidArgumentException('non-nullable scheduledFor cannot be null');
         }
-        $this->container['transport'] = $transport;
+        $this->container['scheduledFor'] = $scheduledFor;
 
         return $this;
     }

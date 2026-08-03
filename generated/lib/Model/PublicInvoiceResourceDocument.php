@@ -1,6 +1,6 @@
 <?php
 /**
- * InvoicesGet200Response
+ * PublicInvoiceResourceDocument
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * InvoicesGet200Response Class Doc Comment
+ * PublicInvoiceResourceDocument Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerializable
+class PublicInvoiceResourceDocument implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      *
      * @var string
      */
-    protected static $openAPIModelName = 'invoicesGet_200_response';
+    protected static $openAPIModelName = 'PublicInvoiceResource_document';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $openAPITypes = [
-        'success' => 'bool',
-        'data' => '\EmitfyGenerated\Model\PublicInvoiceResource'
+        'number' => 'string',
+        'series' => 'string',
+        'accessKey' => 'string',
+        'protocol' => 'string',
+        'rps' => '\EmitfyGenerated\Model\PublicInvoiceResourceDocumentRps',
+        'nfse' => 'array<string,mixed>',
+        'nfe' => 'array<string,mixed>',
+        'nfce' => 'array<string,mixed>'
     ];
 
     /**
@@ -69,8 +75,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'success' => null,
-        'data' => null
+        'number' => null,
+        'series' => null,
+        'accessKey' => null,
+        'protocol' => null,
+        'rps' => null,
+        'nfse' => null,
+        'nfe' => null,
+        'nfce' => null
     ];
 
     /**
@@ -79,8 +91,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'success' => false,
-        'data' => false
+        'number' => false,
+        'series' => false,
+        'accessKey' => false,
+        'protocol' => false,
+        'rps' => false,
+        'nfse' => false,
+        'nfe' => false,
+        'nfce' => false
     ];
 
     /**
@@ -169,8 +187,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'success' => 'success',
-        'data' => 'data'
+        'number' => 'number',
+        'series' => 'series',
+        'accessKey' => 'accessKey',
+        'protocol' => 'protocol',
+        'rps' => 'rps',
+        'nfse' => 'nfse',
+        'nfe' => 'nfe',
+        'nfce' => 'nfce'
     ];
 
     /**
@@ -179,8 +203,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'success' => 'setSuccess',
-        'data' => 'setData'
+        'number' => 'setNumber',
+        'series' => 'setSeries',
+        'accessKey' => 'setAccessKey',
+        'protocol' => 'setProtocol',
+        'rps' => 'setRps',
+        'nfse' => 'setNfse',
+        'nfe' => 'setNfe',
+        'nfce' => 'setNfce'
     ];
 
     /**
@@ -189,8 +219,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'success' => 'getSuccess',
-        'data' => 'getData'
+        'number' => 'getNumber',
+        'series' => 'getSeries',
+        'accessKey' => 'getAccessKey',
+        'protocol' => 'getProtocol',
+        'rps' => 'getRps',
+        'nfse' => 'getNfse',
+        'nfe' => 'getNfe',
+        'nfce' => 'getNfce'
     ];
 
     /**
@@ -234,19 +270,6 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
         return self::$openAPIModelName;
     }
 
-    public const SUCCESS_TRUE = 'true';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getSuccessAllowableValues()
-    {
-        return [
-            self::SUCCESS_TRUE,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -263,8 +286,14 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('success', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
+        $this->setIfExists('number', $data ?? [], null);
+        $this->setIfExists('series', $data ?? [], null);
+        $this->setIfExists('accessKey', $data ?? [], null);
+        $this->setIfExists('protocol', $data ?? [], null);
+        $this->setIfExists('rps', $data ?? [], null);
+        $this->setIfExists('nfse', $data ?? [], null);
+        $this->setIfExists('nfe', $data ?? [], null);
+        $this->setIfExists('nfce', $data ?? [], null);
     }
 
     /**
@@ -294,15 +323,6 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!is_null($this->container['success']) && !in_array($this->container['success'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'success', must be one of '%s'",
-                $this->container['success'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -319,65 +339,217 @@ class InvoicesGet200Response implements ModelInterface, ArrayAccess, \JsonSerial
 
 
     /**
-     * Gets success
+     * Gets number
      *
-     * @return bool|null
+     * @return string|null
      */
-    public function getSuccess()
+    public function getNumber()
     {
-        return $this->container['success'];
+        return $this->container['number'];
     }
 
     /**
-     * Sets success
+     * Sets number
      *
-     * @param bool|null $success success
+     * @param string|null $number number
      *
      * @return self
      */
-    public function setSuccess($success)
+    public function setNumber($number)
     {
-        if (is_null($success)) {
-            throw new \InvalidArgumentException('non-nullable success cannot be null');
+        if (is_null($number)) {
+            throw new \InvalidArgumentException('non-nullable number cannot be null');
         }
-        $allowedValues = $this->getSuccessAllowableValues();
-        if (!in_array($success, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'success', must be one of '%s'",
-                    $success,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['success'] = $success;
+        $this->container['number'] = $number;
 
         return $this;
     }
 
     /**
-     * Gets data
+     * Gets series
      *
-     * @return \EmitfyGenerated\Model\PublicInvoiceResource|null
+     * @return string|null
      */
-    public function getData()
+    public function getSeries()
     {
-        return $this->container['data'];
+        return $this->container['series'];
     }
 
     /**
-     * Sets data
+     * Sets series
      *
-     * @param \EmitfyGenerated\Model\PublicInvoiceResource|null $data data
+     * @param string|null $series series
      *
      * @return self
      */
-    public function setData($data)
+    public function setSeries($series)
     {
-        if (is_null($data)) {
-            throw new \InvalidArgumentException('non-nullable data cannot be null');
+        if (is_null($series)) {
+            throw new \InvalidArgumentException('non-nullable series cannot be null');
         }
-        $this->container['data'] = $data;
+        $this->container['series'] = $series;
+
+        return $this;
+    }
+
+    /**
+     * Gets accessKey
+     *
+     * @return string|null
+     */
+    public function getAccessKey()
+    {
+        return $this->container['accessKey'];
+    }
+
+    /**
+     * Sets accessKey
+     *
+     * @param string|null $accessKey accessKey
+     *
+     * @return self
+     */
+    public function setAccessKey($accessKey)
+    {
+        if (is_null($accessKey)) {
+            throw new \InvalidArgumentException('non-nullable accessKey cannot be null');
+        }
+        $this->container['accessKey'] = $accessKey;
+
+        return $this;
+    }
+
+    /**
+     * Gets protocol
+     *
+     * @return string|null
+     */
+    public function getProtocol()
+    {
+        return $this->container['protocol'];
+    }
+
+    /**
+     * Sets protocol
+     *
+     * @param string|null $protocol protocol
+     *
+     * @return self
+     */
+    public function setProtocol($protocol)
+    {
+        if (is_null($protocol)) {
+            throw new \InvalidArgumentException('non-nullable protocol cannot be null');
+        }
+        $this->container['protocol'] = $protocol;
+
+        return $this;
+    }
+
+    /**
+     * Gets rps
+     *
+     * @return \EmitfyGenerated\Model\PublicInvoiceResourceDocumentRps|null
+     */
+    public function getRps()
+    {
+        return $this->container['rps'];
+    }
+
+    /**
+     * Sets rps
+     *
+     * @param \EmitfyGenerated\Model\PublicInvoiceResourceDocumentRps|null $rps rps
+     *
+     * @return self
+     */
+    public function setRps($rps)
+    {
+        if (is_null($rps)) {
+            throw new \InvalidArgumentException('non-nullable rps cannot be null');
+        }
+        $this->container['rps'] = $rps;
+
+        return $this;
+    }
+
+    /**
+     * Gets nfse
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getNfse()
+    {
+        return $this->container['nfse'];
+    }
+
+    /**
+     * Sets nfse
+     *
+     * @param array<string,mixed>|null $nfse nfse
+     *
+     * @return self
+     */
+    public function setNfse($nfse)
+    {
+        if (is_null($nfse)) {
+            throw new \InvalidArgumentException('non-nullable nfse cannot be null');
+        }
+        $this->container['nfse'] = $nfse;
+
+        return $this;
+    }
+
+    /**
+     * Gets nfe
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getNfe()
+    {
+        return $this->container['nfe'];
+    }
+
+    /**
+     * Sets nfe
+     *
+     * @param array<string,mixed>|null $nfe nfe
+     *
+     * @return self
+     */
+    public function setNfe($nfe)
+    {
+        if (is_null($nfe)) {
+            throw new \InvalidArgumentException('non-nullable nfe cannot be null');
+        }
+        $this->container['nfe'] = $nfe;
+
+        return $this;
+    }
+
+    /**
+     * Gets nfce
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getNfce()
+    {
+        return $this->container['nfce'];
+    }
+
+    /**
+     * Sets nfce
+     *
+     * @param array<string,mixed>|null $nfce nfce
+     *
+     * @return self
+     */
+    public function setNfce($nfce)
+    {
+        if (is_null($nfce)) {
+            throw new \InvalidArgumentException('non-nullable nfce cannot be null');
+        }
+        $this->container['nfce'] = $nfce;
 
         return $this;
     }

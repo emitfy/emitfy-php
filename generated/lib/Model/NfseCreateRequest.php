@@ -63,21 +63,25 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => 'string',
         'guarantee' => 'int',
         'cityServiceCode' => 'string',
-        'serviceCode' => 'string',
-        'serviceItemCode' => 'string',
-        'nbsCode' => 'string',
+        'federalServiceCode' => 'string',
+        'nbs' => 'string',
         'cnaeCode' => 'string',
-        'taxClassification' => 'string',
-        'ibsCst' => 'string',
-        'ibsOperationIndicator' => 'string',
+        'iss' => '\EmitfyGenerated\Model\NfseCreateRequestIss',
+        'ibsCbs' => '\EmitfyGenerated\Model\NfseCreateRequestIbsCbs',
         'natureOfOperation' => 'string',
         'serviceLocation' => 'string',
         'municipalityOfIncidence' => 'string',
-        'taxes' => '\EmitfyGenerated\Model\NfseCreateRequestTaxes',
+        'taxes' => 'array<string,mixed>',
         'amount' => 'float',
         'issueDate' => '\DateTime',
         'externalId' => 'string',
-        'borrower' => '\EmitfyGenerated\Model\NfseCreateRequestBorrower'
+        'borrower' => '\EmitfyGenerated\Model\NfseCreateRequestBorrower',
+        'serviceCode' => 'string',
+        'serviceItemCode' => 'string',
+        'nbsCode' => 'string',
+        'taxClassification' => 'string',
+        'ibsCst' => 'string',
+        'ibsOperationIndicator' => 'string'
     ];
 
     /**
@@ -94,13 +98,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => null,
         'guarantee' => null,
         'cityServiceCode' => null,
-        'serviceCode' => null,
-        'serviceItemCode' => null,
-        'nbsCode' => null,
+        'federalServiceCode' => null,
+        'nbs' => null,
         'cnaeCode' => null,
-        'taxClassification' => null,
-        'ibsCst' => null,
-        'ibsOperationIndicator' => null,
+        'iss' => null,
+        'ibsCbs' => null,
         'natureOfOperation' => null,
         'serviceLocation' => null,
         'municipalityOfIncidence' => null,
@@ -108,7 +110,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'amount' => null,
         'issueDate' => 'date-time',
         'externalId' => null,
-        'borrower' => null
+        'borrower' => null,
+        'serviceCode' => null,
+        'serviceItemCode' => null,
+        'nbsCode' => null,
+        'taxClassification' => null,
+        'ibsCst' => null,
+        'ibsOperationIndicator' => null
     ];
 
     /**
@@ -123,13 +131,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => false,
         'guarantee' => false,
         'cityServiceCode' => false,
-        'serviceCode' => false,
-        'serviceItemCode' => false,
-        'nbsCode' => false,
+        'federalServiceCode' => false,
+        'nbs' => false,
         'cnaeCode' => false,
-        'taxClassification' => false,
-        'ibsCst' => false,
-        'ibsOperationIndicator' => false,
+        'iss' => false,
+        'ibsCbs' => false,
         'natureOfOperation' => false,
         'serviceLocation' => false,
         'municipalityOfIncidence' => false,
@@ -137,7 +143,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'amount' => false,
         'issueDate' => false,
         'externalId' => false,
-        'borrower' => false
+        'borrower' => false,
+        'serviceCode' => false,
+        'serviceItemCode' => false,
+        'nbsCode' => false,
+        'taxClassification' => false,
+        'ibsCst' => false,
+        'ibsOperationIndicator' => false
     ];
 
     /**
@@ -232,13 +244,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => 'category',
         'guarantee' => 'guarantee',
         'cityServiceCode' => 'cityServiceCode',
-        'serviceCode' => 'serviceCode',
-        'serviceItemCode' => 'serviceItemCode',
-        'nbsCode' => 'nbsCode',
+        'federalServiceCode' => 'federalServiceCode',
+        'nbs' => 'nbs',
         'cnaeCode' => 'cnaeCode',
-        'taxClassification' => 'taxClassification',
-        'ibsCst' => 'ibsCst',
-        'ibsOperationIndicator' => 'ibsOperationIndicator',
+        'iss' => 'iss',
+        'ibsCbs' => 'ibsCbs',
         'natureOfOperation' => 'natureOfOperation',
         'serviceLocation' => 'serviceLocation',
         'municipalityOfIncidence' => 'municipalityOfIncidence',
@@ -246,7 +256,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'amount' => 'amount',
         'issueDate' => 'issueDate',
         'externalId' => 'externalId',
-        'borrower' => 'borrower'
+        'borrower' => 'borrower',
+        'serviceCode' => 'serviceCode',
+        'serviceItemCode' => 'serviceItemCode',
+        'nbsCode' => 'nbsCode',
+        'taxClassification' => 'taxClassification',
+        'ibsCst' => 'ibsCst',
+        'ibsOperationIndicator' => 'ibsOperationIndicator'
     ];
 
     /**
@@ -261,13 +277,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => 'setCategory',
         'guarantee' => 'setGuarantee',
         'cityServiceCode' => 'setCityServiceCode',
-        'serviceCode' => 'setServiceCode',
-        'serviceItemCode' => 'setServiceItemCode',
-        'nbsCode' => 'setNbsCode',
+        'federalServiceCode' => 'setFederalServiceCode',
+        'nbs' => 'setNbs',
         'cnaeCode' => 'setCnaeCode',
-        'taxClassification' => 'setTaxClassification',
-        'ibsCst' => 'setIbsCst',
-        'ibsOperationIndicator' => 'setIbsOperationIndicator',
+        'iss' => 'setIss',
+        'ibsCbs' => 'setIbsCbs',
         'natureOfOperation' => 'setNatureOfOperation',
         'serviceLocation' => 'setServiceLocation',
         'municipalityOfIncidence' => 'setMunicipalityOfIncidence',
@@ -275,7 +289,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'amount' => 'setAmount',
         'issueDate' => 'setIssueDate',
         'externalId' => 'setExternalId',
-        'borrower' => 'setBorrower'
+        'borrower' => 'setBorrower',
+        'serviceCode' => 'setServiceCode',
+        'serviceItemCode' => 'setServiceItemCode',
+        'nbsCode' => 'setNbsCode',
+        'taxClassification' => 'setTaxClassification',
+        'ibsCst' => 'setIbsCst',
+        'ibsOperationIndicator' => 'setIbsOperationIndicator'
     ];
 
     /**
@@ -290,13 +310,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'category' => 'getCategory',
         'guarantee' => 'getGuarantee',
         'cityServiceCode' => 'getCityServiceCode',
-        'serviceCode' => 'getServiceCode',
-        'serviceItemCode' => 'getServiceItemCode',
-        'nbsCode' => 'getNbsCode',
+        'federalServiceCode' => 'getFederalServiceCode',
+        'nbs' => 'getNbs',
         'cnaeCode' => 'getCnaeCode',
-        'taxClassification' => 'getTaxClassification',
-        'ibsCst' => 'getIbsCst',
-        'ibsOperationIndicator' => 'getIbsOperationIndicator',
+        'iss' => 'getIss',
+        'ibsCbs' => 'getIbsCbs',
         'natureOfOperation' => 'getNatureOfOperation',
         'serviceLocation' => 'getServiceLocation',
         'municipalityOfIncidence' => 'getMunicipalityOfIncidence',
@@ -304,7 +322,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'amount' => 'getAmount',
         'issueDate' => 'getIssueDate',
         'externalId' => 'getExternalId',
-        'borrower' => 'getBorrower'
+        'borrower' => 'getBorrower',
+        'serviceCode' => 'getServiceCode',
+        'serviceItemCode' => 'getServiceItemCode',
+        'nbsCode' => 'getNbsCode',
+        'taxClassification' => 'getTaxClassification',
+        'ibsCst' => 'getIbsCst',
+        'ibsOperationIndicator' => 'getIbsOperationIndicator'
     ];
 
     /**
@@ -370,13 +394,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         $this->setIfExists('category', $data ?? [], null);
         $this->setIfExists('guarantee', $data ?? [], null);
         $this->setIfExists('cityServiceCode', $data ?? [], null);
-        $this->setIfExists('serviceCode', $data ?? [], null);
-        $this->setIfExists('serviceItemCode', $data ?? [], null);
-        $this->setIfExists('nbsCode', $data ?? [], null);
+        $this->setIfExists('federalServiceCode', $data ?? [], null);
+        $this->setIfExists('nbs', $data ?? [], null);
         $this->setIfExists('cnaeCode', $data ?? [], null);
-        $this->setIfExists('taxClassification', $data ?? [], null);
-        $this->setIfExists('ibsCst', $data ?? [], null);
-        $this->setIfExists('ibsOperationIndicator', $data ?? [], null);
+        $this->setIfExists('iss', $data ?? [], null);
+        $this->setIfExists('ibsCbs', $data ?? [], null);
         $this->setIfExists('natureOfOperation', $data ?? [], null);
         $this->setIfExists('serviceLocation', $data ?? [], null);
         $this->setIfExists('municipalityOfIncidence', $data ?? [], null);
@@ -385,6 +407,12 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         $this->setIfExists('issueDate', $data ?? [], null);
         $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('borrower', $data ?? [], null);
+        $this->setIfExists('serviceCode', $data ?? [], null);
+        $this->setIfExists('serviceItemCode', $data ?? [], null);
+        $this->setIfExists('nbsCode', $data ?? [], null);
+        $this->setIfExists('taxClassification', $data ?? [], null);
+        $this->setIfExists('ibsCst', $data ?? [], null);
+        $this->setIfExists('ibsOperationIndicator', $data ?? [], null);
     }
 
     /**
@@ -444,11 +472,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if ($this->container['cityServiceCode'] === null) {
             $invalidProperties[] = "'cityServiceCode' can't be null";
         }
-        if ($this->container['serviceItemCode'] === null) {
-            $invalidProperties[] = "'serviceItemCode' can't be null";
+        if ($this->container['federalServiceCode'] === null) {
+            $invalidProperties[] = "'federalServiceCode' can't be null";
         }
-        if ($this->container['taxes'] === null) {
-            $invalidProperties[] = "'taxes' can't be null";
+        if ($this->container['iss'] === null) {
+            $invalidProperties[] = "'iss' can't be null";
         }
         if ($this->container['amount'] === null) {
             $invalidProperties[] = "'amount' can't be null";
@@ -640,7 +668,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets cityServiceCode
      *
-     * @param string $cityServiceCode Código municipal do serviço (obrigatório; alias legado serviceCode ainda aceito na API)
+     * @param string $cityServiceCode Código municipal do serviço
      *
      * @return self
      */
@@ -655,82 +683,55 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     }
 
     /**
-     * Gets serviceCode
-     *
-     * @return string|null
-     */
-    public function getServiceCode()
-    {
-        return $this->container['serviceCode'];
-    }
-
-    /**
-     * Sets serviceCode
-     *
-     * @param string|null $serviceCode Alias legado de cityServiceCode
-     *
-     * @return self
-     */
-    public function setServiceCode($serviceCode)
-    {
-        if (is_null($serviceCode)) {
-            throw new \InvalidArgumentException('non-nullable serviceCode cannot be null');
-        }
-        $this->container['serviceCode'] = $serviceCode;
-
-        return $this;
-    }
-
-    /**
-     * Gets serviceItemCode
+     * Gets federalServiceCode
      *
      * @return string
      */
-    public function getServiceItemCode()
+    public function getFederalServiceCode()
     {
-        return $this->container['serviceItemCode'];
+        return $this->container['federalServiceCode'];
     }
 
     /**
-     * Sets serviceItemCode
+     * Sets federalServiceCode
      *
-     * @param string $serviceItemCode Item LC 116
+     * @param string $federalServiceCode Item LC 116 (cTribNac)
      *
      * @return self
      */
-    public function setServiceItemCode($serviceItemCode)
+    public function setFederalServiceCode($federalServiceCode)
     {
-        if (is_null($serviceItemCode)) {
-            throw new \InvalidArgumentException('non-nullable serviceItemCode cannot be null');
+        if (is_null($federalServiceCode)) {
+            throw new \InvalidArgumentException('non-nullable federalServiceCode cannot be null');
         }
-        $this->container['serviceItemCode'] = $serviceItemCode;
+        $this->container['federalServiceCode'] = $federalServiceCode;
 
         return $this;
     }
 
     /**
-     * Gets nbsCode
+     * Gets nbs
      *
      * @return string|null
      */
-    public function getNbsCode()
+    public function getNbs()
     {
-        return $this->container['nbsCode'];
+        return $this->container['nbs'];
     }
 
     /**
-     * Sets nbsCode
+     * Sets nbs
      *
-     * @param string|null $nbsCode nbsCode
+     * @param string|null $nbs Código NBS (reforma)
      *
      * @return self
      */
-    public function setNbsCode($nbsCode)
+    public function setNbs($nbs)
     {
-        if (is_null($nbsCode)) {
-            throw new \InvalidArgumentException('non-nullable nbsCode cannot be null');
+        if (is_null($nbs)) {
+            throw new \InvalidArgumentException('non-nullable nbs cannot be null');
         }
-        $this->container['nbsCode'] = $nbsCode;
+        $this->container['nbs'] = $nbs;
 
         return $this;
     }
@@ -763,82 +764,55 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     }
 
     /**
-     * Gets taxClassification
+     * Gets iss
      *
-     * @return string|null
+     * @return \EmitfyGenerated\Model\NfseCreateRequestIss
      */
-    public function getTaxClassification()
+    public function getIss()
     {
-        return $this->container['taxClassification'];
+        return $this->container['iss'];
     }
 
     /**
-     * Sets taxClassification
+     * Sets iss
      *
-     * @param string|null $taxClassification taxClassification
+     * @param \EmitfyGenerated\Model\NfseCreateRequestIss $iss iss
      *
      * @return self
      */
-    public function setTaxClassification($taxClassification)
+    public function setIss($iss)
     {
-        if (is_null($taxClassification)) {
-            throw new \InvalidArgumentException('non-nullable taxClassification cannot be null');
+        if (is_null($iss)) {
+            throw new \InvalidArgumentException('non-nullable iss cannot be null');
         }
-        $this->container['taxClassification'] = $taxClassification;
+        $this->container['iss'] = $iss;
 
         return $this;
     }
 
     /**
-     * Gets ibsCst
+     * Gets ibsCbs
      *
-     * @return string|null
+     * @return \EmitfyGenerated\Model\NfseCreateRequestIbsCbs|null
      */
-    public function getIbsCst()
+    public function getIbsCbs()
     {
-        return $this->container['ibsCst'];
+        return $this->container['ibsCbs'];
     }
 
     /**
-     * Sets ibsCst
+     * Sets ibsCbs
      *
-     * @param string|null $ibsCst ibsCst
+     * @param \EmitfyGenerated\Model\NfseCreateRequestIbsCbs|null $ibsCbs ibsCbs
      *
      * @return self
      */
-    public function setIbsCst($ibsCst)
+    public function setIbsCbs($ibsCbs)
     {
-        if (is_null($ibsCst)) {
-            throw new \InvalidArgumentException('non-nullable ibsCst cannot be null');
+        if (is_null($ibsCbs)) {
+            throw new \InvalidArgumentException('non-nullable ibsCbs cannot be null');
         }
-        $this->container['ibsCst'] = $ibsCst;
-
-        return $this;
-    }
-
-    /**
-     * Gets ibsOperationIndicator
-     *
-     * @return string|null
-     */
-    public function getIbsOperationIndicator()
-    {
-        return $this->container['ibsOperationIndicator'];
-    }
-
-    /**
-     * Sets ibsOperationIndicator
-     *
-     * @param string|null $ibsOperationIndicator ibsOperationIndicator
-     *
-     * @return self
-     */
-    public function setIbsOperationIndicator($ibsOperationIndicator)
-    {
-        if (is_null($ibsOperationIndicator)) {
-            throw new \InvalidArgumentException('non-nullable ibsOperationIndicator cannot be null');
-        }
-        $this->container['ibsOperationIndicator'] = $ibsOperationIndicator;
+        $this->container['ibsCbs'] = $ibsCbs;
 
         return $this;
     }
@@ -927,7 +901,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets taxes
      *
-     * @return \EmitfyGenerated\Model\NfseCreateRequestTaxes
+     * @return array<string,mixed>|null
      */
     public function getTaxes()
     {
@@ -937,7 +911,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets taxes
      *
-     * @param \EmitfyGenerated\Model\NfseCreateRequestTaxes $taxes taxes
+     * @param array<string,mixed>|null $taxes Retenções federais opcionais (pis/cofins/csll/ir/inss). ISS canônico é iss no topo.
      *
      * @return self
      */
@@ -1055,6 +1029,180 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             throw new \InvalidArgumentException('non-nullable borrower cannot be null');
         }
         $this->container['borrower'] = $borrower;
+
+        return $this;
+    }
+
+    /**
+     * Gets serviceCode
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getServiceCode()
+    {
+        return $this->container['serviceCode'];
+    }
+
+    /**
+     * Sets serviceCode
+     *
+     * @param string|null $serviceCode Alias legado de cityServiceCode
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setServiceCode($serviceCode)
+    {
+        if (is_null($serviceCode)) {
+            throw new \InvalidArgumentException('non-nullable serviceCode cannot be null');
+        }
+        $this->container['serviceCode'] = $serviceCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets serviceItemCode
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getServiceItemCode()
+    {
+        return $this->container['serviceItemCode'];
+    }
+
+    /**
+     * Sets serviceItemCode
+     *
+     * @param string|null $serviceItemCode Alias legado de federalServiceCode
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setServiceItemCode($serviceItemCode)
+    {
+        if (is_null($serviceItemCode)) {
+            throw new \InvalidArgumentException('non-nullable serviceItemCode cannot be null');
+        }
+        $this->container['serviceItemCode'] = $serviceItemCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets nbsCode
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getNbsCode()
+    {
+        return $this->container['nbsCode'];
+    }
+
+    /**
+     * Sets nbsCode
+     *
+     * @param string|null $nbsCode Alias legado de nbs
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setNbsCode($nbsCode)
+    {
+        if (is_null($nbsCode)) {
+            throw new \InvalidArgumentException('non-nullable nbsCode cannot be null');
+        }
+        $this->container['nbsCode'] = $nbsCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets taxClassification
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getTaxClassification()
+    {
+        return $this->container['taxClassification'];
+    }
+
+    /**
+     * Sets taxClassification
+     *
+     * @param string|null $taxClassification Alias legado de ibsCbs.taxClassCode
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setTaxClassification($taxClassification)
+    {
+        if (is_null($taxClassification)) {
+            throw new \InvalidArgumentException('non-nullable taxClassification cannot be null');
+        }
+        $this->container['taxClassification'] = $taxClassification;
+
+        return $this;
+    }
+
+    /**
+     * Gets ibsCst
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getIbsCst()
+    {
+        return $this->container['ibsCst'];
+    }
+
+    /**
+     * Sets ibsCst
+     *
+     * @param string|null $ibsCst Alias legado de ibsCbs.cst
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setIbsCst($ibsCst)
+    {
+        if (is_null($ibsCst)) {
+            throw new \InvalidArgumentException('non-nullable ibsCst cannot be null');
+        }
+        $this->container['ibsCst'] = $ibsCst;
+
+        return $this;
+    }
+
+    /**
+     * Gets ibsOperationIndicator
+     *
+     * @return string|null
+     * @deprecated
+     */
+    public function getIbsOperationIndicator()
+    {
+        return $this->container['ibsOperationIndicator'];
+    }
+
+    /**
+     * Sets ibsOperationIndicator
+     *
+     * @param string|null $ibsOperationIndicator Alias legado de ibsCbs.operationIndicator
+     *
+     * @return self
+     * @deprecated
+     */
+    public function setIbsOperationIndicator($ibsOperationIndicator)
+    {
+        if (is_null($ibsOperationIndicator)) {
+            throw new \InvalidArgumentException('non-nullable ibsOperationIndicator cannot be null');
+        }
+        $this->container['ibsOperationIndicator'] = $ibsOperationIndicator;
 
         return $this;
     }

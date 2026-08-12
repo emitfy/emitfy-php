@@ -26,8 +26,8 @@ $company->nfse->create([
   'category' => 'consulting',
   'serviceDescription' => 'Consultoria em tecnologia',
   'cityServiceCode' => '02800',
-  'serviceItemCode' => '01.05',
-  'taxes' => ['iss' => ['rate' => 2.9, 'isWithheld' => false]],
+  'federalServiceCode' => '01.05',
+  'iss' => ['rate' => 2.9, 'isWithheld' => false],
   'amount' => 100,
   'borrower' => [
     'name' => 'Cliente LTDA',

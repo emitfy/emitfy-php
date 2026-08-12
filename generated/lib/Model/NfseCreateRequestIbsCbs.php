@@ -1,6 +1,6 @@
 <?php
 /**
- * NfseCreateRequestTaxesIss
+ * NfseCreateRequestIbsCbs
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * NfseCreateRequestTaxesIss Class Doc Comment
+ * NfseCreateRequestIbsCbs Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfseCreateRequestIbsCbs implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      *
      * @var string
      */
-    protected static $openAPIModelName = 'NfseCreateRequest_taxes_iss';
+    protected static $openAPIModelName = 'NfseCreateRequest_ibsCbs';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $openAPITypes = [
-        'rate' => 'float',
-        'isWithheld' => 'bool'
+        'cst' => 'string',
+        'taxClassCode' => 'string',
+        'operationIndicator' => 'string'
     ];
 
     /**
@@ -69,8 +70,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'rate' => null,
-        'isWithheld' => null
+        'cst' => null,
+        'taxClassCode' => null,
+        'operationIndicator' => null
     ];
 
     /**
@@ -79,8 +81,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'rate' => false,
-        'isWithheld' => false
+        'cst' => false,
+        'taxClassCode' => false,
+        'operationIndicator' => false
     ];
 
     /**
@@ -169,8 +172,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
-        'rate' => 'rate',
-        'isWithheld' => 'isWithheld'
+        'cst' => 'cst',
+        'taxClassCode' => 'taxClassCode',
+        'operationIndicator' => 'operationIndicator'
     ];
 
     /**
@@ -179,8 +183,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
-        'rate' => 'setRate',
-        'isWithheld' => 'setIsWithheld'
+        'cst' => 'setCst',
+        'taxClassCode' => 'setTaxClassCode',
+        'operationIndicator' => 'setOperationIndicator'
     ];
 
     /**
@@ -189,8 +194,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
-        'rate' => 'getRate',
-        'isWithheld' => 'getIsWithheld'
+        'cst' => 'getCst',
+        'taxClassCode' => 'getTaxClassCode',
+        'operationIndicator' => 'getOperationIndicator'
     ];
 
     /**
@@ -250,8 +256,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('rate', $data ?? [], null);
-        $this->setIfExists('isWithheld', $data ?? [], null);
+        $this->setIfExists('cst', $data ?? [], null);
+        $this->setIfExists('taxClassCode', $data ?? [], null);
+        $this->setIfExists('operationIndicator', $data ?? [], null);
     }
 
     /**
@@ -281,17 +288,6 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
-        if ($this->container['rate'] === null) {
-            $invalidProperties[] = "'rate' can't be null";
-        }
-        if (($this->container['rate'] > 100)) {
-            $invalidProperties[] = "invalid value for 'rate', must be smaller than or equal to 100.";
-        }
-
-        if (($this->container['rate'] < 0)) {
-            $invalidProperties[] = "invalid value for 'rate', must be bigger than or equal to 0.";
-        }
-
         return $invalidProperties;
     }
 
@@ -308,62 +304,82 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
 
 
     /**
-     * Gets rate
+     * Gets cst
      *
-     * @return float
+     * @return string|null
      */
-    public function getRate()
+    public function getCst()
     {
-        return $this->container['rate'];
+        return $this->container['cst'];
     }
 
     /**
-     * Sets rate
+     * Sets cst
      *
-     * @param float $rate rate
+     * @param string|null $cst CST IBS/CBS (default 000)
      *
      * @return self
      */
-    public function setRate($rate)
+    public function setCst($cst)
     {
-        if (is_null($rate)) {
-            throw new \InvalidArgumentException('non-nullable rate cannot be null');
+        if (is_null($cst)) {
+            throw new \InvalidArgumentException('non-nullable cst cannot be null');
         }
-        if (($rate > 100)) {
-            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestTaxesIss., must be smaller than or equal to 100.');
-        }
-        if (($rate < 0)) {
-            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestTaxesIss., must be bigger than or equal to 0.');
-        }
-
-        $this->container['rate'] = $rate;
+        $this->container['cst'] = $cst;
 
         return $this;
     }
 
     /**
-     * Gets isWithheld
+     * Gets taxClassCode
      *
-     * @return bool|null
+     * @return string|null
      */
-    public function getIsWithheld()
+    public function getTaxClassCode()
     {
-        return $this->container['isWithheld'];
+        return $this->container['taxClassCode'];
     }
 
     /**
-     * Sets isWithheld
+     * Sets taxClassCode
      *
-     * @param bool|null $isWithheld isWithheld
+     * @param string|null $taxClassCode cClassTrib (default 000001)
      *
      * @return self
      */
-    public function setIsWithheld($isWithheld)
+    public function setTaxClassCode($taxClassCode)
     {
-        if (is_null($isWithheld)) {
-            throw new \InvalidArgumentException('non-nullable isWithheld cannot be null');
+        if (is_null($taxClassCode)) {
+            throw new \InvalidArgumentException('non-nullable taxClassCode cannot be null');
         }
-        $this->container['isWithheld'] = $isWithheld;
+        $this->container['taxClassCode'] = $taxClassCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets operationIndicator
+     *
+     * @return string|null
+     */
+    public function getOperationIndicator()
+    {
+        return $this->container['operationIndicator'];
+    }
+
+    /**
+     * Sets operationIndicator
+     *
+     * @param string|null $operationIndicator cIndOp (default 100301)
+     *
+     * @return self
+     */
+    public function setOperationIndicator($operationIndicator)
+    {
+        if (is_null($operationIndicator)) {
+            throw new \InvalidArgumentException('non-nullable operationIndicator cannot be null');
+        }
+        $this->container['operationIndicator'] = $operationIndicator;
 
         return $this;
     }

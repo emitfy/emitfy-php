@@ -1,6 +1,6 @@
 <?php
 /**
- * NfseCreateRequestTaxes
+ * NfseCreateRequestIss
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * NfseCreateRequestTaxes Class Doc Comment
+ * NfseCreateRequestIss Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfseCreateRequestIss implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      *
      * @var string
      */
-    protected static $openAPIModelName = 'NfseCreateRequest_taxes';
+    protected static $openAPIModelName = 'NfseCreateRequest_iss';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,7 +57,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $openAPITypes = [
-        'iss' => '\EmitfyGenerated\Model\NfseCreateRequestTaxesIss'
+        'rate' => 'float',
+        'isWithheld' => 'bool'
     ];
 
     /**
@@ -68,7 +69,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'iss' => null
+        'rate' => null,
+        'isWithheld' => null
     ];
 
     /**
@@ -77,7 +79,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'iss' => false
+        'rate' => false,
+        'isWithheld' => false
     ];
 
     /**
@@ -166,7 +169,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'iss' => 'iss'
+        'rate' => 'rate',
+        'isWithheld' => 'isWithheld'
     ];
 
     /**
@@ -175,7 +179,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'iss' => 'setIss'
+        'rate' => 'setRate',
+        'isWithheld' => 'setIsWithheld'
     ];
 
     /**
@@ -184,7 +189,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'iss' => 'getIss'
+        'rate' => 'getRate',
+        'isWithheld' => 'getIsWithheld'
     ];
 
     /**
@@ -244,7 +250,8 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('iss', $data ?? [], null);
+        $this->setIfExists('rate', $data ?? [], null);
+        $this->setIfExists('isWithheld', $data ?? [], null);
     }
 
     /**
@@ -274,9 +281,17 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     {
         $invalidProperties = [];
 
-        if ($this->container['iss'] === null) {
-            $invalidProperties[] = "'iss' can't be null";
+        if ($this->container['rate'] === null) {
+            $invalidProperties[] = "'rate' can't be null";
         }
+        if (($this->container['rate'] > 100)) {
+            $invalidProperties[] = "invalid value for 'rate', must be smaller than or equal to 100.";
+        }
+
+        if (($this->container['rate'] < 0)) {
+            $invalidProperties[] = "invalid value for 'rate', must be bigger than or equal to 0.";
+        }
+
         return $invalidProperties;
     }
 
@@ -293,28 +308,62 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
 
 
     /**
-     * Gets iss
+     * Gets rate
      *
-     * @return \EmitfyGenerated\Model\NfseCreateRequestTaxesIss
+     * @return float
      */
-    public function getIss()
+    public function getRate()
     {
-        return $this->container['iss'];
+        return $this->container['rate'];
     }
 
     /**
-     * Sets iss
+     * Sets rate
      *
-     * @param \EmitfyGenerated\Model\NfseCreateRequestTaxesIss $iss iss
+     * @param float $rate rate
      *
      * @return self
      */
-    public function setIss($iss)
+    public function setRate($rate)
     {
-        if (is_null($iss)) {
-            throw new \InvalidArgumentException('non-nullable iss cannot be null');
+        if (is_null($rate)) {
+            throw new \InvalidArgumentException('non-nullable rate cannot be null');
         }
-        $this->container['iss'] = $iss;
+        if (($rate > 100)) {
+            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestIss., must be smaller than or equal to 100.');
+        }
+        if (($rate < 0)) {
+            throw new \InvalidArgumentException('invalid value for $rate when calling NfseCreateRequestIss., must be bigger than or equal to 0.');
+        }
+
+        $this->container['rate'] = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Gets isWithheld
+     *
+     * @return bool|null
+     */
+    public function getIsWithheld()
+    {
+        return $this->container['isWithheld'];
+    }
+
+    /**
+     * Sets isWithheld
+     *
+     * @param bool|null $isWithheld isWithheld
+     *
+     * @return self
+     */
+    public function setIsWithheld($isWithheld)
+    {
+        if (is_null($isWithheld)) {
+            throw new \InvalidArgumentException('non-nullable isWithheld cannot be null');
+        }
+        $this->container['isWithheld'] = $isWithheld;
 
         return $this;
     }

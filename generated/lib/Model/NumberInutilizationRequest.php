@@ -1,6 +1,6 @@
 <?php
 /**
- * TransportCarrierAddress
+ * NumberInutilizationRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * TransportCarrierAddress Class Doc Comment
+ * NumberInutilizationRequest Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSerializable
+class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      *
      * @var string
      */
-    protected static $openAPIModelName = 'TransportCarrier_address';
+    protected static $openAPIModelName = 'NumberInutilizationRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,9 +57,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $openAPITypes = [
-        'street' => 'string',
-        'city' => 'string',
-        'state' => 'string'
+        'series' => 'int',
+        'rangeStart' => 'int',
+        'rangeEnd' => 'int',
+        'justification' => 'string',
+        'year' => 'int'
     ];
 
     /**
@@ -70,9 +72,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'street' => null,
-        'city' => null,
-        'state' => null
+        'series' => null,
+        'rangeStart' => null,
+        'rangeEnd' => null,
+        'justification' => null,
+        'year' => null
     ];
 
     /**
@@ -81,9 +85,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'street' => false,
-        'city' => false,
-        'state' => false
+        'series' => false,
+        'rangeStart' => false,
+        'rangeEnd' => false,
+        'justification' => false,
+        'year' => false
     ];
 
     /**
@@ -172,9 +178,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $attributeMap = [
-        'street' => 'street',
-        'city' => 'city',
-        'state' => 'state'
+        'series' => 'series',
+        'rangeStart' => 'rangeStart',
+        'rangeEnd' => 'rangeEnd',
+        'justification' => 'justification',
+        'year' => 'year'
     ];
 
     /**
@@ -183,9 +191,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $setters = [
-        'street' => 'setStreet',
-        'city' => 'setCity',
-        'state' => 'setState'
+        'series' => 'setSeries',
+        'rangeStart' => 'setRangeStart',
+        'rangeEnd' => 'setRangeEnd',
+        'justification' => 'setJustification',
+        'year' => 'setYear'
     ];
 
     /**
@@ -194,9 +204,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $getters = [
-        'street' => 'getStreet',
-        'city' => 'getCity',
-        'state' => 'getState'
+        'series' => 'getSeries',
+        'rangeStart' => 'getRangeStart',
+        'rangeEnd' => 'getRangeEnd',
+        'justification' => 'getJustification',
+        'year' => 'getYear'
     ];
 
     /**
@@ -256,9 +268,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('street', $data ?? [], null);
-        $this->setIfExists('city', $data ?? [], null);
-        $this->setIfExists('state', $data ?? [], null);
+        $this->setIfExists('series', $data ?? [], null);
+        $this->setIfExists('rangeStart', $data ?? [], null);
+        $this->setIfExists('rangeEnd', $data ?? [], null);
+        $this->setIfExists('justification', $data ?? [], null);
+        $this->setIfExists('year', $data ?? [], null);
     }
 
     /**
@@ -288,6 +302,50 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $invalidProperties = [];
 
+        if ($this->container['series'] === null) {
+            $invalidProperties[] = "'series' can't be null";
+        }
+        if (($this->container['series'] > 999)) {
+            $invalidProperties[] = "invalid value for 'series', must be smaller than or equal to 999.";
+        }
+
+        if (($this->container['series'] < 0)) {
+            $invalidProperties[] = "invalid value for 'series', must be bigger than or equal to 0.";
+        }
+
+        if ($this->container['rangeStart'] === null) {
+            $invalidProperties[] = "'rangeStart' can't be null";
+        }
+        if (($this->container['rangeStart'] < 1)) {
+            $invalidProperties[] = "invalid value for 'rangeStart', must be bigger than or equal to 1.";
+        }
+
+        if ($this->container['rangeEnd'] === null) {
+            $invalidProperties[] = "'rangeEnd' can't be null";
+        }
+        if (($this->container['rangeEnd'] < 1)) {
+            $invalidProperties[] = "invalid value for 'rangeEnd', must be bigger than or equal to 1.";
+        }
+
+        if ($this->container['justification'] === null) {
+            $invalidProperties[] = "'justification' can't be null";
+        }
+        if ((mb_strlen($this->container['justification']) > 255)) {
+            $invalidProperties[] = "invalid value for 'justification', the character length must be smaller than or equal to 255.";
+        }
+
+        if ((mb_strlen($this->container['justification']) < 15)) {
+            $invalidProperties[] = "invalid value for 'justification', the character length must be bigger than or equal to 15.";
+        }
+
+        if (!is_null($this->container['year']) && ($this->container['year'] > 2100)) {
+            $invalidProperties[] = "invalid value for 'year', must be smaller than or equal to 2100.";
+        }
+
+        if (!is_null($this->container['year']) && ($this->container['year'] < 2000)) {
+            $invalidProperties[] = "invalid value for 'year', must be bigger than or equal to 2000.";
+        }
+
         return $invalidProperties;
     }
 
@@ -304,82 +362,165 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
 
 
     /**
-     * Gets street
+     * Gets series
      *
-     * @return string|null
+     * @return int
      */
-    public function getStreet()
+    public function getSeries()
     {
-        return $this->container['street'];
+        return $this->container['series'];
     }
 
     /**
-     * Sets street
+     * Sets series
      *
-     * @param string|null $street street
+     * @param int $series series
      *
      * @return self
      */
-    public function setStreet($street)
+    public function setSeries($series)
     {
-        if (is_null($street)) {
-            throw new \InvalidArgumentException('non-nullable street cannot be null');
+        if (is_null($series)) {
+            throw new \InvalidArgumentException('non-nullable series cannot be null');
         }
-        $this->container['street'] = $street;
+        if (($series > 999)) {
+            throw new \InvalidArgumentException('invalid value for $series when calling NumberInutilizationRequest., must be smaller than or equal to 999.');
+        }
+        if (($series < 0)) {
+            throw new \InvalidArgumentException('invalid value for $series when calling NumberInutilizationRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['series'] = $series;
 
         return $this;
     }
 
     /**
-     * Gets city
+     * Gets rangeStart
      *
-     * @return string|null
+     * @return int
      */
-    public function getCity()
+    public function getRangeStart()
     {
-        return $this->container['city'];
+        return $this->container['rangeStart'];
     }
 
     /**
-     * Sets city
+     * Sets rangeStart
      *
-     * @param string|null $city city
+     * @param int $rangeStart rangeStart
      *
      * @return self
      */
-    public function setCity($city)
+    public function setRangeStart($rangeStart)
     {
-        if (is_null($city)) {
-            throw new \InvalidArgumentException('non-nullable city cannot be null');
+        if (is_null($rangeStart)) {
+            throw new \InvalidArgumentException('non-nullable rangeStart cannot be null');
         }
-        $this->container['city'] = $city;
+        if (($rangeStart < 1)) {
+            throw new \InvalidArgumentException('invalid value for $rangeStart when calling NumberInutilizationRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['rangeStart'] = $rangeStart;
 
         return $this;
     }
 
     /**
-     * Gets state
+     * Gets rangeEnd
      *
-     * @return string|null
+     * @return int
      */
-    public function getState()
+    public function getRangeEnd()
     {
-        return $this->container['state'];
+        return $this->container['rangeEnd'];
     }
 
     /**
-     * Sets state
+     * Sets rangeEnd
      *
-     * @param string|null $state state
+     * @param int $rangeEnd rangeEnd
      *
      * @return self
      */
-    public function setState($state)
+    public function setRangeEnd($rangeEnd)
     {
-        if (is_null($state)) {
-            throw new \InvalidArgumentException('non-nullable state cannot be null');
+        if (is_null($rangeEnd)) {
+            throw new \InvalidArgumentException('non-nullable rangeEnd cannot be null');
         }
-        $this->container['state'] = $state;
+        if (($rangeEnd < 1)) {
+            throw new \InvalidArgumentException('invalid value for $rangeEnd when calling NumberInutilizationRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['rangeEnd'] = $rangeEnd;
+
+        return $this;
+    }
+
+    /**
+     * Gets justification
+     *
+     * @return string
+     */
+    public function getJustification()
+    {
+        return $this->container['justification'];
+    }
+
+    /**
+     * Sets justification
+     *
+     * @param string $justification justification
+     *
+     * @return self
+     */
+    public function setJustification($justification)
+    {
+        if (is_null($justification)) {
+            throw new \InvalidArgumentException('non-nullable justification cannot be null');
+        }
+        if ((mb_strlen($justification) > 255)) {
+            throw new \InvalidArgumentException('invalid length for $justification when calling NumberInutilizationRequest., must be smaller than or equal to 255.');
+        }
+        if ((mb_strlen($justification) < 15)) {
+            throw new \InvalidArgumentException('invalid length for $justification when calling NumberInutilizationRequest., must be bigger than or equal to 15.');
+        }
+
+        $this->container['justification'] = $justification;
+
+        return $this;
+    }
+
+    /**
+     * Gets year
+     *
+     * @return int|null
+     */
+    public function getYear()
+    {
+        return $this->container['year'];
+    }
+
+    /**
+     * Sets year
+     *
+     * @param int|null $year year
+     *
+     * @return self
+     */
+    public function setYear($year)
+    {
+        if (is_null($year)) {
+            throw new \InvalidArgumentException('non-nullable year cannot be null');
+        }
+        if (($year > 2100)) {
+            throw new \InvalidArgumentException('invalid value for $year when calling NumberInutilizationRequest., must be smaller than or equal to 2100.');
+        }
+        if (($year < 2000)) {
+            throw new \InvalidArgumentException('invalid value for $year when calling NumberInutilizationRequest., must be bigger than or equal to 2000.');
+        }
+
+        $this->container['year'] = $year;
 
         return $this;
     }

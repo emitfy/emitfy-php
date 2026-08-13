@@ -1,6 +1,6 @@
 <?php
 /**
- * TransportCarrierAddress
+ * NfeCorrectionRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * TransportCarrierAddress Class Doc Comment
+ * NfeCorrectionRequest Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSerializable
+class NfeCorrectionRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      *
      * @var string
      */
-    protected static $openAPIModelName = 'TransportCarrier_address';
+    protected static $openAPIModelName = 'NfeCorrectionRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,9 +57,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $openAPITypes = [
-        'street' => 'string',
-        'city' => 'string',
-        'state' => 'string'
+        'correction' => 'string'
     ];
 
     /**
@@ -70,9 +68,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'street' => null,
-        'city' => null,
-        'state' => null
+        'correction' => null
     ];
 
     /**
@@ -81,9 +77,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'street' => false,
-        'city' => false,
-        'state' => false
+        'correction' => false
     ];
 
     /**
@@ -172,9 +166,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $attributeMap = [
-        'street' => 'street',
-        'city' => 'city',
-        'state' => 'state'
+        'correction' => 'correction'
     ];
 
     /**
@@ -183,9 +175,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $setters = [
-        'street' => 'setStreet',
-        'city' => 'setCity',
-        'state' => 'setState'
+        'correction' => 'setCorrection'
     ];
 
     /**
@@ -194,9 +184,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $getters = [
-        'street' => 'getStreet',
-        'city' => 'getCity',
-        'state' => 'getState'
+        'correction' => 'getCorrection'
     ];
 
     /**
@@ -256,9 +244,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('street', $data ?? [], null);
-        $this->setIfExists('city', $data ?? [], null);
-        $this->setIfExists('state', $data ?? [], null);
+        $this->setIfExists('correction', $data ?? [], null);
     }
 
     /**
@@ -288,6 +274,17 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $invalidProperties = [];
 
+        if ($this->container['correction'] === null) {
+            $invalidProperties[] = "'correction' can't be null";
+        }
+        if ((mb_strlen($this->container['correction']) > 1000)) {
+            $invalidProperties[] = "invalid value for 'correction', the character length must be smaller than or equal to 1000.";
+        }
+
+        if ((mb_strlen($this->container['correction']) < 15)) {
+            $invalidProperties[] = "invalid value for 'correction', the character length must be bigger than or equal to 15.";
+        }
+
         return $invalidProperties;
     }
 
@@ -304,82 +301,35 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
 
 
     /**
-     * Gets street
+     * Gets correction
      *
-     * @return string|null
+     * @return string
      */
-    public function getStreet()
+    public function getCorrection()
     {
-        return $this->container['street'];
+        return $this->container['correction'];
     }
 
     /**
-     * Sets street
+     * Sets correction
      *
-     * @param string|null $street street
+     * @param string $correction Texto da CC-e (NF-e autorizada). Não reprocessa rejeição.
      *
      * @return self
      */
-    public function setStreet($street)
+    public function setCorrection($correction)
     {
-        if (is_null($street)) {
-            throw new \InvalidArgumentException('non-nullable street cannot be null');
+        if (is_null($correction)) {
+            throw new \InvalidArgumentException('non-nullable correction cannot be null');
         }
-        $this->container['street'] = $street;
-
-        return $this;
-    }
-
-    /**
-     * Gets city
-     *
-     * @return string|null
-     */
-    public function getCity()
-    {
-        return $this->container['city'];
-    }
-
-    /**
-     * Sets city
-     *
-     * @param string|null $city city
-     *
-     * @return self
-     */
-    public function setCity($city)
-    {
-        if (is_null($city)) {
-            throw new \InvalidArgumentException('non-nullable city cannot be null');
+        if ((mb_strlen($correction) > 1000)) {
+            throw new \InvalidArgumentException('invalid length for $correction when calling NfeCorrectionRequest., must be smaller than or equal to 1000.');
         }
-        $this->container['city'] = $city;
-
-        return $this;
-    }
-
-    /**
-     * Gets state
-     *
-     * @return string|null
-     */
-    public function getState()
-    {
-        return $this->container['state'];
-    }
-
-    /**
-     * Sets state
-     *
-     * @param string|null $state state
-     *
-     * @return self
-     */
-    public function setState($state)
-    {
-        if (is_null($state)) {
-            throw new \InvalidArgumentException('non-nullable state cannot be null');
+        if ((mb_strlen($correction) < 15)) {
+            throw new \InvalidArgumentException('invalid length for $correction when calling NfeCorrectionRequest., must be bigger than or equal to 15.');
         }
-        $this->container['state'] = $state;
+
+        $this->container['correction'] = $correction;
 
         return $this;
     }

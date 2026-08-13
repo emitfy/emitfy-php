@@ -8,7 +8,7 @@ final class CompanyResource extends Resource
 {
     public function __construct(
         HttpClient $http,
-        private readonly string $basePath,
+        protected readonly string $basePath,
     ) {
         parent::__construct($http);
     }
@@ -60,5 +60,15 @@ final class CompanyResource extends Resource
             $payload,
             $headers,
         );
+    }
+
+    public function xml(string $id): mixed
+    {
+        return $this->http->request('GET', $this->basePath . '/' . rawurlencode($id) . '/xml');
+    }
+
+    public function pdf(string $id): mixed
+    {
+        return $this->http->request('GET', $this->basePath . '/' . rawurlencode($id) . '/pdf');
     }
 }

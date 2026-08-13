@@ -1,6 +1,6 @@
 <?php
 /**
- * TransportCarrierAddress
+ * InvoiceUpdateRequest
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * TransportCarrierAddress Class Doc Comment
+ * InvoiceUpdateRequest Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSerializable
+class InvoiceUpdateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      *
      * @var string
      */
-    protected static $openAPIModelName = 'TransportCarrier_address';
+    protected static $openAPIModelName = 'InvoiceUpdateRequest';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,9 +57,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $openAPITypes = [
-        'street' => 'string',
-        'city' => 'string',
-        'state' => 'string'
+        'version' => 'int',
+        'commercial' => 'array<string,mixed>',
+        'issueMode' => 'string',
+        'scheduledAt' => '\DateTime',
+        'sendEmail' => 'bool'
     ];
 
     /**
@@ -70,9 +72,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'street' => null,
-        'city' => null,
-        'state' => null
+        'version' => null,
+        'commercial' => null,
+        'issueMode' => null,
+        'scheduledAt' => 'date-time',
+        'sendEmail' => null
     ];
 
     /**
@@ -81,9 +85,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'street' => false,
-        'city' => false,
-        'state' => false
+        'version' => false,
+        'commercial' => false,
+        'issueMode' => false,
+        'scheduledAt' => false,
+        'sendEmail' => false
     ];
 
     /**
@@ -172,9 +178,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $attributeMap = [
-        'street' => 'street',
-        'city' => 'city',
-        'state' => 'state'
+        'version' => 'version',
+        'commercial' => 'commercial',
+        'issueMode' => 'issueMode',
+        'scheduledAt' => 'scheduledAt',
+        'sendEmail' => 'sendEmail'
     ];
 
     /**
@@ -183,9 +191,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $setters = [
-        'street' => 'setStreet',
-        'city' => 'setCity',
-        'state' => 'setState'
+        'version' => 'setVersion',
+        'commercial' => 'setCommercial',
+        'issueMode' => 'setIssueMode',
+        'scheduledAt' => 'setScheduledAt',
+        'sendEmail' => 'setSendEmail'
     ];
 
     /**
@@ -194,9 +204,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      * @var string[]
      */
     protected static $getters = [
-        'street' => 'getStreet',
-        'city' => 'getCity',
-        'state' => 'getState'
+        'version' => 'getVersion',
+        'commercial' => 'getCommercial',
+        'issueMode' => 'getIssueMode',
+        'scheduledAt' => 'getScheduledAt',
+        'sendEmail' => 'getSendEmail'
     ];
 
     /**
@@ -240,6 +252,23 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
         return self::$openAPIModelName;
     }
 
+    public const ISSUE_MODE_DRAFT = 'draft';
+    public const ISSUE_MODE_IMMEDIATE = 'immediate';
+    public const ISSUE_MODE_SCHEDULED = 'scheduled';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getIssueModeAllowableValues()
+    {
+        return [
+            self::ISSUE_MODE_DRAFT,
+            self::ISSUE_MODE_IMMEDIATE,
+            self::ISSUE_MODE_SCHEDULED,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -256,9 +285,11 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('street', $data ?? [], null);
-        $this->setIfExists('city', $data ?? [], null);
-        $this->setIfExists('state', $data ?? [], null);
+        $this->setIfExists('version', $data ?? [], null);
+        $this->setIfExists('commercial', $data ?? [], null);
+        $this->setIfExists('issueMode', $data ?? [], null);
+        $this->setIfExists('scheduledAt', $data ?? [], null);
+        $this->setIfExists('sendEmail', $data ?? [], null);
     }
 
     /**
@@ -288,6 +319,22 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $invalidProperties = [];
 
+        if ($this->container['version'] === null) {
+            $invalidProperties[] = "'version' can't be null";
+        }
+        if (($this->container['version'] < 1)) {
+            $invalidProperties[] = "invalid value for 'version', must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getIssueModeAllowableValues();
+        if (!is_null($this->container['issueMode']) && !in_array($this->container['issueMode'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'issueMode', must be one of '%s'",
+                $this->container['issueMode'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -304,82 +351,150 @@ class TransportCarrierAddress implements ModelInterface, ArrayAccess, \JsonSeria
 
 
     /**
-     * Gets street
+     * Gets version
      *
-     * @return string|null
+     * @return int
      */
-    public function getStreet()
+    public function getVersion()
     {
-        return $this->container['street'];
+        return $this->container['version'];
     }
 
     /**
-     * Sets street
+     * Sets version
      *
-     * @param string|null $street street
+     * @param int $version Versão atual da nota (concorrência). 409 INVOICE_VERSION_CONFLICT se desatualizada.
      *
      * @return self
      */
-    public function setStreet($street)
+    public function setVersion($version)
     {
-        if (is_null($street)) {
-            throw new \InvalidArgumentException('non-nullable street cannot be null');
+        if (is_null($version)) {
+            throw new \InvalidArgumentException('non-nullable version cannot be null');
         }
-        $this->container['street'] = $street;
+        if (($version < 1)) {
+            throw new \InvalidArgumentException('invalid value for $version when calling InvoiceUpdateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['version'] = $version;
 
         return $this;
     }
 
     /**
-     * Gets city
+     * Gets commercial
      *
-     * @return string|null
+     * @return array<string,mixed>|null
      */
-    public function getCity()
+    public function getCommercial()
     {
-        return $this->container['city'];
+        return $this->container['commercial'];
     }
 
     /**
-     * Sets city
+     * Sets commercial
      *
-     * @param string|null $city city
+     * @param array<string,mixed>|null $commercial Snapshot comercial parcial (merge no servidor)
      *
      * @return self
      */
-    public function setCity($city)
+    public function setCommercial($commercial)
     {
-        if (is_null($city)) {
-            throw new \InvalidArgumentException('non-nullable city cannot be null');
+        if (is_null($commercial)) {
+            throw new \InvalidArgumentException('non-nullable commercial cannot be null');
         }
-        $this->container['city'] = $city;
+        $this->container['commercial'] = $commercial;
 
         return $this;
     }
 
     /**
-     * Gets state
+     * Gets issueMode
      *
      * @return string|null
      */
-    public function getState()
+    public function getIssueMode()
     {
-        return $this->container['state'];
+        return $this->container['issueMode'];
     }
 
     /**
-     * Sets state
+     * Sets issueMode
      *
-     * @param string|null $state state
+     * @param string|null $issueMode issueMode
      *
      * @return self
      */
-    public function setState($state)
+    public function setIssueMode($issueMode)
     {
-        if (is_null($state)) {
-            throw new \InvalidArgumentException('non-nullable state cannot be null');
+        if (is_null($issueMode)) {
+            throw new \InvalidArgumentException('non-nullable issueMode cannot be null');
         }
-        $this->container['state'] = $state;
+        $allowedValues = $this->getIssueModeAllowableValues();
+        if (!in_array($issueMode, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'issueMode', must be one of '%s'",
+                    $issueMode,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['issueMode'] = $issueMode;
+
+        return $this;
+    }
+
+    /**
+     * Gets scheduledAt
+     *
+     * @return \DateTime|null
+     */
+    public function getScheduledAt()
+    {
+        return $this->container['scheduledAt'];
+    }
+
+    /**
+     * Sets scheduledAt
+     *
+     * @param \DateTime|null $scheduledAt scheduledAt
+     *
+     * @return self
+     */
+    public function setScheduledAt($scheduledAt)
+    {
+        if (is_null($scheduledAt)) {
+            throw new \InvalidArgumentException('non-nullable scheduledAt cannot be null');
+        }
+        $this->container['scheduledAt'] = $scheduledAt;
+
+        return $this;
+    }
+
+    /**
+     * Gets sendEmail
+     *
+     * @return bool|null
+     */
+    public function getSendEmail()
+    {
+        return $this->container['sendEmail'];
+    }
+
+    /**
+     * Sets sendEmail
+     *
+     * @param bool|null $sendEmail sendEmail
+     *
+     * @return self
+     */
+    public function setSendEmail($sendEmail)
+    {
+        if (is_null($sendEmail)) {
+            throw new \InvalidArgumentException('non-nullable sendEmail cannot be null');
+        }
+        $this->container['sendEmail'] = $sendEmail;
 
         return $this;
     }

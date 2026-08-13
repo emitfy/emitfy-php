@@ -12,7 +12,7 @@ final class CompanyContext
     public readonly CompanyResource $cte;
     public readonly CompanyResource $customers;
     public readonly CompanyResource $products;
-    public readonly CompanyResource $invoices;
+    public readonly InvoicesResource $invoices;
     public readonly CompanyResource $receivedNfes;
 
     public function __construct(
@@ -26,7 +26,7 @@ final class CompanyContext
         $this->cte = new CompanyResource($http, $prefix . '/cte');
         $this->customers = new CompanyResource($http, $prefix . '/customers');
         $this->products = new CompanyResource($http, $prefix . '/products');
-        $this->invoices = new CompanyResource($http, $prefix . '/invoices');
+        $this->invoices = new InvoicesResource($http, $prefix . '/invoices');
         $this->receivedNfes = new CompanyResource($http, $prefix . '/received-nfes');
     }
 
@@ -45,6 +45,82 @@ final class CompanyContext
             '/companies/' . rawurlencode($this->companyId) . '/cte-os',
             $payload,
             $headers,
+        );
+    }
+
+    public function status(): mixed
+    {
+        return $this->http->request('GET', '/companies/' . rawurlencode($this->companyId) . '/status');
+    }
+
+    public function setEnvironment(string $environment): mixed
+    {
+        return $this->http->request(
+            'PATCH',
+            '/companies/' . rawurlencode($this->companyId) . '/environment',
+            ['environment' => $environment],
+        );
+    }
+
+    public function certificateStatus(): mixed
+    {
+        return $this->http->request('GET', '/companies/' . rawurlencode($this->companyId) . '/certificate');
+    }
+
+    /** @param array<string, mixed> $payload */
+    public function uploadCertificate(array $payload): mixed
+    {
+        return $this->http->request(
+            'POST',
+            '/companies/' . rawurlencode($this->companyId) . '/certificate',
+            $payload,
+        );
+    }
+
+    public function deleteCertificate(): mixed
+    {
+        return $this->http->request(
+            'DELETE',
+            '/companies/' . rawurlencode($this->companyId) . '/certificate',
+        );
+    }
+
+    /** @param array<string, mixed> $payload */
+    public function createCorrectionLetter(string $id, array $payload): mixed
+    {
+        return $this->http->request(
+            'POST',
+            '/companies/' . rawurlencode($this->companyId) . '/nfe/' . rawurlencode($id) . '/correction',
+            $payload,
+        );
+    }
+
+    /** @param array<string, mixed> $payload */
+    public function inutilizeNfe(array $payload): mixed
+    {
+        return $this->http->request(
+            'POST',
+            '/companies/' . rawurlencode($this->companyId) . '/nfe/inutilizations',
+            $payload,
+        );
+    }
+
+    public function transmitNfce(string $id): mixed
+    {
+        return $this->http->request(
+            'POST',
+            '/companies/' . rawurlencode($this->companyId) . '/nfce/' . rawurlencode($id) . '/transmit',
+            [],
+        );
+    }
+
+    /** @param array<string, mixed> $payload */
+    public function inutilizeNfce(array $payload): mixed
+    {
+        return $this->http->request(
+            'POST',
+            '/companies/' . rawurlencode($this->companyId) . '/nfce/inutilizations',
+            $payload,
         );
     }
 }

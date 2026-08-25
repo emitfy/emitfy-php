@@ -49,6 +49,16 @@ final class CompanyResource extends Resource
         return $this->http->request('DELETE', $this->basePath . '/' . rawurlencode($id));
     }
 
+    /** @param array<string, mixed> $payload */
+    public function cancel(string $id, array $payload): mixed
+    {
+        return $this->http->request(
+            'DELETE',
+            $this->basePath . '/' . rawurlencode($id),
+            $payload,
+        );
+    }
+
     /** @param array<string, mixed>|null $payload */
     public function post(string $suffix, ?array $payload = null, ?string $idempotencyKey = null): mixed
     {

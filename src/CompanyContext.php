@@ -10,6 +10,7 @@ final class CompanyContext
     public readonly CompanyResource $nfe;
     public readonly CompanyResource $nfce;
     public readonly CompanyResource $cte;
+    public readonly CompanyResource $mdfe;
     public readonly CompanyResource $customers;
     public readonly CompanyResource $products;
     public readonly InvoicesResource $invoices;
@@ -24,6 +25,7 @@ final class CompanyContext
         $this->nfe = new CompanyResource($http, $prefix . '/nfe');
         $this->nfce = new CompanyResource($http, $prefix . '/nfce');
         $this->cte = new CompanyResource($http, $prefix . '/cte');
+        $this->mdfe = new CompanyResource($http, $prefix . '/mdfe');
         $this->customers = new CompanyResource($http, $prefix . '/customers');
         $this->products = new CompanyResource($http, $prefix . '/products');
         $this->invoices = new InvoicesResource($http, $prefix . '/invoices');
@@ -53,6 +55,7 @@ final class CompanyContext
         return $this->http->request('GET', '/companies/' . rawurlencode($this->companyId) . '/status');
     }
 
+    /** @deprecated Public emission is always production. This endpoint returns 410. */
     public function setEnvironment(string $environment): mixed
     {
         return $this->http->request(

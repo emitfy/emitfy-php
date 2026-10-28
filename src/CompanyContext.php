@@ -55,16 +55,6 @@ final class CompanyContext
         return $this->http->request('GET', '/companies/' . rawurlencode($this->companyId) . '/status');
     }
 
-    /** @deprecated Public emission is always production. This endpoint returns 410. */
-    public function setEnvironment(string $environment): mixed
-    {
-        return $this->http->request(
-            'PATCH',
-            '/companies/' . rawurlencode($this->companyId) . '/environment',
-            ['environment' => $environment],
-        );
-    }
-
     public function certificateStatus(): mixed
     {
         return $this->http->request('GET', '/companies/' . rawurlencode($this->companyId) . '/certificate');

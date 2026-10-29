@@ -142,7 +142,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesGet'] to see the possible values for this operation
      *
@@ -160,7 +160,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesGet'] to see the possible values for this operation
      *
@@ -210,7 +210,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesGet'] to see the possible values for this operation
      *
@@ -232,7 +232,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesGet'] to see the possible values for this operation
      *
@@ -270,7 +270,7 @@ class ReceivedNfesApi
     /**
      * Create request for operation 'receivedNfesGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesGet'] to see the possible values for this operation
      *
@@ -390,7 +390,7 @@ class ReceivedNfesApi
      *
      * List received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page page (optional, default to 1)
      * @param  int|null $limit limit (optional)
      * @param  string|null $search search (optional)
@@ -411,7 +411,7 @@ class ReceivedNfesApi
      *
      * List received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
@@ -464,7 +464,7 @@ class ReceivedNfesApi
      *
      * List received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
@@ -489,7 +489,7 @@ class ReceivedNfesApi
      *
      * List received NF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
@@ -530,7 +530,7 @@ class ReceivedNfesApi
     /**
      * Create request for operation 'receivedNfesList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
@@ -681,7 +681,7 @@ class ReceivedNfesApi
      *
      * Manifest recipient event
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\ReceivedNfesManifestRequest $receivedNfesManifestRequest receivedNfesManifestRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesManifest'] to see the possible values for this operation
@@ -700,7 +700,7 @@ class ReceivedNfesApi
      *
      * Manifest recipient event
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\ReceivedNfesManifestRequest $receivedNfesManifestRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesManifest'] to see the possible values for this operation
@@ -751,7 +751,7 @@ class ReceivedNfesApi
      *
      * Manifest recipient event
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\ReceivedNfesManifestRequest $receivedNfesManifestRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesManifest'] to see the possible values for this operation
@@ -774,7 +774,7 @@ class ReceivedNfesApi
      *
      * Manifest recipient event
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\ReceivedNfesManifestRequest $receivedNfesManifestRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesManifest'] to see the possible values for this operation
@@ -813,7 +813,7 @@ class ReceivedNfesApi
     /**
      * Create request for operation 'receivedNfesManifest'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\ReceivedNfesManifestRequest $receivedNfesManifestRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesManifest'] to see the possible values for this operation
@@ -948,7 +948,7 @@ class ReceivedNfesApi
      *
      * Enqueue DistDFe sync
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSync'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -965,7 +965,7 @@ class ReceivedNfesApi
      *
      * Enqueue DistDFe sync
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSync'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1014,7 +1014,7 @@ class ReceivedNfesApi
      *
      * Enqueue DistDFe sync
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSync'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1035,7 +1035,7 @@ class ReceivedNfesApi
      *
      * Enqueue DistDFe sync
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSync'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1072,7 +1072,7 @@ class ReceivedNfesApi
     /**
      * Create request for operation 'receivedNfesSync'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSync'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1176,7 +1176,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesXml'] to see the possible values for this operation
      *
@@ -1194,7 +1194,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesXml'] to see the possible values for this operation
      *
@@ -1244,7 +1244,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesXml'] to see the possible values for this operation
      *
@@ -1266,7 +1266,7 @@ class ReceivedNfesApi
      *
      * Get received NF-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesXml'] to see the possible values for this operation
      *
@@ -1304,7 +1304,7 @@ class ReceivedNfesApi
     /**
      * Create request for operation 'receivedNfesXml'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesXml'] to see the possible values for this operation
      *

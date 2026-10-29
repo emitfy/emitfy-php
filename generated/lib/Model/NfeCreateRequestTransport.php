@@ -35,7 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfeCreateRequestTransport Class Doc Comment
  *
  * @category Class
- * @description Dados de transporte inline (opcional). &#x60;freightModality&#x60; é obrigatório quando &#x60;carrier&#x60; é enviado; &#x60;noShipping&#x60; com &#x60;carrier&#x60; retorna 400.
+ * @description Dados de transporte inline (opcional). &#x60;freightModality&#x60; é obrigatório quando &#x60;carrier&#x60; é enviado; &#x60;noShipping&#x60; com &#x60;carrier&#x60; retorna 422 (&#x60;VALIDATION_ERROR&#x60;).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech

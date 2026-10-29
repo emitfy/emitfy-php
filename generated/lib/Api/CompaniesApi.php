@@ -381,7 +381,7 @@ class CompaniesApi
      *
      * Delete or detach company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesDelete'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -398,7 +398,7 @@ class CompaniesApi
      *
      * Delete or detach company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesDelete'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -447,7 +447,7 @@ class CompaniesApi
      *
      * Delete or detach company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -468,7 +468,7 @@ class CompaniesApi
      *
      * Delete or detach company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -505,7 +505,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companiesDelete'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -609,7 +609,7 @@ class CompaniesApi
      *
      * Get company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -626,7 +626,7 @@ class CompaniesApi
      *
      * Get company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -675,7 +675,7 @@ class CompaniesApi
      *
      * Get company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -696,7 +696,7 @@ class CompaniesApi
      *
      * Get company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -733,7 +733,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companiesGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1045,7 +1045,7 @@ class CompaniesApi
      *
      * Update company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed>|null $requestBody requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesUpdate'] to see the possible values for this operation
      *
@@ -1063,7 +1063,7 @@ class CompaniesApi
      *
      * Update company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesUpdate'] to see the possible values for this operation
      *
@@ -1113,7 +1113,7 @@ class CompaniesApi
      *
      * Update company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesUpdate'] to see the possible values for this operation
      *
@@ -1135,7 +1135,7 @@ class CompaniesApi
      *
      * Update company
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesUpdate'] to see the possible values for this operation
      *
@@ -1173,7 +1173,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companiesUpdate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companiesUpdate'] to see the possible values for this operation
      *
@@ -1286,7 +1286,7 @@ class CompaniesApi
      *
      * Remove certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateDelete'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1303,7 +1303,7 @@ class CompaniesApi
      *
      * Remove certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateDelete'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1352,7 +1352,7 @@ class CompaniesApi
      *
      * Remove certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1373,7 +1373,7 @@ class CompaniesApi
      *
      * Remove certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1410,7 +1410,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companyCertificateDelete'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateDelete'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1514,7 +1514,7 @@ class CompaniesApi
      *
      * Get certificate status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1531,7 +1531,7 @@ class CompaniesApi
      *
      * Get certificate status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1580,7 +1580,7 @@ class CompaniesApi
      *
      * Get certificate status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1601,7 +1601,7 @@ class CompaniesApi
      *
      * Get certificate status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1638,7 +1638,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companyCertificateGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateGet'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1742,7 +1742,7 @@ class CompaniesApi
      *
      * Upload A1 certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateUpload'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1759,7 +1759,7 @@ class CompaniesApi
      *
      * Upload A1 certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateUpload'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1808,7 +1808,7 @@ class CompaniesApi
      *
      * Upload A1 certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateUpload'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1829,7 +1829,7 @@ class CompaniesApi
      *
      * Upload A1 certificate
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateUpload'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1866,7 +1866,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companyCertificateUpload'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyCertificateUpload'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1971,7 +1971,7 @@ class CompaniesApi
      *
      * Company fiscal status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyStatus'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1988,7 +1988,7 @@ class CompaniesApi
      *
      * Company fiscal status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyStatus'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
@@ -2037,7 +2037,7 @@ class CompaniesApi
      *
      * Company fiscal status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2058,7 +2058,7 @@ class CompaniesApi
      *
      * Company fiscal status
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2095,7 +2095,7 @@ class CompaniesApi
     /**
      * Create request for operation 'companyStatus'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['companyStatus'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

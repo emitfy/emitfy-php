@@ -338,7 +338,7 @@ class MdfeCloseRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets cityCode
      *
-     * @param string $cityCode cityCode
+     * @param string $cityCode IBGE do município de encerramento
      *
      * @return self
      */

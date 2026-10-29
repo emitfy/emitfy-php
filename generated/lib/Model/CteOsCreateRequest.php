@@ -57,12 +57,21 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $openAPITypes = [
+        'externalId' => 'string',
         'cfop' => 'string',
         'nature' => 'string',
+        'serviceType' => 'string',
+        'takerParty' => '\EmitfyGenerated\Model\CteParty',
+        'municipalityStartIbge' => 'string',
+        'municipalityEndIbge' => 'string',
+        'routeUfs' => 'string[]',
         'serviceDescription' => 'string',
+        'serviceQuantity' => 'float',
         'serviceAmount' => 'float',
-        'icms' => 'object',
-        'components' => 'object[]'
+        'icms' => '\EmitfyGenerated\Model\CteIcms',
+        'taf' => 'string',
+        'stateAgencyRegistration' => 'string',
+        'components' => '\EmitfyGenerated\Model\DfeComponent[]'
     ];
 
     /**
@@ -73,11 +82,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'externalId' => null,
         'cfop' => null,
         'nature' => null,
+        'serviceType' => null,
+        'takerParty' => null,
+        'municipalityStartIbge' => null,
+        'municipalityEndIbge' => null,
+        'routeUfs' => null,
         'serviceDescription' => null,
+        'serviceQuantity' => null,
         'serviceAmount' => null,
         'icms' => null,
+        'taf' => null,
+        'stateAgencyRegistration' => null,
         'components' => null
     ];
 
@@ -87,11 +105,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'externalId' => false,
         'cfop' => false,
         'nature' => false,
+        'serviceType' => false,
+        'takerParty' => false,
+        'municipalityStartIbge' => false,
+        'municipalityEndIbge' => false,
+        'routeUfs' => false,
         'serviceDescription' => false,
+        'serviceQuantity' => false,
         'serviceAmount' => false,
         'icms' => false,
+        'taf' => false,
+        'stateAgencyRegistration' => false,
         'components' => false
     ];
 
@@ -181,11 +208,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $attributeMap = [
+        'externalId' => 'externalId',
         'cfop' => 'cfop',
         'nature' => 'nature',
+        'serviceType' => 'serviceType',
+        'takerParty' => 'takerParty',
+        'municipalityStartIbge' => 'municipalityStartIbge',
+        'municipalityEndIbge' => 'municipalityEndIbge',
+        'routeUfs' => 'routeUfs',
         'serviceDescription' => 'serviceDescription',
+        'serviceQuantity' => 'serviceQuantity',
         'serviceAmount' => 'serviceAmount',
         'icms' => 'icms',
+        'taf' => 'taf',
+        'stateAgencyRegistration' => 'stateAgencyRegistration',
         'components' => 'components'
     ];
 
@@ -195,11 +231,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $setters = [
+        'externalId' => 'setExternalId',
         'cfop' => 'setCfop',
         'nature' => 'setNature',
+        'serviceType' => 'setServiceType',
+        'takerParty' => 'setTakerParty',
+        'municipalityStartIbge' => 'setMunicipalityStartIbge',
+        'municipalityEndIbge' => 'setMunicipalityEndIbge',
+        'routeUfs' => 'setRouteUfs',
         'serviceDescription' => 'setServiceDescription',
+        'serviceQuantity' => 'setServiceQuantity',
         'serviceAmount' => 'setServiceAmount',
         'icms' => 'setIcms',
+        'taf' => 'setTaf',
+        'stateAgencyRegistration' => 'setStateAgencyRegistration',
         'components' => 'setComponents'
     ];
 
@@ -209,11 +254,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      * @var string[]
      */
     protected static $getters = [
+        'externalId' => 'getExternalId',
         'cfop' => 'getCfop',
         'nature' => 'getNature',
+        'serviceType' => 'getServiceType',
+        'takerParty' => 'getTakerParty',
+        'municipalityStartIbge' => 'getMunicipalityStartIbge',
+        'municipalityEndIbge' => 'getMunicipalityEndIbge',
+        'routeUfs' => 'getRouteUfs',
         'serviceDescription' => 'getServiceDescription',
+        'serviceQuantity' => 'getServiceQuantity',
         'serviceAmount' => 'getServiceAmount',
         'icms' => 'getIcms',
+        'taf' => 'getTaf',
+        'stateAgencyRegistration' => 'getStateAgencyRegistration',
         'components' => 'getComponents'
     ];
 
@@ -258,6 +312,23 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
+    public const SERVICE_TYPE__6 = '6';
+    public const SERVICE_TYPE__7 = '7';
+    public const SERVICE_TYPE__8 = '8';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getServiceTypeAllowableValues()
+    {
+        return [
+            self::SERVICE_TYPE__6,
+            self::SERVICE_TYPE__7,
+            self::SERVICE_TYPE__8,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -274,11 +345,20 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('cfop', $data ?? [], null);
         $this->setIfExists('nature', $data ?? [], null);
+        $this->setIfExists('serviceType', $data ?? [], '6');
+        $this->setIfExists('takerParty', $data ?? [], null);
+        $this->setIfExists('municipalityStartIbge', $data ?? [], null);
+        $this->setIfExists('municipalityEndIbge', $data ?? [], null);
+        $this->setIfExists('routeUfs', $data ?? [], null);
         $this->setIfExists('serviceDescription', $data ?? [], null);
+        $this->setIfExists('serviceQuantity', $data ?? [], null);
         $this->setIfExists('serviceAmount', $data ?? [], null);
         $this->setIfExists('icms', $data ?? [], null);
+        $this->setIfExists('taf', $data ?? [], null);
+        $this->setIfExists('stateAgencyRegistration', $data ?? [], null);
         $this->setIfExists('components', $data ?? [], null);
     }
 
@@ -309,18 +389,83 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['cfop'] === null) {
             $invalidProperties[] = "'cfop' can't be null";
         }
+        if ((mb_strlen($this->container['cfop']) > 4)) {
+            $invalidProperties[] = "invalid value for 'cfop', the character length must be smaller than or equal to 4.";
+        }
+
+        if ((mb_strlen($this->container['cfop']) < 4)) {
+            $invalidProperties[] = "invalid value for 'cfop', the character length must be bigger than or equal to 4.";
+        }
+
         if ($this->container['nature'] === null) {
             $invalidProperties[] = "'nature' can't be null";
         }
+        if ((mb_strlen($this->container['nature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be smaller than or equal to 60.";
+        }
+
+        if ((mb_strlen($this->container['nature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getServiceTypeAllowableValues();
+        if (!is_null($this->container['serviceType']) && !in_array($this->container['serviceType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'serviceType', must be one of '%s'",
+                $this->container['serviceType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['municipalityStartIbge']) && (mb_strlen($this->container['municipalityStartIbge']) > 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityStartIbge', the character length must be smaller than or equal to 7.";
+        }
+
+        if (!is_null($this->container['municipalityStartIbge']) && (mb_strlen($this->container['municipalityStartIbge']) < 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityStartIbge', the character length must be bigger than or equal to 7.";
+        }
+
+        if (!is_null($this->container['municipalityEndIbge']) && (mb_strlen($this->container['municipalityEndIbge']) > 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityEndIbge', the character length must be smaller than or equal to 7.";
+        }
+
+        if (!is_null($this->container['municipalityEndIbge']) && (mb_strlen($this->container['municipalityEndIbge']) < 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityEndIbge', the character length must be bigger than or equal to 7.";
+        }
+
         if ($this->container['serviceDescription'] === null) {
             $invalidProperties[] = "'serviceDescription' can't be null";
         }
+        if ((mb_strlen($this->container['serviceDescription']) > 30)) {
+            $invalidProperties[] = "invalid value for 'serviceDescription', the character length must be smaller than or equal to 30.";
+        }
+
+        if ((mb_strlen($this->container['serviceDescription']) < 1)) {
+            $invalidProperties[] = "invalid value for 'serviceDescription', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['serviceQuantity']) && ($this->container['serviceQuantity'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'serviceQuantity', must be bigger than 0.";
+        }
+
         if ($this->container['serviceAmount'] === null) {
             $invalidProperties[] = "'serviceAmount' can't be null";
         }
+        if (($this->container['serviceAmount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'serviceAmount', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['icms'] === null) {
             $invalidProperties[] = "'icms' can't be null";
         }
@@ -338,6 +483,40 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets externalId
+     *
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->container['externalId'];
+    }
+
+    /**
+     * Sets externalId
+     *
+     * @param string|null $externalId Idempotência. Obrigatório se não enviar o header `Idempotency-Key` (400 `CTE_EXTERNAL_ID_REQUIRED`).
+     *
+     * @return self
+     */
+    public function setExternalId($externalId)
+    {
+        if (is_null($externalId)) {
+            throw new \InvalidArgumentException('non-nullable externalId cannot be null');
+        }
+        if ((mb_strlen($externalId) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling CteOsCreateRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($externalId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling CteOsCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['externalId'] = $externalId;
+
+        return $this;
+    }
 
     /**
      * Gets cfop
@@ -361,6 +540,13 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         if (is_null($cfop)) {
             throw new \InvalidArgumentException('non-nullable cfop cannot be null');
         }
+        if ((mb_strlen($cfop) > 4)) {
+            throw new \InvalidArgumentException('invalid length for $cfop when calling CteOsCreateRequest., must be smaller than or equal to 4.');
+        }
+        if ((mb_strlen($cfop) < 4)) {
+            throw new \InvalidArgumentException('invalid length for $cfop when calling CteOsCreateRequest., must be bigger than or equal to 4.');
+        }
+
         $this->container['cfop'] = $cfop;
 
         return $this;
@@ -388,7 +574,173 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         if (is_null($nature)) {
             throw new \InvalidArgumentException('non-nullable nature cannot be null');
         }
+        if ((mb_strlen($nature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling CteOsCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($nature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling CteOsCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['nature'] = $nature;
+
+        return $this;
+    }
+
+    /**
+     * Gets serviceType
+     *
+     * @return string|null
+     */
+    public function getServiceType()
+    {
+        return $this->container['serviceType'];
+    }
+
+    /**
+     * Sets serviceType
+     *
+     * @param string|null $serviceType `6` transporte de pessoas, `7` de valores, `8` excesso de bagagem
+     *
+     * @return self
+     */
+    public function setServiceType($serviceType)
+    {
+        if (is_null($serviceType)) {
+            throw new \InvalidArgumentException('non-nullable serviceType cannot be null');
+        }
+        $allowedValues = $this->getServiceTypeAllowableValues();
+        if (!in_array($serviceType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'serviceType', must be one of '%s'",
+                    $serviceType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['serviceType'] = $serviceType;
+
+        return $this;
+    }
+
+    /**
+     * Gets takerParty
+     *
+     * @return \EmitfyGenerated\Model\CteParty|null
+     */
+    public function getTakerParty()
+    {
+        return $this->container['takerParty'];
+    }
+
+    /**
+     * Sets takerParty
+     *
+     * @param \EmitfyGenerated\Model\CteParty|null $takerParty Tomador do serviço (obrigatório exceto `serviceType` `8`)
+     *
+     * @return self
+     */
+    public function setTakerParty($takerParty)
+    {
+        if (is_null($takerParty)) {
+            throw new \InvalidArgumentException('non-nullable takerParty cannot be null');
+        }
+        $this->container['takerParty'] = $takerParty;
+
+        return $this;
+    }
+
+    /**
+     * Gets municipalityStartIbge
+     *
+     * @return string|null
+     */
+    public function getMunicipalityStartIbge()
+    {
+        return $this->container['municipalityStartIbge'];
+    }
+
+    /**
+     * Sets municipalityStartIbge
+     *
+     * @param string|null $municipalityStartIbge municipalityStartIbge
+     *
+     * @return self
+     */
+    public function setMunicipalityStartIbge($municipalityStartIbge)
+    {
+        if (is_null($municipalityStartIbge)) {
+            throw new \InvalidArgumentException('non-nullable municipalityStartIbge cannot be null');
+        }
+        if ((mb_strlen($municipalityStartIbge) > 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityStartIbge when calling CteOsCreateRequest., must be smaller than or equal to 7.');
+        }
+        if ((mb_strlen($municipalityStartIbge) < 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityStartIbge when calling CteOsCreateRequest., must be bigger than or equal to 7.');
+        }
+
+        $this->container['municipalityStartIbge'] = $municipalityStartIbge;
+
+        return $this;
+    }
+
+    /**
+     * Gets municipalityEndIbge
+     *
+     * @return string|null
+     */
+    public function getMunicipalityEndIbge()
+    {
+        return $this->container['municipalityEndIbge'];
+    }
+
+    /**
+     * Sets municipalityEndIbge
+     *
+     * @param string|null $municipalityEndIbge municipalityEndIbge
+     *
+     * @return self
+     */
+    public function setMunicipalityEndIbge($municipalityEndIbge)
+    {
+        if (is_null($municipalityEndIbge)) {
+            throw new \InvalidArgumentException('non-nullable municipalityEndIbge cannot be null');
+        }
+        if ((mb_strlen($municipalityEndIbge) > 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityEndIbge when calling CteOsCreateRequest., must be smaller than or equal to 7.');
+        }
+        if ((mb_strlen($municipalityEndIbge) < 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityEndIbge when calling CteOsCreateRequest., must be bigger than or equal to 7.');
+        }
+
+        $this->container['municipalityEndIbge'] = $municipalityEndIbge;
+
+        return $this;
+    }
+
+    /**
+     * Gets routeUfs
+     *
+     * @return string[]|null
+     */
+    public function getRouteUfs()
+    {
+        return $this->container['routeUfs'];
+    }
+
+    /**
+     * Sets routeUfs
+     *
+     * @param string[]|null $routeUfs routeUfs
+     *
+     * @return self
+     */
+    public function setRouteUfs($routeUfs)
+    {
+        if (is_null($routeUfs)) {
+            throw new \InvalidArgumentException('non-nullable routeUfs cannot be null');
+        }
+        $this->container['routeUfs'] = $routeUfs;
 
         return $this;
     }
@@ -415,7 +767,45 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         if (is_null($serviceDescription)) {
             throw new \InvalidArgumentException('non-nullable serviceDescription cannot be null');
         }
+        if ((mb_strlen($serviceDescription) > 30)) {
+            throw new \InvalidArgumentException('invalid length for $serviceDescription when calling CteOsCreateRequest., must be smaller than or equal to 30.');
+        }
+        if ((mb_strlen($serviceDescription) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $serviceDescription when calling CteOsCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['serviceDescription'] = $serviceDescription;
+
+        return $this;
+    }
+
+    /**
+     * Gets serviceQuantity
+     *
+     * @return float|null
+     */
+    public function getServiceQuantity()
+    {
+        return $this->container['serviceQuantity'];
+    }
+
+    /**
+     * Sets serviceQuantity
+     *
+     * @param float|null $serviceQuantity serviceQuantity
+     *
+     * @return self
+     */
+    public function setServiceQuantity($serviceQuantity)
+    {
+        if (is_null($serviceQuantity)) {
+            throw new \InvalidArgumentException('non-nullable serviceQuantity cannot be null');
+        }
+        if (($serviceQuantity <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $serviceQuantity when calling CteOsCreateRequest., must be bigger than 0.');
+        }
+
+        $this->container['serviceQuantity'] = $serviceQuantity;
 
         return $this;
     }
@@ -442,6 +832,10 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         if (is_null($serviceAmount)) {
             throw new \InvalidArgumentException('non-nullable serviceAmount cannot be null');
         }
+        if (($serviceAmount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $serviceAmount when calling CteOsCreateRequest., must be bigger than or equal to 0.');
+        }
+
         $this->container['serviceAmount'] = $serviceAmount;
 
         return $this;
@@ -450,7 +844,7 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets icms
      *
-     * @return object
+     * @return \EmitfyGenerated\Model\CteIcms
      */
     public function getIcms()
     {
@@ -460,7 +854,7 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets icms
      *
-     * @param object $icms icms
+     * @param \EmitfyGenerated\Model\CteIcms $icms icms
      *
      * @return self
      */
@@ -475,9 +869,63 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     }
 
     /**
+     * Gets taf
+     *
+     * @return string|null
+     */
+    public function getTaf()
+    {
+        return $this->container['taf'];
+    }
+
+    /**
+     * Sets taf
+     *
+     * @param string|null $taf Termo de Autorização de Fretamento (12 dígitos)
+     *
+     * @return self
+     */
+    public function setTaf($taf)
+    {
+        if (is_null($taf)) {
+            throw new \InvalidArgumentException('non-nullable taf cannot be null');
+        }
+        $this->container['taf'] = $taf;
+
+        return $this;
+    }
+
+    /**
+     * Gets stateAgencyRegistration
+     *
+     * @return string|null
+     */
+    public function getStateAgencyRegistration()
+    {
+        return $this->container['stateAgencyRegistration'];
+    }
+
+    /**
+     * Sets stateAgencyRegistration
+     *
+     * @param string|null $stateAgencyRegistration Registro estadual (25 dígitos) — alternativa ao `taf`
+     *
+     * @return self
+     */
+    public function setStateAgencyRegistration($stateAgencyRegistration)
+    {
+        if (is_null($stateAgencyRegistration)) {
+            throw new \InvalidArgumentException('non-nullable stateAgencyRegistration cannot be null');
+        }
+        $this->container['stateAgencyRegistration'] = $stateAgencyRegistration;
+
+        return $this;
+    }
+
+    /**
      * Gets components
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\DfeComponent[]|null
      */
     public function getComponents()
     {
@@ -487,7 +935,7 @@ class CteOsCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets components
      *
-     * @param object[]|null $components components
+     * @param \EmitfyGenerated\Model\DfeComponent[]|null $components components
      *
      * @return self
      */

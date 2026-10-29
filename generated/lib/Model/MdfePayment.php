@@ -59,6 +59,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'responsibleTaxId' => 'string',
         'responsibleName' => 'string',
+        'components' => '\EmitfyGenerated\Model\MdfePaymentComponentsInner[]',
         'amount' => 'float',
         'method' => 'string'
     ];
@@ -73,6 +74,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'responsibleTaxId' => null,
         'responsibleName' => null,
+        'components' => null,
         'amount' => null,
         'method' => null
     ];
@@ -85,6 +87,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static array $openAPINullables = [
         'responsibleTaxId' => false,
         'responsibleName' => false,
+        'components' => false,
         'amount' => false,
         'method' => false
     ];
@@ -177,6 +180,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $attributeMap = [
         'responsibleTaxId' => 'responsibleTaxId',
         'responsibleName' => 'responsibleName',
+        'components' => 'components',
         'amount' => 'amount',
         'method' => 'method'
     ];
@@ -189,6 +193,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $setters = [
         'responsibleTaxId' => 'setResponsibleTaxId',
         'responsibleName' => 'setResponsibleName',
+        'components' => 'setComponents',
         'amount' => 'setAmount',
         'method' => 'setMethod'
     ];
@@ -201,6 +206,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $getters = [
         'responsibleTaxId' => 'getResponsibleTaxId',
         'responsibleName' => 'getResponsibleName',
+        'components' => 'getComponents',
         'amount' => 'getAmount',
         'method' => 'getMethod'
     ];
@@ -264,6 +270,7 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $this->setIfExists('responsibleTaxId', $data ?? [], null);
         $this->setIfExists('responsibleName', $data ?? [], null);
+        $this->setIfExists('components', $data ?? [], null);
         $this->setIfExists('amount', $data ?? [], null);
         $this->setIfExists('method', $data ?? [], null);
     }
@@ -364,6 +371,33 @@ class MdfePayment implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable responsibleName cannot be null');
         }
         $this->container['responsibleName'] = $responsibleName;
+
+        return $this;
+    }
+
+    /**
+     * Gets components
+     *
+     * @return \EmitfyGenerated\Model\MdfePaymentComponentsInner[]|null
+     */
+    public function getComponents()
+    {
+        return $this->container['components'];
+    }
+
+    /**
+     * Sets components
+     *
+     * @param \EmitfyGenerated\Model\MdfePaymentComponentsInner[]|null $components components
+     *
+     * @return self
+     */
+    public function setComponents($components)
+    {
+        if (is_null($components)) {
+            throw new \InvalidArgumentException('non-nullable components cannot be null');
+        }
+        $this->container['components'] = $components;
 
         return $this;
     }

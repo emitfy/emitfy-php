@@ -151,18 +151,18 @@ class InvoicesApi
      *
      * Cancel authorized invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
-     * @param  array<string,mixed>|null $requestBody requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoicesCancel200Response|\EmitfyGenerated\Model\ErrorBody
      */
-    public function invoicesCancel($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesCancel'][0])
+    public function invoicesCancel($companyId, $id, string $contentType = self::contentTypes['invoicesCancel'][0])
     {
-        $this->invoicesCancelWithHttpInfo($companyId, $id, $requestBody, $contentType);
+        list($response) = $this->invoicesCancelWithHttpInfo($companyId, $id, $contentType);
+        return $response;
     }
 
     /**
@@ -170,18 +170,17 @@ class InvoicesApi
      *
      * Cancel authorized invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoicesCancel200Response|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
-    public function invoicesCancelWithHttpInfo($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesCancel'][0])
+    public function invoicesCancelWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesCancel'][0])
     {
-        $request = $this->invoicesCancelRequest($companyId, $id, $requestBody, $contentType);
+        $request = $this->invoicesCancelRequest($companyId, $id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -206,9 +205,59 @@ class InvoicesApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoicesCancel200Response',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoicesCancel200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoicesCancel200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -221,17 +270,16 @@ class InvoicesApi
      *
      * Cancel authorized invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesCancel'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesCancelAsync($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesCancel'][0])
+    public function invoicesCancelAsync($companyId, $id, string $contentType = self::contentTypes['invoicesCancel'][0])
     {
-        return $this->invoicesCancelAsyncWithHttpInfo($companyId, $id, $requestBody, $contentType)
+        return $this->invoicesCancelAsyncWithHttpInfo($companyId, $id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -244,24 +292,36 @@ class InvoicesApi
      *
      * Cancel authorized invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesCancel'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesCancelAsyncWithHttpInfo($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesCancel'][0])
+    public function invoicesCancelAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesCancel'][0])
     {
-        $returnType = '';
-        $request = $this->invoicesCancelRequest($companyId, $id, $requestBody, $contentType);
+        $returnType = '\EmitfyGenerated\Model\InvoicesCancel200Response';
+        $request = $this->invoicesCancelRequest($companyId, $id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -283,15 +343,14 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesCancel'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesCancel'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function invoicesCancelRequest($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesCancel'][0])
+    public function invoicesCancelRequest($companyId, $id, string $contentType = self::contentTypes['invoicesCancel'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -307,7 +366,6 @@ class InvoicesApi
                 'Missing the required parameter $id when calling invoicesCancel'
             );
         }
-
 
 
         $resourcePath = '/companies/{companyId}/invoices/{id}/cancel';
@@ -338,20 +396,13 @@ class InvoicesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($requestBody)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($requestBody));
-            } else {
-                $httpBody = $requestBody;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -412,7 +463,7 @@ class InvoicesApi
      *
      * Consult invoice at SEFAZ or city hall
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesConsult'] to see the possible values for this operation
      *
@@ -430,7 +481,7 @@ class InvoicesApi
      *
      * Consult invoice at SEFAZ or city hall
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesConsult'] to see the possible values for this operation
      *
@@ -480,7 +531,7 @@ class InvoicesApi
      *
      * Consult invoice at SEFAZ or city hall
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesConsult'] to see the possible values for this operation
      *
@@ -502,7 +553,7 @@ class InvoicesApi
      *
      * Consult invoice at SEFAZ or city hall
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesConsult'] to see the possible values for this operation
      *
@@ -540,7 +591,7 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesConsult'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesConsult'] to see the possible values for this operation
      *
@@ -660,7 +711,7 @@ class InvoicesApi
      *
      * Emit or retry invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEmit'] to see the possible values for this operation
      *
@@ -678,7 +729,7 @@ class InvoicesApi
      *
      * Emit or retry invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEmit'] to see the possible values for this operation
      *
@@ -728,7 +779,7 @@ class InvoicesApi
      *
      * Emit or retry invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEmit'] to see the possible values for this operation
      *
@@ -750,7 +801,7 @@ class InvoicesApi
      *
      * Emit or retry invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEmit'] to see the possible values for this operation
      *
@@ -788,7 +839,7 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesEmit'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEmit'] to see the possible values for this operation
      *
@@ -908,7 +959,7 @@ class InvoicesApi
      *
      * List invoice events
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEvents'] to see the possible values for this operation
      *
@@ -926,7 +977,7 @@ class InvoicesApi
      *
      * List invoice events
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEvents'] to see the possible values for this operation
      *
@@ -976,7 +1027,7 @@ class InvoicesApi
      *
      * List invoice events
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEvents'] to see the possible values for this operation
      *
@@ -998,7 +1049,7 @@ class InvoicesApi
      *
      * List invoice events
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEvents'] to see the possible values for this operation
      *
@@ -1036,7 +1087,7 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesEvents'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesEvents'] to see the possible values for this operation
      *
@@ -1156,7 +1207,7 @@ class InvoicesApi
      *
      * Get invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesGet'] to see the possible values for this operation
      *
@@ -1175,7 +1226,7 @@ class InvoicesApi
      *
      * Get invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesGet'] to see the possible values for this operation
      *
@@ -1261,7 +1312,7 @@ class InvoicesApi
      *
      * Get invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesGet'] to see the possible values for this operation
      *
@@ -1283,7 +1334,7 @@ class InvoicesApi
      *
      * Get invoice
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesGet'] to see the possible values for this operation
      *
@@ -1334,7 +1385,7 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesGet'] to see the possible values for this operation
      *
@@ -1454,18 +1505,27 @@ class InvoicesApi
      *
      * List invoices
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $pageSize pageSize (optional)
+     * @param  string|null $status Status canônico; aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;, &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;, &#x60;queued&#x60; → &#x60;processing&#x60;. (optional)
+     * @param  string|null $type type (optional)
+     * @param  string|null $search search (optional)
+     * @param  string|null $integrationId integrationId (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoicesList200Response
      */
-    public function invoicesList($companyId, $page = 1, $pageSize = null, string $contentType = self::contentTypes['invoicesList'][0])
+    public function invoicesList($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $status = null, $type = null, $search = null, $integrationId = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['invoicesList'][0])
     {
-        $this->invoicesListWithHttpInfo($companyId, $page, $pageSize, $contentType);
+        list($response) = $this->invoicesListWithHttpInfo($companyId, $limit, $action, $cursor, $page, $status, $type, $search, $integrationId, $startDate, $endDate, $contentType);
+        return $response;
     }
 
     /**
@@ -1473,18 +1533,26 @@ class InvoicesApi
      *
      * List invoices
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  string|null $status Status canônico; aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;, &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;, &#x60;queued&#x60; → &#x60;processing&#x60;. (optional)
+     * @param  string|null $type (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $integrationId (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoicesList200Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function invoicesListWithHttpInfo($companyId, $page = 1, $pageSize = null, string $contentType = self::contentTypes['invoicesList'][0])
+    public function invoicesListWithHttpInfo($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $status = null, $type = null, $search = null, $integrationId = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['invoicesList'][0])
     {
-        $request = $this->invoicesListRequest($companyId, $page, $pageSize, $contentType);
+        $request = $this->invoicesListRequest($companyId, $limit, $action, $cursor, $page, $status, $type, $search, $integrationId, $startDate, $endDate, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1509,9 +1577,45 @@ class InvoicesApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoicesList200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoicesList200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoicesList200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1524,17 +1628,25 @@ class InvoicesApi
      *
      * List invoices
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  string|null $status Status canônico; aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;, &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;, &#x60;queued&#x60; → &#x60;processing&#x60;. (optional)
+     * @param  string|null $type (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $integrationId (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesListAsync($companyId, $page = 1, $pageSize = null, string $contentType = self::contentTypes['invoicesList'][0])
+    public function invoicesListAsync($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $status = null, $type = null, $search = null, $integrationId = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['invoicesList'][0])
     {
-        return $this->invoicesListAsyncWithHttpInfo($companyId, $page, $pageSize, $contentType)
+        return $this->invoicesListAsyncWithHttpInfo($companyId, $limit, $action, $cursor, $page, $status, $type, $search, $integrationId, $startDate, $endDate, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1547,24 +1659,45 @@ class InvoicesApi
      *
      * List invoices
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  string|null $status Status canônico; aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;, &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;, &#x60;queued&#x60; → &#x60;processing&#x60;. (optional)
+     * @param  string|null $type (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $integrationId (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = null, string $contentType = self::contentTypes['invoicesList'][0])
+    public function invoicesListAsyncWithHttpInfo($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $status = null, $type = null, $search = null, $integrationId = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['invoicesList'][0])
     {
-        $returnType = '';
-        $request = $this->invoicesListRequest($companyId, $page, $pageSize, $contentType);
+        $returnType = '\EmitfyGenerated\Model\InvoicesList200Response';
+        $request = $this->invoicesListRequest($companyId, $limit, $action, $cursor, $page, $status, $type, $search, $integrationId, $startDate, $endDate, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1586,15 +1719,23 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  string|null $status Status canônico; aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;, &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;, &#x60;queued&#x60; → &#x60;processing&#x60;. (optional)
+     * @param  string|null $type (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $integrationId (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function invoicesListRequest($companyId, $page = 1, $pageSize = null, string $contentType = self::contentTypes['invoicesList'][0])
+    public function invoicesListRequest($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $status = null, $type = null, $search = null, $integrationId = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['invoicesList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1604,17 +1745,25 @@ class InvoicesApi
             );
         }
 
+        if ($limit !== null && $limit > 100) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling InvoicesApi.invoicesList, must be smaller than or equal to 100.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling InvoicesApi.invoicesList, must be bigger than or equal to 1.');
+        }
+        
+
+
         if ($page !== null && $page < 1) {
             throw new \InvalidArgumentException('invalid value for "$page" when calling InvoicesApi.invoicesList, must be bigger than or equal to 1.');
         }
         
-        if ($pageSize !== null && $pageSize > 100) {
-            throw new \InvalidArgumentException('invalid value for "$pageSize" when calling InvoicesApi.invoicesList, must be smaller than or equal to 100.');
-        }
-        if ($pageSize !== null && $pageSize < 1) {
-            throw new \InvalidArgumentException('invalid value for "$pageSize" when calling InvoicesApi.invoicesList, must be bigger than or equal to 1.');
-        }
-        
+
+
+
+
+
+
 
         $resourcePath = '/companies/{companyId}/invoices';
         $formParams = [];
@@ -1623,6 +1772,33 @@ class InvoicesApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $action,
+            'action', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $cursor,
+            'cursor', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $page,
@@ -1634,8 +1810,53 @@ class InvoicesApi
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $pageSize,
-            'pageSize', // param base name
+            $status,
+            'status', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $type,
+            'type', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $integrationId,
+            'integrationId', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
             'integer', // openApiType
             'form', // style
             true, // explode
@@ -1654,7 +1875,7 @@ class InvoicesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1721,18 +1942,18 @@ class InvoicesApi
      *
      * Resend invoice email
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
-     * @param  array<string,mixed>|null $requestBody requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesSendEmail'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoicesSendEmail200Response
      */
-    public function invoicesSendEmail($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesSendEmail'][0])
+    public function invoicesSendEmail($companyId, $id, string $contentType = self::contentTypes['invoicesSendEmail'][0])
     {
-        $this->invoicesSendEmailWithHttpInfo($companyId, $id, $requestBody, $contentType);
+        list($response) = $this->invoicesSendEmailWithHttpInfo($companyId, $id, $contentType);
+        return $response;
     }
 
     /**
@@ -1740,18 +1961,17 @@ class InvoicesApi
      *
      * Resend invoice email
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesSendEmail'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoicesSendEmail200Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function invoicesSendEmailWithHttpInfo($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesSendEmail'][0])
+    public function invoicesSendEmailWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesSendEmail'][0])
     {
-        $request = $this->invoicesSendEmailRequest($companyId, $id, $requestBody, $contentType);
+        $request = $this->invoicesSendEmailRequest($companyId, $id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1776,9 +1996,45 @@ class InvoicesApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoicesSendEmail200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoicesSendEmail200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoicesSendEmail200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1791,17 +2047,16 @@ class InvoicesApi
      *
      * Resend invoice email
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesSendEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesSendEmailAsync($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesSendEmail'][0])
+    public function invoicesSendEmailAsync($companyId, $id, string $contentType = self::contentTypes['invoicesSendEmail'][0])
     {
-        return $this->invoicesSendEmailAsyncWithHttpInfo($companyId, $id, $requestBody, $contentType)
+        return $this->invoicesSendEmailAsyncWithHttpInfo($companyId, $id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1814,24 +2069,36 @@ class InvoicesApi
      *
      * Resend invoice email
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesSendEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invoicesSendEmailAsyncWithHttpInfo($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesSendEmail'][0])
+    public function invoicesSendEmailAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['invoicesSendEmail'][0])
     {
-        $returnType = '';
-        $request = $this->invoicesSendEmailRequest($companyId, $id, $requestBody, $contentType);
+        $returnType = '\EmitfyGenerated\Model\InvoicesSendEmail200Response';
+        $request = $this->invoicesSendEmailRequest($companyId, $id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1853,15 +2120,14 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesSendEmail'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
-     * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesSendEmail'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function invoicesSendEmailRequest($companyId, $id, $requestBody = null, string $contentType = self::contentTypes['invoicesSendEmail'][0])
+    public function invoicesSendEmailRequest($companyId, $id, string $contentType = self::contentTypes['invoicesSendEmail'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1877,7 +2143,6 @@ class InvoicesApi
                 'Missing the required parameter $id when calling invoicesSendEmail'
             );
         }
-
 
 
         $resourcePath = '/companies/{companyId}/invoices/{id}/send-borrower-email';
@@ -1908,20 +2173,13 @@ class InvoicesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
 
         // for model (json/xml)
-        if (isset($requestBody)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($requestBody));
-            } else {
-                $httpBody = $requestBody;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1982,7 +2240,7 @@ class InvoicesApi
      *
      * Update invoice draft or rejected note
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\InvoiceUpdateRequest $invoiceUpdateRequest invoiceUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesUpdate'] to see the possible values for this operation
@@ -2001,7 +2259,7 @@ class InvoicesApi
      *
      * Update invoice draft or rejected note
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\InvoiceUpdateRequest $invoiceUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesUpdate'] to see the possible values for this operation
@@ -2052,7 +2310,7 @@ class InvoicesApi
      *
      * Update invoice draft or rejected note
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\InvoiceUpdateRequest $invoiceUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesUpdate'] to see the possible values for this operation
@@ -2075,7 +2333,7 @@ class InvoicesApi
      *
      * Update invoice draft or rejected note
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\InvoiceUpdateRequest $invoiceUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesUpdate'] to see the possible values for this operation
@@ -2114,7 +2372,7 @@ class InvoicesApi
     /**
      * Create request for operation 'invoicesUpdate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\InvoiceUpdateRequest $invoiceUpdateRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['invoicesUpdate'] to see the possible values for this operation

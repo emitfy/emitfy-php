@@ -145,17 +145,18 @@ class NfseApi
      *
      * Cancel NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoiceCancelAccepted|\EmitfyGenerated\Model\ErrorBody
      */
     public function nfseCancel($companyId, $id, string $contentType = self::contentTypes['nfseCancel'][0])
     {
-        $this->nfseCancelWithHttpInfo($companyId, $id, $contentType);
+        list($response) = $this->nfseCancelWithHttpInfo($companyId, $id, $contentType);
+        return $response;
     }
 
     /**
@@ -163,13 +164,13 @@ class NfseApi
      *
      * Cancel NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoiceCancelAccepted|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
     public function nfseCancelWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseCancel'][0])
     {
@@ -198,9 +199,59 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 202:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoiceCancelAccepted',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoiceCancelAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 202:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoiceCancelAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -213,7 +264,7 @@ class NfseApi
      *
      * Cancel NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCancel'] to see the possible values for this operation
      *
@@ -235,7 +286,7 @@ class NfseApi
      *
      * Cancel NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCancel'] to see the possible values for this operation
      *
@@ -244,14 +295,27 @@ class NfseApi
      */
     public function nfseCancelAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseCancel'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\InvoiceCancelAccepted';
         $request = $this->nfseCancelRequest($companyId, $id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -273,7 +337,7 @@ class NfseApi
     /**
      * Create request for operation 'nfseCancel'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCancel'] to see the possible values for this operation
      *
@@ -326,7 +390,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -393,18 +457,19 @@ class NfseApi
      *
      * Emit NFS-e (shortcut)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\NfseCreateRequest $nfseCreateRequest nfseCreateRequest (required)
      * @param  string|null $idempotencyKey idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoiceCreateAccepted|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody
      */
     public function nfseCreate($companyId, $nfseCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['nfseCreate'][0])
     {
-        $this->nfseCreateWithHttpInfo($companyId, $nfseCreateRequest, $idempotencyKey, $contentType);
+        list($response) = $this->nfseCreateWithHttpInfo($companyId, $nfseCreateRequest, $idempotencyKey, $contentType);
+        return $response;
     }
 
     /**
@@ -412,14 +477,14 @@ class NfseApi
      *
      * Emit NFS-e (shortcut)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\NfseCreateRequest $nfseCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoiceCreateAccepted|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
     public function nfseCreateWithHttpInfo($companyId, $nfseCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['nfseCreate'][0])
     {
@@ -448,9 +513,73 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoiceCreateAccepted',
+                        $request,
+                        $response,
+                    );
+                case 402:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoiceCreateAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoiceCreateAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 402:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -463,7 +592,7 @@ class NfseApi
      *
      * Emit NFS-e (shortcut)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\NfseCreateRequest $nfseCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCreate'] to see the possible values for this operation
@@ -486,7 +615,7 @@ class NfseApi
      *
      * Emit NFS-e (shortcut)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\NfseCreateRequest $nfseCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCreate'] to see the possible values for this operation
@@ -496,14 +625,27 @@ class NfseApi
      */
     public function nfseCreateAsyncWithHttpInfo($companyId, $nfseCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['nfseCreate'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\InvoiceCreateAccepted';
         $request = $this->nfseCreateRequest($companyId, $nfseCreateRequest, $idempotencyKey, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -525,7 +667,7 @@ class NfseApi
     /**
      * Create request for operation 'nfseCreate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\NfseCreateRequest $nfseCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseCreate'] to see the possible values for this operation
@@ -576,7 +718,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -650,17 +792,18 @@ class NfseApi
      *
      * Get NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoiceTypedDetail
      */
     public function nfseGet($companyId, $id, string $contentType = self::contentTypes['nfseGet'][0])
     {
-        $this->nfseGetWithHttpInfo($companyId, $id, $contentType);
+        list($response) = $this->nfseGetWithHttpInfo($companyId, $id, $contentType);
+        return $response;
     }
 
     /**
@@ -668,13 +811,13 @@ class NfseApi
      *
      * Get NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseGet'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoiceTypedDetail, HTTP status code, HTTP response headers (array of strings)
      */
     public function nfseGetWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseGet'][0])
     {
@@ -703,9 +846,45 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoiceTypedDetail',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoiceTypedDetail',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoiceTypedDetail',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -718,7 +897,7 @@ class NfseApi
      *
      * Get NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseGet'] to see the possible values for this operation
      *
@@ -740,7 +919,7 @@ class NfseApi
      *
      * Get NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseGet'] to see the possible values for this operation
      *
@@ -749,14 +928,27 @@ class NfseApi
      */
     public function nfseGetAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseGet'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\InvoiceTypedDetail';
         $request = $this->nfseGetRequest($companyId, $id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -778,7 +970,7 @@ class NfseApi
     /**
      * Create request for operation 'nfseGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseGet'] to see the possible values for this operation
      *
@@ -831,7 +1023,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -898,19 +1090,20 @@ class NfseApi
      *
      * List NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $pageSize pageSize (optional)
-     * @param  string|null $status status (optional)
+     * @param  int|null $pageSize pageSize (optional, default to 20)
+     * @param  string|null $status Filtro de status. Aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;; &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\InvoiceTypedList
      */
-    public function nfseList($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['nfseList'][0])
+    public function nfseList($companyId, $page = 1, $pageSize = 20, $status = null, string $contentType = self::contentTypes['nfseList'][0])
     {
-        $this->nfseListWithHttpInfo($companyId, $page, $pageSize, $status, $contentType);
+        list($response) = $this->nfseListWithHttpInfo($companyId, $page, $pageSize, $status, $contentType);
+        return $response;
     }
 
     /**
@@ -918,17 +1111,17 @@ class NfseApi
      *
      * List NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
-     * @param  string|null $status (optional)
+     * @param  int|null $pageSize (optional, default to 20)
+     * @param  string|null $status Filtro de status. Aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;; &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\InvoiceTypedList, HTTP status code, HTTP response headers (array of strings)
      */
-    public function nfseListWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['nfseList'][0])
+    public function nfseListWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, string $contentType = self::contentTypes['nfseList'][0])
     {
         $request = $this->nfseListRequest($companyId, $page, $pageSize, $status, $contentType);
 
@@ -955,9 +1148,45 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\InvoiceTypedList',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\InvoiceTypedList',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\InvoiceTypedList',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -970,16 +1199,16 @@ class NfseApi
      *
      * List NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
-     * @param  string|null $status (optional)
+     * @param  int|null $pageSize (optional, default to 20)
+     * @param  string|null $status Filtro de status. Aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;; &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfseListAsync($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['nfseList'][0])
+    public function nfseListAsync($companyId, $page = 1, $pageSize = 20, $status = null, string $contentType = self::contentTypes['nfseList'][0])
     {
         return $this->nfseListAsyncWithHttpInfo($companyId, $page, $pageSize, $status, $contentType)
             ->then(
@@ -994,25 +1223,38 @@ class NfseApi
      *
      * List NFS-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
-     * @param  string|null $status (optional)
+     * @param  int|null $pageSize (optional, default to 20)
+     * @param  string|null $status Filtro de status. Aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;; &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfseListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['nfseList'][0])
+    public function nfseListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, string $contentType = self::contentTypes['nfseList'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\InvoiceTypedList';
         $request = $this->nfseListRequest($companyId, $page, $pageSize, $status, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1034,16 +1276,16 @@ class NfseApi
     /**
      * Create request for operation 'nfseList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
-     * @param  string|null $status (optional)
+     * @param  int|null $pageSize (optional, default to 20)
+     * @param  string|null $status Filtro de status. Aliases: &#x60;canceled&#x60; → &#x60;cancelled&#x60;; &#x60;error&#x60;/&#x60;failed&#x60; → &#x60;rejected&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function nfseListRequest($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['nfseList'][0])
+    public function nfseListRequest($companyId, $page = 1, $pageSize = 20, $status = null, string $contentType = self::contentTypes['nfseList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1113,7 +1355,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1180,17 +1422,20 @@ class NfseApi
      *
      * Get NFS-e PDF
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
+     * @param  string|null $regenerate &#x60;1&#x60;/&#x60;true&#x60; &#x3D; regenera o PDF antes de entregar. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfsePdf'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \SplFileObject|\EmitfyGenerated\Model\ErrorBody
      */
-    public function nfsePdf($companyId, $id, string $contentType = self::contentTypes['nfsePdf'][0])
+    public function nfsePdf($companyId, $id, $download = null, $regenerate = null, string $contentType = self::contentTypes['nfsePdf'][0])
     {
-        $this->nfsePdfWithHttpInfo($companyId, $id, $contentType);
+        list($response) = $this->nfsePdfWithHttpInfo($companyId, $id, $download, $regenerate, $contentType);
+        return $response;
     }
 
     /**
@@ -1198,17 +1443,19 @@ class NfseApi
      *
      * Get NFS-e PDF
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
+     * @param  string|null $regenerate &#x60;1&#x60;/&#x60;true&#x60; &#x3D; regenera o PDF antes de entregar. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfsePdf'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \SplFileObject|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
-    public function nfsePdfWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfsePdf'][0])
+    public function nfsePdfWithHttpInfo($companyId, $id, $download = null, $regenerate = null, string $contentType = self::contentTypes['nfsePdf'][0])
     {
-        $request = $this->nfsePdfRequest($companyId, $id, $contentType);
+        $request = $this->nfsePdfRequest($companyId, $id, $download, $regenerate, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1233,9 +1480,59 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\SplFileObject',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\SplFileObject',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\SplFileObject',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1248,16 +1545,18 @@ class NfseApi
      *
      * Get NFS-e PDF
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
+     * @param  string|null $regenerate &#x60;1&#x60;/&#x60;true&#x60; &#x3D; regenera o PDF antes de entregar. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfsePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfsePdfAsync($companyId, $id, string $contentType = self::contentTypes['nfsePdf'][0])
+    public function nfsePdfAsync($companyId, $id, $download = null, $regenerate = null, string $contentType = self::contentTypes['nfsePdf'][0])
     {
-        return $this->nfsePdfAsyncWithHttpInfo($companyId, $id, $contentType)
+        return $this->nfsePdfAsyncWithHttpInfo($companyId, $id, $download, $regenerate, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1270,23 +1569,38 @@ class NfseApi
      *
      * Get NFS-e PDF
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
+     * @param  string|null $regenerate &#x60;1&#x60;/&#x60;true&#x60; &#x3D; regenera o PDF antes de entregar. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfsePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfsePdfAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfsePdf'][0])
+    public function nfsePdfAsyncWithHttpInfo($companyId, $id, $download = null, $regenerate = null, string $contentType = self::contentTypes['nfsePdf'][0])
     {
-        $returnType = '';
-        $request = $this->nfsePdfRequest($companyId, $id, $contentType);
+        $returnType = '\SplFileObject';
+        $request = $this->nfsePdfRequest($companyId, $id, $download, $regenerate, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1308,14 +1622,16 @@ class NfseApi
     /**
      * Create request for operation 'nfsePdf'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
+     * @param  string|null $regenerate &#x60;1&#x60;/&#x60;true&#x60; &#x3D; regenera o PDF antes de entregar. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfsePdf'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function nfsePdfRequest($companyId, $id, string $contentType = self::contentTypes['nfsePdf'][0])
+    public function nfsePdfRequest($companyId, $id, $download = null, $regenerate = null, string $contentType = self::contentTypes['nfsePdf'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1333,6 +1649,8 @@ class NfseApi
         }
 
 
+
+
         $resourcePath = '/companies/{companyId}/nfse/{id}/pdf';
         $formParams = [];
         $queryParams = [];
@@ -1340,6 +1658,24 @@ class NfseApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $download,
+            'download', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $regenerate,
+            'regenerate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -1361,7 +1697,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/pdf', 'application/json', ],
             $contentType,
             $multipart
         );
@@ -1428,17 +1764,19 @@ class NfseApi
      *
      * Get NFS-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseXml'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \SplFileObject|\EmitfyGenerated\Model\ErrorBody
      */
-    public function nfseXml($companyId, $id, string $contentType = self::contentTypes['nfseXml'][0])
+    public function nfseXml($companyId, $id, $download = null, string $contentType = self::contentTypes['nfseXml'][0])
     {
-        $this->nfseXmlWithHttpInfo($companyId, $id, $contentType);
+        list($response) = $this->nfseXmlWithHttpInfo($companyId, $id, $download, $contentType);
+        return $response;
     }
 
     /**
@@ -1446,17 +1784,18 @@ class NfseApi
      *
      * Get NFS-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseXml'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \SplFileObject|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
-    public function nfseXmlWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseXml'][0])
+    public function nfseXmlWithHttpInfo($companyId, $id, $download = null, string $contentType = self::contentTypes['nfseXml'][0])
     {
-        $request = $this->nfseXmlRequest($companyId, $id, $contentType);
+        $request = $this->nfseXmlRequest($companyId, $id, $download, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1481,9 +1820,59 @@ class NfseApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\SplFileObject',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\SplFileObject',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\SplFileObject',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1496,16 +1885,17 @@ class NfseApi
      *
      * Get NFS-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfseXmlAsync($companyId, $id, string $contentType = self::contentTypes['nfseXml'][0])
+    public function nfseXmlAsync($companyId, $id, $download = null, string $contentType = self::contentTypes['nfseXml'][0])
     {
-        return $this->nfseXmlAsyncWithHttpInfo($companyId, $id, $contentType)
+        return $this->nfseXmlAsyncWithHttpInfo($companyId, $id, $download, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1518,23 +1908,37 @@ class NfseApi
      *
      * Get NFS-e XML
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function nfseXmlAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfseXml'][0])
+    public function nfseXmlAsyncWithHttpInfo($companyId, $id, $download = null, string $contentType = self::contentTypes['nfseXml'][0])
     {
-        $returnType = '';
-        $request = $this->nfseXmlRequest($companyId, $id, $contentType);
+        $returnType = '\SplFileObject';
+        $request = $this->nfseXmlRequest($companyId, $id, $download, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1556,14 +1960,15 @@ class NfseApi
     /**
      * Create request for operation 'nfseXml'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
+     * @param  string|null $download &#x60;1&#x60; &#x3D; força download com nome &#x60;nota-&lt;número&gt;.&lt;ext&gt;&#x60; e sem cache. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfseXml'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function nfseXmlRequest($companyId, $id, string $contentType = self::contentTypes['nfseXml'][0])
+    public function nfseXmlRequest($companyId, $id, $download = null, string $contentType = self::contentTypes['nfseXml'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1581,6 +1986,7 @@ class NfseApi
         }
 
 
+
         $resourcePath = '/companies/{companyId}/nfse/{id}/xml';
         $formParams = [];
         $queryParams = [];
@@ -1588,6 +1994,15 @@ class NfseApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $download,
+            'download', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -1609,7 +2024,7 @@ class NfseApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/xml', 'application/json', ],
             $contentType,
             $multipart
         );

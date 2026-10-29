@@ -154,18 +154,19 @@ class MdfeApi
      *
      * Add document to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\MdfeUnloadCity $mdfeUnloadCity mdfeUnloadCity (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDocument'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function mdfeAddDocument($companyId, $id, $mdfeUnloadCity, string $contentType = self::contentTypes['mdfeAddDocument'][0])
     {
-        $this->mdfeAddDocumentWithHttpInfo($companyId, $id, $mdfeUnloadCity, $contentType);
+        list($response) = $this->mdfeAddDocumentWithHttpInfo($companyId, $id, $mdfeUnloadCity, $contentType);
+        return $response;
     }
 
     /**
@@ -173,14 +174,14 @@ class MdfeApi
      *
      * Add document to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeUnloadCity $mdfeUnloadCity (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDocument'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeAddDocumentWithHttpInfo($companyId, $id, $mdfeUnloadCity, string $contentType = self::contentTypes['mdfeAddDocument'][0])
     {
@@ -209,9 +210,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -224,7 +261,7 @@ class MdfeApi
      *
      * Add document to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeUnloadCity $mdfeUnloadCity (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDocument'] to see the possible values for this operation
@@ -247,7 +284,7 @@ class MdfeApi
      *
      * Add document to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeUnloadCity $mdfeUnloadCity (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDocument'] to see the possible values for this operation
@@ -257,14 +294,27 @@ class MdfeApi
      */
     public function mdfeAddDocumentAsyncWithHttpInfo($companyId, $id, $mdfeUnloadCity, string $contentType = self::contentTypes['mdfeAddDocument'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->mdfeAddDocumentRequest($companyId, $id, $mdfeUnloadCity, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -286,7 +336,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeAddDocument'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeUnloadCity $mdfeUnloadCity (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDocument'] to see the possible values for this operation
@@ -347,7 +397,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -421,18 +471,19 @@ class MdfeApi
      *
      * Add driver to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\MdfeDriver $mdfeDriver mdfeDriver (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDriver'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function mdfeAddDriver($companyId, $id, $mdfeDriver, string $contentType = self::contentTypes['mdfeAddDriver'][0])
     {
-        $this->mdfeAddDriverWithHttpInfo($companyId, $id, $mdfeDriver, $contentType);
+        list($response) = $this->mdfeAddDriverWithHttpInfo($companyId, $id, $mdfeDriver, $contentType);
+        return $response;
     }
 
     /**
@@ -440,14 +491,14 @@ class MdfeApi
      *
      * Add driver to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeDriver $mdfeDriver (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDriver'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeAddDriverWithHttpInfo($companyId, $id, $mdfeDriver, string $contentType = self::contentTypes['mdfeAddDriver'][0])
     {
@@ -476,9 +527,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -491,7 +578,7 @@ class MdfeApi
      *
      * Add driver to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeDriver $mdfeDriver (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDriver'] to see the possible values for this operation
@@ -514,7 +601,7 @@ class MdfeApi
      *
      * Add driver to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeDriver $mdfeDriver (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDriver'] to see the possible values for this operation
@@ -524,14 +611,27 @@ class MdfeApi
      */
     public function mdfeAddDriverAsyncWithHttpInfo($companyId, $id, $mdfeDriver, string $contentType = self::contentTypes['mdfeAddDriver'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->mdfeAddDriverRequest($companyId, $id, $mdfeDriver, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -553,7 +653,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeAddDriver'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeDriver $mdfeDriver (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddDriver'] to see the possible values for this operation
@@ -614,7 +714,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -688,18 +788,19 @@ class MdfeApi
      *
      * Add payment to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\MdfePayment $mdfePayment mdfePayment (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddPayment'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function mdfeAddPayment($companyId, $id, $mdfePayment, string $contentType = self::contentTypes['mdfeAddPayment'][0])
     {
-        $this->mdfeAddPaymentWithHttpInfo($companyId, $id, $mdfePayment, $contentType);
+        list($response) = $this->mdfeAddPaymentWithHttpInfo($companyId, $id, $mdfePayment, $contentType);
+        return $response;
     }
 
     /**
@@ -707,14 +808,14 @@ class MdfeApi
      *
      * Add payment to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfePayment $mdfePayment (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddPayment'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeAddPaymentWithHttpInfo($companyId, $id, $mdfePayment, string $contentType = self::contentTypes['mdfeAddPayment'][0])
     {
@@ -743,9 +844,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -758,7 +895,7 @@ class MdfeApi
      *
      * Add payment to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfePayment $mdfePayment (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddPayment'] to see the possible values for this operation
@@ -781,7 +918,7 @@ class MdfeApi
      *
      * Add payment to MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfePayment $mdfePayment (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddPayment'] to see the possible values for this operation
@@ -791,14 +928,27 @@ class MdfeApi
      */
     public function mdfeAddPaymentAsyncWithHttpInfo($companyId, $id, $mdfePayment, string $contentType = self::contentTypes['mdfeAddPayment'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->mdfeAddPaymentRequest($companyId, $id, $mdfePayment, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -820,7 +970,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeAddPayment'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfePayment $mdfePayment (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeAddPayment'] to see the possible values for this operation
@@ -881,7 +1031,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -955,18 +1105,19 @@ class MdfeApi
      *
      * Cancel MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\MdfeCancelRequest $mdfeCancelRequest mdfeCancelRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function mdfeCancel($companyId, $id, $mdfeCancelRequest, string $contentType = self::contentTypes['mdfeCancel'][0])
     {
-        $this->mdfeCancelWithHttpInfo($companyId, $id, $mdfeCancelRequest, $contentType);
+        list($response) = $this->mdfeCancelWithHttpInfo($companyId, $id, $mdfeCancelRequest, $contentType);
+        return $response;
     }
 
     /**
@@ -974,14 +1125,14 @@ class MdfeApi
      *
      * Cancel MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCancelRequest $mdfeCancelRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeCancelWithHttpInfo($companyId, $id, $mdfeCancelRequest, string $contentType = self::contentTypes['mdfeCancel'][0])
     {
@@ -1010,9 +1161,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1025,7 +1212,7 @@ class MdfeApi
      *
      * Cancel MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCancelRequest $mdfeCancelRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCancel'] to see the possible values for this operation
@@ -1048,7 +1235,7 @@ class MdfeApi
      *
      * Cancel MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCancelRequest $mdfeCancelRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCancel'] to see the possible values for this operation
@@ -1058,14 +1245,27 @@ class MdfeApi
      */
     public function mdfeCancelAsyncWithHttpInfo($companyId, $id, $mdfeCancelRequest, string $contentType = self::contentTypes['mdfeCancel'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->mdfeCancelRequest($companyId, $id, $mdfeCancelRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1087,7 +1287,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeCancel'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCancelRequest $mdfeCancelRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCancel'] to see the possible values for this operation
@@ -1148,7 +1348,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1222,18 +1422,19 @@ class MdfeApi
      *
      * Close MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  \EmitfyGenerated\Model\MdfeCloseRequest $mdfeCloseRequest mdfeCloseRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeClose'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function mdfeClose($companyId, $id, $mdfeCloseRequest, string $contentType = self::contentTypes['mdfeClose'][0])
     {
-        $this->mdfeCloseWithHttpInfo($companyId, $id, $mdfeCloseRequest, $contentType);
+        list($response) = $this->mdfeCloseWithHttpInfo($companyId, $id, $mdfeCloseRequest, $contentType);
+        return $response;
     }
 
     /**
@@ -1241,14 +1442,14 @@ class MdfeApi
      *
      * Close MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCloseRequest $mdfeCloseRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeClose'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeCloseWithHttpInfo($companyId, $id, $mdfeCloseRequest, string $contentType = self::contentTypes['mdfeClose'][0])
     {
@@ -1277,9 +1478,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1292,7 +1529,7 @@ class MdfeApi
      *
      * Close MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCloseRequest $mdfeCloseRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeClose'] to see the possible values for this operation
@@ -1315,7 +1552,7 @@ class MdfeApi
      *
      * Close MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCloseRequest $mdfeCloseRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeClose'] to see the possible values for this operation
@@ -1325,14 +1562,27 @@ class MdfeApi
      */
     public function mdfeCloseAsyncWithHttpInfo($companyId, $id, $mdfeCloseRequest, string $contentType = self::contentTypes['mdfeClose'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->mdfeCloseRequest($companyId, $id, $mdfeCloseRequest, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1354,7 +1604,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeClose'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  \EmitfyGenerated\Model\MdfeCloseRequest $mdfeCloseRequest (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeClose'] to see the possible values for this operation
@@ -1415,7 +1665,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1489,7 +1739,7 @@ class MdfeApi
      *
      * Consult MDF-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeConsult'] to see the possible values for this operation
      *
@@ -1507,7 +1757,7 @@ class MdfeApi
      *
      * Consult MDF-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeConsult'] to see the possible values for this operation
      *
@@ -1557,7 +1807,7 @@ class MdfeApi
      *
      * Consult MDF-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeConsult'] to see the possible values for this operation
      *
@@ -1579,7 +1829,7 @@ class MdfeApi
      *
      * Consult MDF-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeConsult'] to see the possible values for this operation
      *
@@ -1617,7 +1867,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeConsult'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeConsult'] to see the possible values for this operation
      *
@@ -1737,18 +1987,19 @@ class MdfeApi
      *
      * Emit MDF-e (modelo 58)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\MdfeEmitRequest $mdfeEmitRequest mdfeEmitRequest (required)
      * @param  string|null $idempotencyKey idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\MdfeCreate200Response|\EmitfyGenerated\Model\ErrorBody
      */
     public function mdfeCreate($companyId, $mdfeEmitRequest, $idempotencyKey = null, string $contentType = self::contentTypes['mdfeCreate'][0])
     {
-        $this->mdfeCreateWithHttpInfo($companyId, $mdfeEmitRequest, $idempotencyKey, $contentType);
+        list($response) = $this->mdfeCreateWithHttpInfo($companyId, $mdfeEmitRequest, $idempotencyKey, $contentType);
+        return $response;
     }
 
     /**
@@ -1756,14 +2007,14 @@ class MdfeApi
      *
      * Emit MDF-e (modelo 58)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\MdfeEmitRequest $mdfeEmitRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\MdfeCreate200Response|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
     public function mdfeCreateWithHttpInfo($companyId, $mdfeEmitRequest, $idempotencyKey = null, string $contentType = self::contentTypes['mdfeCreate'][0])
     {
@@ -1792,9 +2043,59 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\MdfeCreate200Response',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\MdfeCreate200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\MdfeCreate200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1807,7 +2108,7 @@ class MdfeApi
      *
      * Emit MDF-e (modelo 58)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\MdfeEmitRequest $mdfeEmitRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCreate'] to see the possible values for this operation
@@ -1830,7 +2131,7 @@ class MdfeApi
      *
      * Emit MDF-e (modelo 58)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\MdfeEmitRequest $mdfeEmitRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCreate'] to see the possible values for this operation
@@ -1840,14 +2141,27 @@ class MdfeApi
      */
     public function mdfeCreateAsyncWithHttpInfo($companyId, $mdfeEmitRequest, $idempotencyKey = null, string $contentType = self::contentTypes['mdfeCreate'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\MdfeCreate200Response';
         $request = $this->mdfeCreateRequest($companyId, $mdfeEmitRequest, $idempotencyKey, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1869,7 +2183,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeCreate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\MdfeEmitRequest $mdfeEmitRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeCreate'] to see the possible values for this operation
@@ -1920,7 +2234,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1994,7 +2308,7 @@ class MdfeApi
      *
      * Get MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeGet'] to see the possible values for this operation
      *
@@ -2012,7 +2326,7 @@ class MdfeApi
      *
      * Get MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeGet'] to see the possible values for this operation
      *
@@ -2062,7 +2376,7 @@ class MdfeApi
      *
      * Get MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeGet'] to see the possible values for this operation
      *
@@ -2084,7 +2398,7 @@ class MdfeApi
      *
      * Get MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeGet'] to see the possible values for this operation
      *
@@ -2122,7 +2436,7 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeGet'] to see the possible values for this operation
      *
@@ -2242,19 +2556,22 @@ class MdfeApi
      *
      * List MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $pageSize pageSize (optional)
+     * @param  int|null $pageSize pageSize (optional, default to 20)
      * @param  string|null $status status (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\MdfeList200Response
      */
-    public function mdfeList($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['mdfeList'][0])
+    public function mdfeList($companyId, $page = 1, $pageSize = 20, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['mdfeList'][0])
     {
-        $this->mdfeListWithHttpInfo($companyId, $page, $pageSize, $status, $contentType);
+        list($response) = $this->mdfeListWithHttpInfo($companyId, $page, $pageSize, $status, $startDate, $endDate, $contentType);
+        return $response;
     }
 
     /**
@@ -2262,19 +2579,21 @@ class MdfeApi
      *
      * List MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\MdfeList200Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function mdfeListWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['mdfeList'][0])
+    public function mdfeListWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['mdfeList'][0])
     {
-        $request = $this->mdfeListRequest($companyId, $page, $pageSize, $status, $contentType);
+        $request = $this->mdfeListRequest($companyId, $page, $pageSize, $status, $startDate, $endDate, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2299,9 +2618,45 @@ class MdfeApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\MdfeList200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\MdfeList200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\MdfeList200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -2314,18 +2669,20 @@ class MdfeApi
      *
      * List MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function mdfeListAsync($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['mdfeList'][0])
+    public function mdfeListAsync($companyId, $page = 1, $pageSize = 20, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['mdfeList'][0])
     {
-        return $this->mdfeListAsyncWithHttpInfo($companyId, $page, $pageSize, $status, $contentType)
+        return $this->mdfeListAsyncWithHttpInfo($companyId, $page, $pageSize, $status, $startDate, $endDate, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2338,25 +2695,40 @@ class MdfeApi
      *
      * List MDF-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function mdfeListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['mdfeList'][0])
+    public function mdfeListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['mdfeList'][0])
     {
-        $returnType = '';
-        $request = $this->mdfeListRequest($companyId, $page, $pageSize, $status, $contentType);
+        $returnType = '\EmitfyGenerated\Model\MdfeList200Response';
+        $request = $this->mdfeListRequest($companyId, $page, $pageSize, $status, $startDate, $endDate, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -2378,16 +2750,18 @@ class MdfeApi
     /**
      * Create request for operation 'mdfeList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function mdfeListRequest($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['mdfeList'][0])
+    public function mdfeListRequest($companyId, $page = 1, $pageSize = 20, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['mdfeList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -2408,6 +2782,8 @@ class MdfeApi
             throw new \InvalidArgumentException('invalid value for "$pageSize" when calling MdfeApi.mdfeList, must be bigger than or equal to 1.');
         }
         
+
+
 
 
         $resourcePath = '/companies/{companyId}/mdfe';
@@ -2444,6 +2820,24 @@ class MdfeApi
             true, // explode
             false // required
         ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -2457,7 +2851,7 @@ class MdfeApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );

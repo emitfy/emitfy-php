@@ -316,6 +316,10 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
         if ($this->container['rangeStart'] === null) {
             $invalidProperties[] = "'rangeStart' can't be null";
         }
+        if (($this->container['rangeStart'] > 999999999)) {
+            $invalidProperties[] = "invalid value for 'rangeStart', must be smaller than or equal to 999999999.";
+        }
+
         if (($this->container['rangeStart'] < 1)) {
             $invalidProperties[] = "invalid value for 'rangeStart', must be bigger than or equal to 1.";
         }
@@ -323,6 +327,10 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
         if ($this->container['rangeEnd'] === null) {
             $invalidProperties[] = "'rangeEnd' can't be null";
         }
+        if (($this->container['rangeEnd'] > 999999999)) {
+            $invalidProperties[] = "invalid value for 'rangeEnd', must be smaller than or equal to 999999999.";
+        }
+
         if (($this->container['rangeEnd'] < 1)) {
             $invalidProperties[] = "invalid value for 'rangeEnd', must be bigger than or equal to 1.";
         }
@@ -417,6 +425,9 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
         if (is_null($rangeStart)) {
             throw new \InvalidArgumentException('non-nullable rangeStart cannot be null');
         }
+        if (($rangeStart > 999999999)) {
+            throw new \InvalidArgumentException('invalid value for $rangeStart when calling NumberInutilizationRequest., must be smaller than or equal to 999999999.');
+        }
         if (($rangeStart < 1)) {
             throw new \InvalidArgumentException('invalid value for $rangeStart when calling NumberInutilizationRequest., must be bigger than or equal to 1.');
         }
@@ -439,7 +450,7 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets rangeEnd
      *
-     * @param int $rangeEnd rangeEnd
+     * @param int $rangeEnd Deve ser maior ou igual a `rangeStart`.
      *
      * @return self
      */
@@ -447,6 +458,9 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
     {
         if (is_null($rangeEnd)) {
             throw new \InvalidArgumentException('non-nullable rangeEnd cannot be null');
+        }
+        if (($rangeEnd > 999999999)) {
+            throw new \InvalidArgumentException('invalid value for $rangeEnd when calling NumberInutilizationRequest., must be smaller than or equal to 999999999.');
         }
         if (($rangeEnd < 1)) {
             throw new \InvalidArgumentException('invalid value for $rangeEnd when calling NumberInutilizationRequest., must be bigger than or equal to 1.');
@@ -504,7 +518,7 @@ class NumberInutilizationRequest implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets year
      *
-     * @param int|null $year year
+     * @param int|null $year Ano da inutilização. Padrão = ano corrente.
      *
      * @return self
      */

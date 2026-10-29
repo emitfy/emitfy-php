@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfseCreateRequest Class Doc Comment
  *
  * @category Class
+ * @description Além dos campos &#x60;required&#x60;, a validação exige: &#x60;cityServiceCode&#x60; (ou o alias &#x60;serviceCode&#x60;), &#x60;federalServiceCode&#x60; (ou &#x60;serviceItemCode&#x60;) e &#x60;iss.rate&#x60; (ou &#x60;taxes.iss.rate&#x60;; 0 é válido). Com &#x60;serviceLocation&#x60; &#x60;3&#x60;, &#x60;cityIbge&#x60; (IBGE de 7 dígitos) é obrigatório. Falha → 422 &#x60;VALIDATION_ERROR&#x60;. Campo desconhecido também → 422.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -71,6 +72,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => 'string',
         'serviceLocation' => 'string',
         'municipalityOfIncidence' => 'string',
+        'cityIbge' => 'string',
+        'competenceDate' => '\DateTime',
+        'deductions' => 'float',
+        'exigibility' => 'string',
+        'additionalInfo' => 'string',
         'taxes' => '\EmitfyGenerated\Model\NfseCreateRequestTaxes',
         'amount' => 'float',
         'issueDate' => '\DateTime',
@@ -109,6 +115,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => null,
         'serviceLocation' => null,
         'municipalityOfIncidence' => null,
+        'cityIbge' => null,
+        'competenceDate' => 'date-time',
+        'deductions' => null,
+        'exigibility' => null,
+        'additionalInfo' => null,
         'taxes' => null,
         'amount' => null,
         'issueDate' => 'date-time',
@@ -145,6 +156,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => false,
         'serviceLocation' => false,
         'municipalityOfIncidence' => false,
+        'cityIbge' => false,
+        'competenceDate' => false,
+        'deductions' => false,
+        'exigibility' => false,
+        'additionalInfo' => false,
         'taxes' => false,
         'amount' => false,
         'issueDate' => false,
@@ -261,6 +277,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => 'natureOfOperation',
         'serviceLocation' => 'serviceLocation',
         'municipalityOfIncidence' => 'municipalityOfIncidence',
+        'cityIbge' => 'cityIbge',
+        'competenceDate' => 'competenceDate',
+        'deductions' => 'deductions',
+        'exigibility' => 'exigibility',
+        'additionalInfo' => 'additionalInfo',
         'taxes' => 'taxes',
         'amount' => 'amount',
         'issueDate' => 'issueDate',
@@ -297,6 +318,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => 'setNatureOfOperation',
         'serviceLocation' => 'setServiceLocation',
         'municipalityOfIncidence' => 'setMunicipalityOfIncidence',
+        'cityIbge' => 'setCityIbge',
+        'competenceDate' => 'setCompetenceDate',
+        'deductions' => 'setDeductions',
+        'exigibility' => 'setExigibility',
+        'additionalInfo' => 'setAdditionalInfo',
         'taxes' => 'setTaxes',
         'amount' => 'setAmount',
         'issueDate' => 'setIssueDate',
@@ -333,6 +359,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'natureOfOperation' => 'getNatureOfOperation',
         'serviceLocation' => 'getServiceLocation',
         'municipalityOfIncidence' => 'getMunicipalityOfIncidence',
+        'cityIbge' => 'getCityIbge',
+        'competenceDate' => 'getCompetenceDate',
+        'deductions' => 'getDeductions',
+        'exigibility' => 'getExigibility',
+        'additionalInfo' => 'getAdditionalInfo',
         'taxes' => 'getTaxes',
         'amount' => 'getAmount',
         'issueDate' => 'getIssueDate',
@@ -390,6 +421,122 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         return self::$openAPIModelName;
     }
 
+    public const CATEGORY_ONLINE_COURSE = 'online_course';
+    public const CATEGORY_CONSULTING = 'consulting';
+    public const CATEGORY_SUBSCRIPTION = 'subscription';
+    public const CATEGORY_SAAS = 'saas';
+    public const CATEGORY_ONLINE_EVENT = 'online_event';
+    public const CATEGORY_PROFESSIONAL_SERVICE = 'professional_service';
+    public const CATEGORY_OTHER_SERVICE = 'other_service';
+    public const CATEGORY_AFFILIATE_INFOPRODUCTS = 'affiliate_infoproducts';
+    public const CATEGORY_AFFILIATE_BETTING = 'affiliate_betting';
+    public const CATEGORY_MARKETING_AGENCY = 'marketing_agency';
+    public const CATEGORY_COPYWRITER = 'copywriter';
+    public const CATEGORY_SYSTEMS_DEVELOPMENT = 'systems_development';
+    public const CATEGORY_GRAPHIC_DESIGNER = 'graphic_designer';
+    public const CATEGORY_DROPSHIPPING_SUPPLIER = 'dropshipping_supplier';
+    public const CATEGORY_DROPSHIPPING_CONSUMER = 'dropshipping_consumer';
+    public const CATEGORY_TRAFFIC_MANAGER = 'traffic_manager';
+    public const CATEGORY_DIGITAL_INFLUENCER = 'digital_influencer';
+    public const CATEGORY_INFOPRODUCER = 'infoproducer';
+    public const CATEGORY_PHYSICAL_PRODUCT = 'physical_product';
+    public const CATEGORY_DIGITAL_BOOK = 'digital_book';
+    public const CATEGORY_DIGITAL_CONTENT = 'digital_content';
+    public const CATEGORY_MEMBERSHIP = 'membership';
+    public const CATEGORY_SOFTWARE = 'software';
+    public const CATEGORY_OTHER_PRODUCT = 'other_product';
+    public const NATURE_OF_OPERATION__1 = '1';
+    public const NATURE_OF_OPERATION__2 = '2';
+    public const NATURE_OF_OPERATION__3 = '3';
+    public const NATURE_OF_OPERATION__4 = '4';
+    public const NATURE_OF_OPERATION__5 = '5';
+    public const NATURE_OF_OPERATION__6 = '6';
+    public const SERVICE_LOCATION__1 = '1';
+    public const SERVICE_LOCATION__2 = '2';
+    public const SERVICE_LOCATION__3 = '3';
+    public const MUNICIPALITY_OF_INCIDENCE__0 = '0';
+    public const MUNICIPALITY_OF_INCIDENCE__1 = '1';
+    public const MUNICIPALITY_OF_INCIDENCE__2 = '2';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getCategoryAllowableValues()
+    {
+        return [
+            self::CATEGORY_ONLINE_COURSE,
+            self::CATEGORY_CONSULTING,
+            self::CATEGORY_SUBSCRIPTION,
+            self::CATEGORY_SAAS,
+            self::CATEGORY_ONLINE_EVENT,
+            self::CATEGORY_PROFESSIONAL_SERVICE,
+            self::CATEGORY_OTHER_SERVICE,
+            self::CATEGORY_AFFILIATE_INFOPRODUCTS,
+            self::CATEGORY_AFFILIATE_BETTING,
+            self::CATEGORY_MARKETING_AGENCY,
+            self::CATEGORY_COPYWRITER,
+            self::CATEGORY_SYSTEMS_DEVELOPMENT,
+            self::CATEGORY_GRAPHIC_DESIGNER,
+            self::CATEGORY_DROPSHIPPING_SUPPLIER,
+            self::CATEGORY_DROPSHIPPING_CONSUMER,
+            self::CATEGORY_TRAFFIC_MANAGER,
+            self::CATEGORY_DIGITAL_INFLUENCER,
+            self::CATEGORY_INFOPRODUCER,
+            self::CATEGORY_PHYSICAL_PRODUCT,
+            self::CATEGORY_DIGITAL_BOOK,
+            self::CATEGORY_DIGITAL_CONTENT,
+            self::CATEGORY_MEMBERSHIP,
+            self::CATEGORY_SOFTWARE,
+            self::CATEGORY_OTHER_PRODUCT,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getNatureOfOperationAllowableValues()
+    {
+        return [
+            self::NATURE_OF_OPERATION__1,
+            self::NATURE_OF_OPERATION__2,
+            self::NATURE_OF_OPERATION__3,
+            self::NATURE_OF_OPERATION__4,
+            self::NATURE_OF_OPERATION__5,
+            self::NATURE_OF_OPERATION__6,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getServiceLocationAllowableValues()
+    {
+        return [
+            self::SERVICE_LOCATION__1,
+            self::SERVICE_LOCATION__2,
+            self::SERVICE_LOCATION__3,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getMunicipalityOfIncidenceAllowableValues()
+    {
+        return [
+            self::MUNICIPALITY_OF_INCIDENCE__0,
+            self::MUNICIPALITY_OF_INCIDENCE__1,
+            self::MUNICIPALITY_OF_INCIDENCE__2,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -420,6 +567,11 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         $this->setIfExists('natureOfOperation', $data ?? [], null);
         $this->setIfExists('serviceLocation', $data ?? [], null);
         $this->setIfExists('municipalityOfIncidence', $data ?? [], null);
+        $this->setIfExists('cityIbge', $data ?? [], null);
+        $this->setIfExists('competenceDate', $data ?? [], null);
+        $this->setIfExists('deductions', $data ?? [], null);
+        $this->setIfExists('exigibility', $data ?? [], null);
+        $this->setIfExists('additionalInfo', $data ?? [], null);
         $this->setIfExists('taxes', $data ?? [], null);
         $this->setIfExists('amount', $data ?? [], null);
         $this->setIfExists('issueDate', $data ?? [], null);
@@ -482,6 +634,23 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 3.";
         }
 
+        if (!is_null($this->container['sku']) && (mb_strlen($this->container['sku']) > 64)) {
+            $invalidProperties[] = "invalid value for 'sku', the character length must be smaller than or equal to 64.";
+        }
+
+        if (!is_null($this->container['sku']) && (mb_strlen($this->container['sku']) < 1)) {
+            $invalidProperties[] = "invalid value for 'sku', the character length must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!is_null($this->container['category']) && !in_array($this->container['category'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'category', must be one of '%s'",
+                $this->container['category'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         if (!is_null($this->container['guarantee']) && ($this->container['guarantee'] > 365)) {
             $invalidProperties[] = "invalid value for 'guarantee', must be smaller than or equal to 365.";
         }
@@ -490,18 +659,68 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             $invalidProperties[] = "invalid value for 'guarantee', must be bigger than or equal to 1.";
         }
 
-        if ($this->container['cityServiceCode'] === null) {
-            $invalidProperties[] = "'cityServiceCode' can't be null";
+        if (!is_null($this->container['cityServiceCode']) && (mb_strlen($this->container['cityServiceCode']) > 50)) {
+            $invalidProperties[] = "invalid value for 'cityServiceCode', the character length must be smaller than or equal to 50.";
         }
-        if ($this->container['federalServiceCode'] === null) {
-            $invalidProperties[] = "'federalServiceCode' can't be null";
+
+        if (!is_null($this->container['cityServiceCode']) && (mb_strlen($this->container['cityServiceCode']) < 1)) {
+            $invalidProperties[] = "invalid value for 'cityServiceCode', the character length must be bigger than or equal to 1.";
         }
-        if ($this->container['iss'] === null) {
-            $invalidProperties[] = "'iss' can't be null";
+
+        if (!is_null($this->container['federalServiceCode']) && (mb_strlen($this->container['federalServiceCode']) > 50)) {
+            $invalidProperties[] = "invalid value for 'federalServiceCode', the character length must be smaller than or equal to 50.";
         }
+
+        if (!is_null($this->container['federalServiceCode']) && (mb_strlen($this->container['federalServiceCode']) < 1)) {
+            $invalidProperties[] = "invalid value for 'federalServiceCode', the character length must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getNatureOfOperationAllowableValues();
+        if (!is_null($this->container['natureOfOperation']) && !in_array($this->container['natureOfOperation'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'natureOfOperation', must be one of '%s'",
+                $this->container['natureOfOperation'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getServiceLocationAllowableValues();
+        if (!is_null($this->container['serviceLocation']) && !in_array($this->container['serviceLocation'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'serviceLocation', must be one of '%s'",
+                $this->container['serviceLocation'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getMunicipalityOfIncidenceAllowableValues();
+        if (!is_null($this->container['municipalityOfIncidence']) && !in_array($this->container['municipalityOfIncidence'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'municipalityOfIncidence', must be one of '%s'",
+                $this->container['municipalityOfIncidence'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['deductions']) && ($this->container['deductions'] < 0)) {
+            $invalidProperties[] = "invalid value for 'deductions', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['amount'] === null) {
             $invalidProperties[] = "'amount' can't be null";
         }
+        if (($this->container['amount'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'amount', must be bigger than 0.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['borrower'] === null) {
             $invalidProperties[] = "'borrower' can't be null";
         }
@@ -610,6 +829,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($sku)) {
             throw new \InvalidArgumentException('non-nullable sku cannot be null');
         }
+        if ((mb_strlen($sku) > 64)) {
+            throw new \InvalidArgumentException('invalid length for $sku when calling NfseCreateRequest., must be smaller than or equal to 64.');
+        }
+        if ((mb_strlen($sku) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $sku when calling NfseCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['sku'] = $sku;
 
         return $this;
@@ -636,6 +862,16 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         if (is_null($category)) {
             throw new \InvalidArgumentException('non-nullable category cannot be null');
+        }
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!in_array($category, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'category', must be one of '%s'",
+                    $category,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['category'] = $category;
 
@@ -679,7 +915,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets cityServiceCode
      *
-     * @return string
+     * @return string|null
      */
     public function getCityServiceCode()
     {
@@ -689,7 +925,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets cityServiceCode
      *
-     * @param string $cityServiceCode Código municipal do serviço
+     * @param string|null $cityServiceCode Código municipal do serviço (obrigatório, ou o alias `serviceCode`)
      *
      * @return self
      */
@@ -698,6 +934,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($cityServiceCode)) {
             throw new \InvalidArgumentException('non-nullable cityServiceCode cannot be null');
         }
+        if ((mb_strlen($cityServiceCode) > 50)) {
+            throw new \InvalidArgumentException('invalid length for $cityServiceCode when calling NfseCreateRequest., must be smaller than or equal to 50.');
+        }
+        if ((mb_strlen($cityServiceCode) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $cityServiceCode when calling NfseCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['cityServiceCode'] = $cityServiceCode;
 
         return $this;
@@ -706,7 +949,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets federalServiceCode
      *
-     * @return string
+     * @return string|null
      */
     public function getFederalServiceCode()
     {
@@ -716,7 +959,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets federalServiceCode
      *
-     * @param string $federalServiceCode Item LC 116 (cTribNac)
+     * @param string|null $federalServiceCode Item LC 116 (cTribNac) — obrigatório, ou o alias `serviceItemCode`
      *
      * @return self
      */
@@ -725,6 +968,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($federalServiceCode)) {
             throw new \InvalidArgumentException('non-nullable federalServiceCode cannot be null');
         }
+        if ((mb_strlen($federalServiceCode) > 50)) {
+            throw new \InvalidArgumentException('invalid length for $federalServiceCode when calling NfseCreateRequest., must be smaller than or equal to 50.');
+        }
+        if ((mb_strlen($federalServiceCode) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $federalServiceCode when calling NfseCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['federalServiceCode'] = $federalServiceCode;
 
         return $this;
@@ -787,7 +1037,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets iss
      *
-     * @return \EmitfyGenerated\Model\NfseCreateRequestIss
+     * @return \EmitfyGenerated\Model\NfseCreateRequestIss|null
      */
     public function getIss()
     {
@@ -797,7 +1047,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets iss
      *
-     * @param \EmitfyGenerated\Model\NfseCreateRequestIss $iss iss
+     * @param \EmitfyGenerated\Model\NfseCreateRequestIss|null $iss iss
      *
      * @return self
      */
@@ -851,7 +1101,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets natureOfOperation
      *
-     * @param string|null $natureOfOperation natureOfOperation
+     * @param string|null $natureOfOperation Natureza da operação. Default 1.
      *
      * @return self
      */
@@ -859,6 +1109,16 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         if (is_null($natureOfOperation)) {
             throw new \InvalidArgumentException('non-nullable natureOfOperation cannot be null');
+        }
+        $allowedValues = $this->getNatureOfOperationAllowableValues();
+        if (!in_array($natureOfOperation, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'natureOfOperation', must be one of '%s'",
+                    $natureOfOperation,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['natureOfOperation'] = $natureOfOperation;
 
@@ -878,7 +1138,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets serviceLocation
      *
-     * @param string|null $serviceLocation serviceLocation
+     * @param string|null $serviceLocation Local de prestação. `1` município da empresa (default), `2` município do tomador, `3` outro município (exige `cityIbge`).
      *
      * @return self
      */
@@ -886,6 +1146,16 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         if (is_null($serviceLocation)) {
             throw new \InvalidArgumentException('non-nullable serviceLocation cannot be null');
+        }
+        $allowedValues = $this->getServiceLocationAllowableValues();
+        if (!in_array($serviceLocation, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'serviceLocation', must be one of '%s'",
+                    $serviceLocation,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['serviceLocation'] = $serviceLocation;
 
@@ -905,7 +1175,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets municipalityOfIncidence
      *
-     * @param string|null $municipalityOfIncidence municipalityOfIncidence
+     * @param string|null $municipalityOfIncidence Município de incidência do ISS. Default 0.
      *
      * @return self
      */
@@ -914,7 +1184,156 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($municipalityOfIncidence)) {
             throw new \InvalidArgumentException('non-nullable municipalityOfIncidence cannot be null');
         }
+        $allowedValues = $this->getMunicipalityOfIncidenceAllowableValues();
+        if (!in_array($municipalityOfIncidence, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'municipalityOfIncidence', must be one of '%s'",
+                    $municipalityOfIncidence,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
         $this->container['municipalityOfIncidence'] = $municipalityOfIncidence;
+
+        return $this;
+    }
+
+    /**
+     * Gets cityIbge
+     *
+     * @return string|null
+     */
+    public function getCityIbge()
+    {
+        return $this->container['cityIbge'];
+    }
+
+    /**
+     * Sets cityIbge
+     *
+     * @param string|null $cityIbge IBGE (7 dígitos) do local de prestação. Obrigatório com `serviceLocation` `3`.
+     *
+     * @return self
+     */
+    public function setCityIbge($cityIbge)
+    {
+        if (is_null($cityIbge)) {
+            throw new \InvalidArgumentException('non-nullable cityIbge cannot be null');
+        }
+        $this->container['cityIbge'] = $cityIbge;
+
+        return $this;
+    }
+
+    /**
+     * Gets competenceDate
+     *
+     * @return \DateTime|null
+     */
+    public function getCompetenceDate()
+    {
+        return $this->container['competenceDate'];
+    }
+
+    /**
+     * Sets competenceDate
+     *
+     * @param \DateTime|null $competenceDate Data de competência (ISO 8601 com offset).
+     *
+     * @return self
+     */
+    public function setCompetenceDate($competenceDate)
+    {
+        if (is_null($competenceDate)) {
+            throw new \InvalidArgumentException('non-nullable competenceDate cannot be null');
+        }
+        $this->container['competenceDate'] = $competenceDate;
+
+        return $this;
+    }
+
+    /**
+     * Gets deductions
+     *
+     * @return float|null
+     */
+    public function getDeductions()
+    {
+        return $this->container['deductions'];
+    }
+
+    /**
+     * Sets deductions
+     *
+     * @param float|null $deductions Deduções da base de cálculo. Default 0.
+     *
+     * @return self
+     */
+    public function setDeductions($deductions)
+    {
+        if (is_null($deductions)) {
+            throw new \InvalidArgumentException('non-nullable deductions cannot be null');
+        }
+        if (($deductions < 0)) {
+            throw new \InvalidArgumentException('invalid value for $deductions when calling NfseCreateRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['deductions'] = $deductions;
+
+        return $this;
+    }
+
+    /**
+     * Gets exigibility
+     *
+     * @return string|null
+     */
+    public function getExigibility()
+    {
+        return $this->container['exigibility'];
+    }
+
+    /**
+     * Sets exigibility
+     *
+     * @param string|null $exigibility exigibility
+     *
+     * @return self
+     */
+    public function setExigibility($exigibility)
+    {
+        if (is_null($exigibility)) {
+            throw new \InvalidArgumentException('non-nullable exigibility cannot be null');
+        }
+        $this->container['exigibility'] = $exigibility;
+
+        return $this;
+    }
+
+    /**
+     * Gets additionalInfo
+     *
+     * @return string|null
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->container['additionalInfo'];
+    }
+
+    /**
+     * Sets additionalInfo
+     *
+     * @param string|null $additionalInfo additionalInfo
+     *
+     * @return self
+     */
+    public function setAdditionalInfo($additionalInfo)
+    {
+        if (is_null($additionalInfo)) {
+            throw new \InvalidArgumentException('non-nullable additionalInfo cannot be null');
+        }
+        $this->container['additionalInfo'] = $additionalInfo;
 
         return $this;
     }
@@ -968,6 +1387,10 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($amount)) {
             throw new \InvalidArgumentException('non-nullable amount cannot be null');
         }
+        if (($amount <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $amount when calling NfseCreateRequest., must be bigger than 0.');
+        }
+
         $this->container['amount'] = $amount;
 
         return $this;
@@ -1013,7 +1436,7 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets externalId
      *
-     * @param string|null $externalId externalId
+     * @param string|null $externalId Idempotência (o header `Idempotency-Key` tem prioridade)
      *
      * @return self
      */
@@ -1022,6 +1445,13 @@ class NfseCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($externalId)) {
             throw new \InvalidArgumentException('non-nullable externalId cannot be null');
         }
+        if ((mb_strlen($externalId) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfseCreateRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($externalId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfseCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['externalId'] = $externalId;
 
         return $this;

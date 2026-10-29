@@ -340,6 +340,12 @@ class PublicInvoiceResource implements ModelInterface, ArrayAccess, \JsonSeriali
     public const TYPE_NFSE = 'nfse';
     public const TYPE_NFE = 'nfe';
     public const TYPE_NFCE = 'nfce';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_QUEUED = 'queued';
+    public const STATUS_PROCESSING = 'processing';
+    public const STATUS_AUTHORIZED = 'authorized';
+    public const STATUS_REJECTED = 'rejected';
+    public const STATUS_CANCELLED = 'cancelled';
     public const CURRENCY_BRL = 'BRL';
 
     /**
@@ -353,6 +359,23 @@ class PublicInvoiceResource implements ModelInterface, ArrayAccess, \JsonSeriali
             self::TYPE_NFSE,
             self::TYPE_NFE,
             self::TYPE_NFCE,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_PENDING,
+            self::STATUS_QUEUED,
+            self::STATUS_PROCESSING,
+            self::STATUS_AUTHORIZED,
+            self::STATUS_REJECTED,
+            self::STATUS_CANCELLED,
         ];
     }
 
@@ -452,6 +475,15 @@ class PublicInvoiceResource implements ModelInterface, ArrayAccess, \JsonSeriali
         if ($this->container['status'] === null) {
             $invalidProperties[] = "'status' can't be null";
         }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         if ($this->container['version'] === null) {
             $invalidProperties[] = "'version' can't be null";
         }
@@ -661,6 +693,16 @@ class PublicInvoiceResource implements ModelInterface, ArrayAccess, \JsonSeriali
     {
         if (is_null($status)) {
             throw new \InvalidArgumentException('non-nullable status cannot be null');
+        }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['status'] = $status;
 

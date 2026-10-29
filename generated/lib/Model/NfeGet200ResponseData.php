@@ -57,7 +57,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $openAPITypes = [
-        'transport' => '\EmitfyGenerated\Model\TransportDetail'
+        'id' => 'string',
+        'status' => 'string',
+        'type' => 'string',
+        'amount' => 'float',
+        'transport' => '\EmitfyGenerated\Model\TransportDetail',
+        'emissionDate' => '\DateTime',
+        'cancellationDate' => '\DateTime',
+        'fiscal' => 'array<string,mixed>',
+        'corrections' => '\EmitfyGenerated\Model\NfeGet200ResponseDataCorrectionsInner[]',
+        'createdAt' => '\DateTime',
+        'updatedAt' => '\DateTime'
     ];
 
     /**
@@ -68,7 +78,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'transport' => null
+        'id' => 'uuid',
+        'status' => null,
+        'type' => null,
+        'amount' => null,
+        'transport' => null,
+        'emissionDate' => 'date-time',
+        'cancellationDate' => 'date-time',
+        'fiscal' => null,
+        'corrections' => null,
+        'createdAt' => 'date-time',
+        'updatedAt' => 'date-time'
     ];
 
     /**
@@ -77,7 +97,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'transport' => false
+        'id' => false,
+        'status' => false,
+        'type' => false,
+        'amount' => false,
+        'transport' => false,
+        'emissionDate' => false,
+        'cancellationDate' => false,
+        'fiscal' => false,
+        'corrections' => false,
+        'createdAt' => false,
+        'updatedAt' => false
     ];
 
     /**
@@ -166,7 +196,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $attributeMap = [
-        'transport' => 'transport'
+        'id' => 'id',
+        'status' => 'status',
+        'type' => 'type',
+        'amount' => 'amount',
+        'transport' => 'transport',
+        'emissionDate' => 'emissionDate',
+        'cancellationDate' => 'cancellationDate',
+        'fiscal' => 'fiscal',
+        'corrections' => 'corrections',
+        'createdAt' => 'createdAt',
+        'updatedAt' => 'updatedAt'
     ];
 
     /**
@@ -175,7 +215,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $setters = [
-        'transport' => 'setTransport'
+        'id' => 'setId',
+        'status' => 'setStatus',
+        'type' => 'setType',
+        'amount' => 'setAmount',
+        'transport' => 'setTransport',
+        'emissionDate' => 'setEmissionDate',
+        'cancellationDate' => 'setCancellationDate',
+        'fiscal' => 'setFiscal',
+        'corrections' => 'setCorrections',
+        'createdAt' => 'setCreatedAt',
+        'updatedAt' => 'setUpdatedAt'
     ];
 
     /**
@@ -184,7 +234,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      * @var string[]
      */
     protected static $getters = [
-        'transport' => 'getTransport'
+        'id' => 'getId',
+        'status' => 'getStatus',
+        'type' => 'getType',
+        'amount' => 'getAmount',
+        'transport' => 'getTransport',
+        'emissionDate' => 'getEmissionDate',
+        'cancellationDate' => 'getCancellationDate',
+        'fiscal' => 'getFiscal',
+        'corrections' => 'getCorrections',
+        'createdAt' => 'getCreatedAt',
+        'updatedAt' => 'getUpdatedAt'
     ];
 
     /**
@@ -228,6 +288,42 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
         return self::$openAPIModelName;
     }
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_QUEUED = 'queued';
+    public const STATUS_PROCESSING = 'processing';
+    public const STATUS_AUTHORIZED = 'authorized';
+    public const STATUS_REJECTED = 'rejected';
+    public const STATUS_CANCELLED = 'cancelled';
+    public const TYPE_NFE = 'nfe';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_PENDING,
+            self::STATUS_QUEUED,
+            self::STATUS_PROCESSING,
+            self::STATUS_AUTHORIZED,
+            self::STATUS_REJECTED,
+            self::STATUS_CANCELLED,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTypeAllowableValues()
+    {
+        return [
+            self::TYPE_NFE,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -244,7 +340,17 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('id', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('type', $data ?? [], null);
+        $this->setIfExists('amount', $data ?? [], null);
         $this->setIfExists('transport', $data ?? [], null);
+        $this->setIfExists('emissionDate', $data ?? [], null);
+        $this->setIfExists('cancellationDate', $data ?? [], null);
+        $this->setIfExists('fiscal', $data ?? [], null);
+        $this->setIfExists('corrections', $data ?? [], null);
+        $this->setIfExists('createdAt', $data ?? [], null);
+        $this->setIfExists('updatedAt', $data ?? [], null);
     }
 
     /**
@@ -274,6 +380,24 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
     {
         $invalidProperties = [];
 
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'type', must be one of '%s'",
+                $this->container['type'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         return $invalidProperties;
     }
 
@@ -288,6 +412,134 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets id
+     *
+     * @return string|null
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     *
+     * @param string|null $id id
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        if (is_null($id)) {
+            throw new \InvalidArgumentException('non-nullable id cannot be null');
+        }
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets status
+     *
+     * @return string|null
+     */
+    public function getStatus()
+    {
+        return $this->container['status'];
+    }
+
+    /**
+     * Sets status
+     *
+     * @param string|null $status status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
+
+        return $this;
+    }
+
+    /**
+     * Gets type
+     *
+     * @return string|null
+     */
+    public function getType()
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     *
+     * @param string|null $type type
+     *
+     * @return self
+     */
+    public function setType($type)
+    {
+        if (is_null($type)) {
+            throw new \InvalidArgumentException('non-nullable type cannot be null');
+        }
+        $allowedValues = $this->getTypeAllowableValues();
+        if (!in_array($type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'type', must be one of '%s'",
+                    $type,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets amount
+     *
+     * @return float|null
+     */
+    public function getAmount()
+    {
+        return $this->container['amount'];
+    }
+
+    /**
+     * Sets amount
+     *
+     * @param float|null $amount amount
+     *
+     * @return self
+     */
+    public function setAmount($amount)
+    {
+        if (is_null($amount)) {
+            throw new \InvalidArgumentException('non-nullable amount cannot be null');
+        }
+        $this->container['amount'] = $amount;
+
+        return $this;
+    }
 
     /**
      * Gets transport
@@ -312,6 +564,168 @@ class NfeGet200ResponseData implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable transport cannot be null');
         }
         $this->container['transport'] = $transport;
+
+        return $this;
+    }
+
+    /**
+     * Gets emissionDate
+     *
+     * @return \DateTime|null
+     */
+    public function getEmissionDate()
+    {
+        return $this->container['emissionDate'];
+    }
+
+    /**
+     * Sets emissionDate
+     *
+     * @param \DateTime|null $emissionDate emissionDate
+     *
+     * @return self
+     */
+    public function setEmissionDate($emissionDate)
+    {
+        if (is_null($emissionDate)) {
+            throw new \InvalidArgumentException('non-nullable emissionDate cannot be null');
+        }
+        $this->container['emissionDate'] = $emissionDate;
+
+        return $this;
+    }
+
+    /**
+     * Gets cancellationDate
+     *
+     * @return \DateTime|null
+     */
+    public function getCancellationDate()
+    {
+        return $this->container['cancellationDate'];
+    }
+
+    /**
+     * Sets cancellationDate
+     *
+     * @param \DateTime|null $cancellationDate cancellationDate
+     *
+     * @return self
+     */
+    public function setCancellationDate($cancellationDate)
+    {
+        if (is_null($cancellationDate)) {
+            throw new \InvalidArgumentException('non-nullable cancellationDate cannot be null');
+        }
+        $this->container['cancellationDate'] = $cancellationDate;
+
+        return $this;
+    }
+
+    /**
+     * Gets fiscal
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getFiscal()
+    {
+        return $this->container['fiscal'];
+    }
+
+    /**
+     * Sets fiscal
+     *
+     * @param array<string,mixed>|null $fiscal Dados fiscais (número, série, chave de acesso, protocolo…)
+     *
+     * @return self
+     */
+    public function setFiscal($fiscal)
+    {
+        if (is_null($fiscal)) {
+            throw new \InvalidArgumentException('non-nullable fiscal cannot be null');
+        }
+        $this->container['fiscal'] = $fiscal;
+
+        return $this;
+    }
+
+    /**
+     * Gets corrections
+     *
+     * @return \EmitfyGenerated\Model\NfeGet200ResponseDataCorrectionsInner[]|null
+     */
+    public function getCorrections()
+    {
+        return $this->container['corrections'];
+    }
+
+    /**
+     * Sets corrections
+     *
+     * @param \EmitfyGenerated\Model\NfeGet200ResponseDataCorrectionsInner[]|null $corrections Cartas de correção registradas
+     *
+     * @return self
+     */
+    public function setCorrections($corrections)
+    {
+        if (is_null($corrections)) {
+            throw new \InvalidArgumentException('non-nullable corrections cannot be null');
+        }
+        $this->container['corrections'] = $corrections;
+
+        return $this;
+    }
+
+    /**
+     * Gets createdAt
+     *
+     * @return \DateTime|null
+     */
+    public function getCreatedAt()
+    {
+        return $this->container['createdAt'];
+    }
+
+    /**
+     * Sets createdAt
+     *
+     * @param \DateTime|null $createdAt createdAt
+     *
+     * @return self
+     */
+    public function setCreatedAt($createdAt)
+    {
+        if (is_null($createdAt)) {
+            throw new \InvalidArgumentException('non-nullable createdAt cannot be null');
+        }
+        $this->container['createdAt'] = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Gets updatedAt
+     *
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->container['updatedAt'];
+    }
+
+    /**
+     * Sets updatedAt
+     *
+     * @param \DateTime|null $updatedAt updatedAt
+     *
+     * @return self
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        if (is_null($updatedAt)) {
+            throw new \InvalidArgumentException('non-nullable updatedAt cannot be null');
+        }
+        $this->container['updatedAt'] = $updatedAt;
 
         return $this;
     }

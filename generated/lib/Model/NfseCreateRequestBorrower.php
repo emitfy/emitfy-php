@@ -74,7 +74,7 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPIFormats = [
         'taxId' => null,
         'name' => null,
-        'email' => null,
+        'email' => 'email',
         'phone' => null,
         'address' => null
     ];
@@ -302,9 +302,17 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['taxId']) && (mb_strlen($this->container['taxId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
+        if ((mb_strlen($this->container['name']) < 1)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['email'] === null) {
             $invalidProperties[] = "'email' can't be null";
         }
@@ -336,7 +344,7 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets taxId
      *
-     * @param string|null $taxId taxId
+     * @param string|null $taxId CPF ou CNPJ do tomador
      *
      * @return self
      */
@@ -345,6 +353,11 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
         if (is_null($taxId)) {
             throw new \InvalidArgumentException('non-nullable taxId cannot be null');
         }
+
+        if ((mb_strlen($taxId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $taxId when calling NfseCreateRequestBorrower., must be bigger than or equal to 1.');
+        }
+
         $this->container['taxId'] = $taxId;
 
         return $this;
@@ -372,6 +385,11 @@ class NfseCreateRequestBorrower implements ModelInterface, ArrayAccess, \JsonSer
         if (is_null($name)) {
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
+
+        if ((mb_strlen($name) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfseCreateRequestBorrower., must be bigger than or equal to 1.');
+        }
+
         $this->container['name'] = $name;
 
         return $this;

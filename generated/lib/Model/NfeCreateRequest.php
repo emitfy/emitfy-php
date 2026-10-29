@@ -63,18 +63,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => 'string',
         'operationNature' => 'string',
         'nature' => 'string',
+        'operationType' => 'string',
+        'printType' => 'string',
+        'consumerType' => 'string',
+        'presenceType' => 'string',
+        'ibsConsumptionCityCode' => 'string',
+        'stateRegistrationId' => 'string',
+        'cfop' => 'string',
+        'issueDate' => '\DateTime',
+        'ide' => 'object',
+        'avulsa' => 'object',
+        'retirada' => '\EmitfyGenerated\Model\NfeCreateRequestRetirada',
+        'entrega' => '\EmitfyGenerated\Model\NfeCreateRequestEntrega',
+        'autXml' => '\EmitfyGenerated\Model\DfeAutXml[]',
         'billing' => 'object',
-        'additional' => 'object',
-        'techResponsible' => 'object',
+        'payments' => 'object[]',
+        'change' => 'float',
         'intermediary' => 'object',
-        'autXml' => 'object[]',
-        'retirada' => 'object',
-        'entrega' => 'object',
+        'additional' => 'object',
         'export' => 'object',
         'purchase' => 'object',
         'sugarcane' => 'object',
+        'techResponsible' => '\EmitfyGenerated\Model\DfeTechResponsible',
+        'nffRequest' => 'string',
         'farming' => 'object',
-        'nffRequest' => 'string'
+        'totals' => 'object'
     ];
 
     /**
@@ -91,18 +104,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => null,
         'operationNature' => null,
         'nature' => null,
-        'billing' => null,
-        'additional' => null,
-        'techResponsible' => null,
-        'intermediary' => null,
-        'autXml' => null,
+        'operationType' => null,
+        'printType' => null,
+        'consumerType' => null,
+        'presenceType' => null,
+        'ibsConsumptionCityCode' => null,
+        'stateRegistrationId' => 'uuid',
+        'cfop' => null,
+        'issueDate' => 'date-time',
+        'ide' => null,
+        'avulsa' => null,
         'retirada' => null,
         'entrega' => null,
+        'autXml' => null,
+        'billing' => null,
+        'payments' => null,
+        'change' => null,
+        'intermediary' => null,
+        'additional' => null,
         'export' => null,
         'purchase' => null,
         'sugarcane' => null,
+        'techResponsible' => null,
+        'nffRequest' => null,
         'farming' => null,
-        'nffRequest' => null
+        'totals' => null
     ];
 
     /**
@@ -117,18 +143,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => false,
         'operationNature' => false,
         'nature' => false,
-        'billing' => false,
-        'additional' => false,
-        'techResponsible' => false,
-        'intermediary' => false,
-        'autXml' => false,
+        'operationType' => false,
+        'printType' => false,
+        'consumerType' => false,
+        'presenceType' => false,
+        'ibsConsumptionCityCode' => false,
+        'stateRegistrationId' => false,
+        'cfop' => false,
+        'issueDate' => false,
+        'ide' => false,
+        'avulsa' => false,
         'retirada' => false,
         'entrega' => false,
+        'autXml' => false,
+        'billing' => false,
+        'payments' => false,
+        'change' => false,
+        'intermediary' => false,
+        'additional' => false,
         'export' => false,
         'purchase' => false,
         'sugarcane' => false,
+        'techResponsible' => false,
+        'nffRequest' => false,
         'farming' => false,
-        'nffRequest' => false
+        'totals' => false
     ];
 
     /**
@@ -223,18 +262,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => 'externalId',
         'operationNature' => 'operationNature',
         'nature' => 'nature',
-        'billing' => 'billing',
-        'additional' => 'additional',
-        'techResponsible' => 'techResponsible',
-        'intermediary' => 'intermediary',
-        'autXml' => 'autXml',
+        'operationType' => 'operationType',
+        'printType' => 'printType',
+        'consumerType' => 'consumerType',
+        'presenceType' => 'presenceType',
+        'ibsConsumptionCityCode' => 'ibsConsumptionCityCode',
+        'stateRegistrationId' => 'stateRegistrationId',
+        'cfop' => 'cfop',
+        'issueDate' => 'issueDate',
+        'ide' => 'ide',
+        'avulsa' => 'avulsa',
         'retirada' => 'retirada',
         'entrega' => 'entrega',
+        'autXml' => 'autXml',
+        'billing' => 'billing',
+        'payments' => 'payments',
+        'change' => 'change',
+        'intermediary' => 'intermediary',
+        'additional' => 'additional',
         'export' => 'export',
         'purchase' => 'purchase',
         'sugarcane' => 'sugarcane',
+        'techResponsible' => 'techResponsible',
+        'nffRequest' => 'nffRequest',
         'farming' => 'farming',
-        'nffRequest' => 'nffRequest'
+        'totals' => 'totals'
     ];
 
     /**
@@ -249,18 +301,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => 'setExternalId',
         'operationNature' => 'setOperationNature',
         'nature' => 'setNature',
-        'billing' => 'setBilling',
-        'additional' => 'setAdditional',
-        'techResponsible' => 'setTechResponsible',
-        'intermediary' => 'setIntermediary',
-        'autXml' => 'setAutXml',
+        'operationType' => 'setOperationType',
+        'printType' => 'setPrintType',
+        'consumerType' => 'setConsumerType',
+        'presenceType' => 'setPresenceType',
+        'ibsConsumptionCityCode' => 'setIbsConsumptionCityCode',
+        'stateRegistrationId' => 'setStateRegistrationId',
+        'cfop' => 'setCfop',
+        'issueDate' => 'setIssueDate',
+        'ide' => 'setIde',
+        'avulsa' => 'setAvulsa',
         'retirada' => 'setRetirada',
         'entrega' => 'setEntrega',
+        'autXml' => 'setAutXml',
+        'billing' => 'setBilling',
+        'payments' => 'setPayments',
+        'change' => 'setChange',
+        'intermediary' => 'setIntermediary',
+        'additional' => 'setAdditional',
         'export' => 'setExport',
         'purchase' => 'setPurchase',
         'sugarcane' => 'setSugarcane',
+        'techResponsible' => 'setTechResponsible',
+        'nffRequest' => 'setNffRequest',
         'farming' => 'setFarming',
-        'nffRequest' => 'setNffRequest'
+        'totals' => 'setTotals'
     ];
 
     /**
@@ -275,18 +340,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'externalId' => 'getExternalId',
         'operationNature' => 'getOperationNature',
         'nature' => 'getNature',
-        'billing' => 'getBilling',
-        'additional' => 'getAdditional',
-        'techResponsible' => 'getTechResponsible',
-        'intermediary' => 'getIntermediary',
-        'autXml' => 'getAutXml',
+        'operationType' => 'getOperationType',
+        'printType' => 'getPrintType',
+        'consumerType' => 'getConsumerType',
+        'presenceType' => 'getPresenceType',
+        'ibsConsumptionCityCode' => 'getIbsConsumptionCityCode',
+        'stateRegistrationId' => 'getStateRegistrationId',
+        'cfop' => 'getCfop',
+        'issueDate' => 'getIssueDate',
+        'ide' => 'getIde',
+        'avulsa' => 'getAvulsa',
         'retirada' => 'getRetirada',
         'entrega' => 'getEntrega',
+        'autXml' => 'getAutXml',
+        'billing' => 'getBilling',
+        'payments' => 'getPayments',
+        'change' => 'getChange',
+        'intermediary' => 'getIntermediary',
+        'additional' => 'getAdditional',
         'export' => 'getExport',
         'purchase' => 'getPurchase',
         'sugarcane' => 'getSugarcane',
+        'techResponsible' => 'getTechResponsible',
+        'nffRequest' => 'getNffRequest',
         'farming' => 'getFarming',
-        'nffRequest' => 'getNffRequest'
+        'totals' => 'getTotals'
     ];
 
     /**
@@ -330,6 +408,74 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const OPERATION_TYPE_OUTGOING = 'outgoing';
+    public const OPERATION_TYPE_INCOMING = 'incoming';
+    public const PRINT_TYPE_NFE_NORMAL_PORTRAIT = 'nfeNormalPortrait';
+    public const PRINT_TYPE_NFE_NORMAL_LANDSCAPE = 'nfeNormalLandscape';
+    public const PRINT_TYPE_NFE_SIMPLIFIED = 'nfeSimplified';
+    public const CONSUMER_TYPE_NORMAL = 'normal';
+    public const CONSUMER_TYPE_FINAL_CONSUMER = 'finalConsumer';
+    public const PRESENCE_TYPE_PRESENTIAL = 'presential';
+    public const PRESENCE_TYPE_INTERNET = 'internet';
+    public const PRESENCE_TYPE_TELEPHONE = 'telephone';
+    public const PRESENCE_TYPE_DELIVERY = 'delivery';
+    public const PRESENCE_TYPE_OTHERS = 'others';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getOperationTypeAllowableValues()
+    {
+        return [
+            self::OPERATION_TYPE_OUTGOING,
+            self::OPERATION_TYPE_INCOMING,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPrintTypeAllowableValues()
+    {
+        return [
+            self::PRINT_TYPE_NFE_NORMAL_PORTRAIT,
+            self::PRINT_TYPE_NFE_NORMAL_LANDSCAPE,
+            self::PRINT_TYPE_NFE_SIMPLIFIED,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getConsumerTypeAllowableValues()
+    {
+        return [
+            self::CONSUMER_TYPE_NORMAL,
+            self::CONSUMER_TYPE_FINAL_CONSUMER,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPresenceTypeAllowableValues()
+    {
+        return [
+            self::PRESENCE_TYPE_PRESENTIAL,
+            self::PRESENCE_TYPE_INTERNET,
+            self::PRESENCE_TYPE_TELEPHONE,
+            self::PRESENCE_TYPE_DELIVERY,
+            self::PRESENCE_TYPE_OTHERS,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -352,18 +498,31 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('operationNature', $data ?? [], null);
         $this->setIfExists('nature', $data ?? [], null);
-        $this->setIfExists('billing', $data ?? [], null);
-        $this->setIfExists('additional', $data ?? [], null);
-        $this->setIfExists('techResponsible', $data ?? [], null);
-        $this->setIfExists('intermediary', $data ?? [], null);
-        $this->setIfExists('autXml', $data ?? [], null);
+        $this->setIfExists('operationType', $data ?? [], null);
+        $this->setIfExists('printType', $data ?? [], null);
+        $this->setIfExists('consumerType', $data ?? [], null);
+        $this->setIfExists('presenceType', $data ?? [], null);
+        $this->setIfExists('ibsConsumptionCityCode', $data ?? [], null);
+        $this->setIfExists('stateRegistrationId', $data ?? [], null);
+        $this->setIfExists('cfop', $data ?? [], null);
+        $this->setIfExists('issueDate', $data ?? [], null);
+        $this->setIfExists('ide', $data ?? [], null);
+        $this->setIfExists('avulsa', $data ?? [], null);
         $this->setIfExists('retirada', $data ?? [], null);
         $this->setIfExists('entrega', $data ?? [], null);
+        $this->setIfExists('autXml', $data ?? [], null);
+        $this->setIfExists('billing', $data ?? [], null);
+        $this->setIfExists('payments', $data ?? [], null);
+        $this->setIfExists('change', $data ?? [], null);
+        $this->setIfExists('intermediary', $data ?? [], null);
+        $this->setIfExists('additional', $data ?? [], null);
         $this->setIfExists('export', $data ?? [], null);
         $this->setIfExists('purchase', $data ?? [], null);
         $this->setIfExists('sugarcane', $data ?? [], null);
-        $this->setIfExists('farming', $data ?? [], null);
+        $this->setIfExists('techResponsible', $data ?? [], null);
         $this->setIfExists('nffRequest', $data ?? [], null);
+        $this->setIfExists('farming', $data ?? [], null);
+        $this->setIfExists('totals', $data ?? [], null);
     }
 
     /**
@@ -403,6 +562,70 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['recipient'] === null) {
             $invalidProperties[] = "'recipient' can't be null";
         }
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['operationNature']) && (mb_strlen($this->container['operationNature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'operationNature', the character length must be smaller than or equal to 60.";
+        }
+
+        if (!is_null($this->container['operationNature']) && (mb_strlen($this->container['operationNature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'operationNature', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['nature']) && (mb_strlen($this->container['nature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be smaller than or equal to 60.";
+        }
+
+        if (!is_null($this->container['nature']) && (mb_strlen($this->container['nature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getOperationTypeAllowableValues();
+        if (!is_null($this->container['operationType']) && !in_array($this->container['operationType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'operationType', must be one of '%s'",
+                $this->container['operationType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getPrintTypeAllowableValues();
+        if (!is_null($this->container['printType']) && !in_array($this->container['printType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'printType', must be one of '%s'",
+                $this->container['printType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getConsumerTypeAllowableValues();
+        if (!is_null($this->container['consumerType']) && !in_array($this->container['consumerType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'consumerType', must be one of '%s'",
+                $this->container['consumerType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getPresenceTypeAllowableValues();
+        if (!is_null($this->container['presenceType']) && !in_array($this->container['presenceType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'presenceType', must be one of '%s'",
+                $this->container['presenceType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['change']) && ($this->container['change'] < 0)) {
+            $invalidProperties[] = "invalid value for 'change', must be bigger than or equal to 0.";
+        }
+
         return $invalidProperties;
     }
 
@@ -516,7 +739,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets externalId
      *
-     * @param string|null $externalId externalId
+     * @param string|null $externalId Idempotência (o header `Idempotency-Key` tem prioridade)
      *
      * @return self
      */
@@ -525,6 +748,13 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($externalId)) {
             throw new \InvalidArgumentException('non-nullable externalId cannot be null');
         }
+        if ((mb_strlen($externalId) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfeCreateRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($externalId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfeCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['externalId'] = $externalId;
 
         return $this;
@@ -552,6 +782,13 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($operationNature)) {
             throw new \InvalidArgumentException('non-nullable operationNature cannot be null');
         }
+        if ((mb_strlen($operationNature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $operationNature when calling NfeCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($operationNature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $operationNature when calling NfeCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['operationNature'] = $operationNature;
 
         return $this;
@@ -571,7 +808,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nature
      *
-     * @param string|null $nature nature
+     * @param string|null $nature Alias legado de operationNature
      *
      * @return self
      * @deprecated
@@ -581,7 +818,405 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($nature)) {
             throw new \InvalidArgumentException('non-nullable nature cannot be null');
         }
+        if ((mb_strlen($nature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling NfeCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($nature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling NfeCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['nature'] = $nature;
+
+        return $this;
+    }
+
+    /**
+     * Gets operationType
+     *
+     * @return string|null
+     */
+    public function getOperationType()
+    {
+        return $this->container['operationType'];
+    }
+
+    /**
+     * Sets operationType
+     *
+     * @param string|null $operationType operationType
+     *
+     * @return self
+     */
+    public function setOperationType($operationType)
+    {
+        if (is_null($operationType)) {
+            throw new \InvalidArgumentException('non-nullable operationType cannot be null');
+        }
+        $allowedValues = $this->getOperationTypeAllowableValues();
+        if (!in_array($operationType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'operationType', must be one of '%s'",
+                    $operationType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['operationType'] = $operationType;
+
+        return $this;
+    }
+
+    /**
+     * Gets printType
+     *
+     * @return string|null
+     */
+    public function getPrintType()
+    {
+        return $this->container['printType'];
+    }
+
+    /**
+     * Sets printType
+     *
+     * @param string|null $printType printType
+     *
+     * @return self
+     */
+    public function setPrintType($printType)
+    {
+        if (is_null($printType)) {
+            throw new \InvalidArgumentException('non-nullable printType cannot be null');
+        }
+        $allowedValues = $this->getPrintTypeAllowableValues();
+        if (!in_array($printType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'printType', must be one of '%s'",
+                    $printType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['printType'] = $printType;
+
+        return $this;
+    }
+
+    /**
+     * Gets consumerType
+     *
+     * @return string|null
+     */
+    public function getConsumerType()
+    {
+        return $this->container['consumerType'];
+    }
+
+    /**
+     * Sets consumerType
+     *
+     * @param string|null $consumerType consumerType
+     *
+     * @return self
+     */
+    public function setConsumerType($consumerType)
+    {
+        if (is_null($consumerType)) {
+            throw new \InvalidArgumentException('non-nullable consumerType cannot be null');
+        }
+        $allowedValues = $this->getConsumerTypeAllowableValues();
+        if (!in_array($consumerType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'consumerType', must be one of '%s'",
+                    $consumerType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['consumerType'] = $consumerType;
+
+        return $this;
+    }
+
+    /**
+     * Gets presenceType
+     *
+     * @return string|null
+     */
+    public function getPresenceType()
+    {
+        return $this->container['presenceType'];
+    }
+
+    /**
+     * Sets presenceType
+     *
+     * @param string|null $presenceType presenceType
+     *
+     * @return self
+     */
+    public function setPresenceType($presenceType)
+    {
+        if (is_null($presenceType)) {
+            throw new \InvalidArgumentException('non-nullable presenceType cannot be null');
+        }
+        $allowedValues = $this->getPresenceTypeAllowableValues();
+        if (!in_array($presenceType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'presenceType', must be one of '%s'",
+                    $presenceType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['presenceType'] = $presenceType;
+
+        return $this;
+    }
+
+    /**
+     * Gets ibsConsumptionCityCode
+     *
+     * @return string|null
+     */
+    public function getIbsConsumptionCityCode()
+    {
+        return $this->container['ibsConsumptionCityCode'];
+    }
+
+    /**
+     * Sets ibsConsumptionCityCode
+     *
+     * @param string|null $ibsConsumptionCityCode ibsConsumptionCityCode
+     *
+     * @return self
+     */
+    public function setIbsConsumptionCityCode($ibsConsumptionCityCode)
+    {
+        if (is_null($ibsConsumptionCityCode)) {
+            throw new \InvalidArgumentException('non-nullable ibsConsumptionCityCode cannot be null');
+        }
+        $this->container['ibsConsumptionCityCode'] = $ibsConsumptionCityCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets stateRegistrationId
+     *
+     * @return string|null
+     */
+    public function getStateRegistrationId()
+    {
+        return $this->container['stateRegistrationId'];
+    }
+
+    /**
+     * Sets stateRegistrationId
+     *
+     * @param string|null $stateRegistrationId Inscrição estadual da empresa (multi-IE) usada na emissão
+     *
+     * @return self
+     */
+    public function setStateRegistrationId($stateRegistrationId)
+    {
+        if (is_null($stateRegistrationId)) {
+            throw new \InvalidArgumentException('non-nullable stateRegistrationId cannot be null');
+        }
+        $this->container['stateRegistrationId'] = $stateRegistrationId;
+
+        return $this;
+    }
+
+    /**
+     * Gets cfop
+     *
+     * @return string|null
+     */
+    public function getCfop()
+    {
+        return $this->container['cfop'];
+    }
+
+    /**
+     * Sets cfop
+     *
+     * @param string|null $cfop cfop
+     *
+     * @return self
+     */
+    public function setCfop($cfop)
+    {
+        if (is_null($cfop)) {
+            throw new \InvalidArgumentException('non-nullable cfop cannot be null');
+        }
+        $this->container['cfop'] = $cfop;
+
+        return $this;
+    }
+
+    /**
+     * Gets issueDate
+     *
+     * @return \DateTime|null
+     */
+    public function getIssueDate()
+    {
+        return $this->container['issueDate'];
+    }
+
+    /**
+     * Sets issueDate
+     *
+     * @param \DateTime|null $issueDate issueDate
+     *
+     * @return self
+     */
+    public function setIssueDate($issueDate)
+    {
+        if (is_null($issueDate)) {
+            throw new \InvalidArgumentException('non-nullable issueDate cannot be null');
+        }
+        $this->container['issueDate'] = $issueDate;
+
+        return $this;
+    }
+
+    /**
+     * Gets ide
+     *
+     * @return object|null
+     */
+    public function getIde()
+    {
+        return $this->container['ide'];
+    }
+
+    /**
+     * Sets ide
+     *
+     * @param object|null $ide Grupo ide (campos avançados)
+     *
+     * @return self
+     */
+    public function setIde($ide)
+    {
+        if (is_null($ide)) {
+            throw new \InvalidArgumentException('non-nullable ide cannot be null');
+        }
+        $this->container['ide'] = $ide;
+
+        return $this;
+    }
+
+    /**
+     * Gets avulsa
+     *
+     * @return object|null
+     */
+    public function getAvulsa()
+    {
+        return $this->container['avulsa'];
+    }
+
+    /**
+     * Sets avulsa
+     *
+     * @param object|null $avulsa avulsa
+     *
+     * @return self
+     */
+    public function setAvulsa($avulsa)
+    {
+        if (is_null($avulsa)) {
+            throw new \InvalidArgumentException('non-nullable avulsa cannot be null');
+        }
+        $this->container['avulsa'] = $avulsa;
+
+        return $this;
+    }
+
+    /**
+     * Gets retirada
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestRetirada|null
+     */
+    public function getRetirada()
+    {
+        return $this->container['retirada'];
+    }
+
+    /**
+     * Sets retirada
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestRetirada|null $retirada retirada
+     *
+     * @return self
+     */
+    public function setRetirada($retirada)
+    {
+        if (is_null($retirada)) {
+            throw new \InvalidArgumentException('non-nullable retirada cannot be null');
+        }
+        $this->container['retirada'] = $retirada;
+
+        return $this;
+    }
+
+    /**
+     * Gets entrega
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestEntrega|null
+     */
+    public function getEntrega()
+    {
+        return $this->container['entrega'];
+    }
+
+    /**
+     * Sets entrega
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestEntrega|null $entrega entrega
+     *
+     * @return self
+     */
+    public function setEntrega($entrega)
+    {
+        if (is_null($entrega)) {
+            throw new \InvalidArgumentException('non-nullable entrega cannot be null');
+        }
+        $this->container['entrega'] = $entrega;
+
+        return $this;
+    }
+
+    /**
+     * Gets autXml
+     *
+     * @return \EmitfyGenerated\Model\DfeAutXml[]|null
+     */
+    public function getAutXml()
+    {
+        return $this->container['autXml'];
+    }
+
+    /**
+     * Sets autXml
+     *
+     * @param \EmitfyGenerated\Model\DfeAutXml[]|null $autXml autXml
+     *
+     * @return self
+     */
+    public function setAutXml($autXml)
+    {
+        if (is_null($autXml)) {
+            throw new \InvalidArgumentException('non-nullable autXml cannot be null');
+        }
+        $this->container['autXml'] = $autXml;
 
         return $this;
     }
@@ -614,55 +1249,59 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets additional
+     * Gets payments
      *
-     * @return object|null
+     * @return object[]|null
      */
-    public function getAdditional()
+    public function getPayments()
     {
-        return $this->container['additional'];
+        return $this->container['payments'];
     }
 
     /**
-     * Sets additional
+     * Sets payments
      *
-     * @param object|null $additional additional
+     * @param object[]|null $payments payments
      *
      * @return self
      */
-    public function setAdditional($additional)
+    public function setPayments($payments)
     {
-        if (is_null($additional)) {
-            throw new \InvalidArgumentException('non-nullable additional cannot be null');
+        if (is_null($payments)) {
+            throw new \InvalidArgumentException('non-nullable payments cannot be null');
         }
-        $this->container['additional'] = $additional;
+        $this->container['payments'] = $payments;
 
         return $this;
     }
 
     /**
-     * Gets techResponsible
+     * Gets change
      *
-     * @return object|null
+     * @return float|null
      */
-    public function getTechResponsible()
+    public function getChange()
     {
-        return $this->container['techResponsible'];
+        return $this->container['change'];
     }
 
     /**
-     * Sets techResponsible
+     * Sets change
      *
-     * @param object|null $techResponsible techResponsible
+     * @param float|null $change Troco
      *
      * @return self
      */
-    public function setTechResponsible($techResponsible)
+    public function setChange($change)
     {
-        if (is_null($techResponsible)) {
-            throw new \InvalidArgumentException('non-nullable techResponsible cannot be null');
+        if (is_null($change)) {
+            throw new \InvalidArgumentException('non-nullable change cannot be null');
         }
-        $this->container['techResponsible'] = $techResponsible;
+        if (($change < 0)) {
+            throw new \InvalidArgumentException('invalid value for $change when calling NfeCreateRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['change'] = $change;
 
         return $this;
     }
@@ -695,82 +1334,28 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets autXml
-     *
-     * @return object[]|null
-     */
-    public function getAutXml()
-    {
-        return $this->container['autXml'];
-    }
-
-    /**
-     * Sets autXml
-     *
-     * @param object[]|null $autXml autXml
-     *
-     * @return self
-     */
-    public function setAutXml($autXml)
-    {
-        if (is_null($autXml)) {
-            throw new \InvalidArgumentException('non-nullable autXml cannot be null');
-        }
-        $this->container['autXml'] = $autXml;
-
-        return $this;
-    }
-
-    /**
-     * Gets retirada
+     * Gets additional
      *
      * @return object|null
      */
-    public function getRetirada()
+    public function getAdditional()
     {
-        return $this->container['retirada'];
+        return $this->container['additional'];
     }
 
     /**
-     * Sets retirada
+     * Sets additional
      *
-     * @param object|null $retirada retirada
+     * @param object|null $additional additional
      *
      * @return self
      */
-    public function setRetirada($retirada)
+    public function setAdditional($additional)
     {
-        if (is_null($retirada)) {
-            throw new \InvalidArgumentException('non-nullable retirada cannot be null');
+        if (is_null($additional)) {
+            throw new \InvalidArgumentException('non-nullable additional cannot be null');
         }
-        $this->container['retirada'] = $retirada;
-
-        return $this;
-    }
-
-    /**
-     * Gets entrega
-     *
-     * @return object|null
-     */
-    public function getEntrega()
-    {
-        return $this->container['entrega'];
-    }
-
-    /**
-     * Sets entrega
-     *
-     * @param object|null $entrega entrega
-     *
-     * @return self
-     */
-    public function setEntrega($entrega)
-    {
-        if (is_null($entrega)) {
-            throw new \InvalidArgumentException('non-nullable entrega cannot be null');
-        }
-        $this->container['entrega'] = $entrega;
+        $this->container['additional'] = $additional;
 
         return $this;
     }
@@ -857,28 +1442,28 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets farming
+     * Gets techResponsible
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\DfeTechResponsible|null
      */
-    public function getFarming()
+    public function getTechResponsible()
     {
-        return $this->container['farming'];
+        return $this->container['techResponsible'];
     }
 
     /**
-     * Sets farming
+     * Sets techResponsible
      *
-     * @param object|null $farming farming
+     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible techResponsible
      *
      * @return self
      */
-    public function setFarming($farming)
+    public function setTechResponsible($techResponsible)
     {
-        if (is_null($farming)) {
-            throw new \InvalidArgumentException('non-nullable farming cannot be null');
+        if (is_null($techResponsible)) {
+            throw new \InvalidArgumentException('non-nullable techResponsible cannot be null');
         }
-        $this->container['farming'] = $farming;
+        $this->container['techResponsible'] = $techResponsible;
 
         return $this;
     }
@@ -906,6 +1491,60 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable nffRequest cannot be null');
         }
         $this->container['nffRequest'] = $nffRequest;
+
+        return $this;
+    }
+
+    /**
+     * Gets farming
+     *
+     * @return object|null
+     */
+    public function getFarming()
+    {
+        return $this->container['farming'];
+    }
+
+    /**
+     * Sets farming
+     *
+     * @param object|null $farming farming
+     *
+     * @return self
+     */
+    public function setFarming($farming)
+    {
+        if (is_null($farming)) {
+            throw new \InvalidArgumentException('non-nullable farming cannot be null');
+        }
+        $this->container['farming'] = $farming;
+
+        return $this;
+    }
+
+    /**
+     * Gets totals
+     *
+     * @return object|null
+     */
+    public function getTotals()
+    {
+        return $this->container['totals'];
+    }
+
+    /**
+     * Sets totals
+     *
+     * @param object|null $totals Override de totais
+     *
+     * @return self
+     */
+    public function setTotals($totals)
+    {
+        if (is_null($totals)) {
+            throw new \InvalidArgumentException('non-nullable totals cannot be null');
+        }
+        $this->container['totals'] = $totals;
 
         return $this;
     }

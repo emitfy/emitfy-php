@@ -1,6 +1,6 @@
 <?php
 /**
- * NfseCreateRequestTaxesIss
+ * InvoicesList200ResponseData
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \EmitfyGenerated\ObjectSerializer;
 
 /**
- * NfseCreateRequestTaxesIss Class Doc Comment
+ * InvoicesList200ResponseData Class Doc Comment
  *
  * @category Class
  * @package  EmitfyGenerated
@@ -40,7 +40,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSerializable
+class InvoicesList200ResponseData implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      *
      * @var string
      */
-    protected static $openAPIModelName = 'NfseCreateRequest_taxes_iss';
+    protected static $openAPIModelName = 'invoicesList_200_response_data';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $openAPITypes = [
-        'rate' => 'float',
-        'isWithheld' => 'bool'
+        'items' => '\EmitfyGenerated\Model\PublicInvoiceResource[]',
+        'pageInfo' => '\EmitfyGenerated\Model\CursorPageInfo',
+        'statistics' => 'array<string,mixed>'
     ];
 
     /**
@@ -69,8 +70,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'rate' => null,
-        'isWithheld' => null
+        'items' => null,
+        'pageInfo' => null,
+        'statistics' => null
     ];
 
     /**
@@ -79,8 +81,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'rate' => false,
-        'isWithheld' => false
+        'items' => false,
+        'pageInfo' => false,
+        'statistics' => false
     ];
 
     /**
@@ -169,8 +172,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $attributeMap = [
-        'rate' => 'rate',
-        'isWithheld' => 'isWithheld'
+        'items' => 'items',
+        'pageInfo' => 'pageInfo',
+        'statistics' => 'statistics'
     ];
 
     /**
@@ -179,8 +183,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $setters = [
-        'rate' => 'setRate',
-        'isWithheld' => 'setIsWithheld'
+        'items' => 'setItems',
+        'pageInfo' => 'setPageInfo',
+        'statistics' => 'setStatistics'
     ];
 
     /**
@@ -189,8 +194,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      * @var string[]
      */
     protected static $getters = [
-        'rate' => 'getRate',
-        'isWithheld' => 'getIsWithheld'
+        'items' => 'getItems',
+        'pageInfo' => 'getPageInfo',
+        'statistics' => 'getStatistics'
     ];
 
     /**
@@ -250,8 +256,9 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('rate', $data ?? [], null);
-        $this->setIfExists('isWithheld', $data ?? [], null);
+        $this->setIfExists('items', $data ?? [], null);
+        $this->setIfExists('pageInfo', $data ?? [], null);
+        $this->setIfExists('statistics', $data ?? [], null);
     }
 
     /**
@@ -297,55 +304,82 @@ class NfseCreateRequestTaxesIss implements ModelInterface, ArrayAccess, \JsonSer
 
 
     /**
-     * Gets rate
+     * Gets items
      *
-     * @return float|null
+     * @return \EmitfyGenerated\Model\PublicInvoiceResource[]|null
      */
-    public function getRate()
+    public function getItems()
     {
-        return $this->container['rate'];
+        return $this->container['items'];
     }
 
     /**
-     * Sets rate
+     * Sets items
      *
-     * @param float|null $rate rate
+     * @param \EmitfyGenerated\Model\PublicInvoiceResource[]|null $items items
      *
      * @return self
      */
-    public function setRate($rate)
+    public function setItems($items)
     {
-        if (is_null($rate)) {
-            throw new \InvalidArgumentException('non-nullable rate cannot be null');
+        if (is_null($items)) {
+            throw new \InvalidArgumentException('non-nullable items cannot be null');
         }
-        $this->container['rate'] = $rate;
+        $this->container['items'] = $items;
 
         return $this;
     }
 
     /**
-     * Gets isWithheld
+     * Gets pageInfo
      *
-     * @return bool|null
+     * @return \EmitfyGenerated\Model\CursorPageInfo|null
      */
-    public function getIsWithheld()
+    public function getPageInfo()
     {
-        return $this->container['isWithheld'];
+        return $this->container['pageInfo'];
     }
 
     /**
-     * Sets isWithheld
+     * Sets pageInfo
      *
-     * @param bool|null $isWithheld isWithheld
+     * @param \EmitfyGenerated\Model\CursorPageInfo|null $pageInfo pageInfo
      *
      * @return self
      */
-    public function setIsWithheld($isWithheld)
+    public function setPageInfo($pageInfo)
     {
-        if (is_null($isWithheld)) {
-            throw new \InvalidArgumentException('non-nullable isWithheld cannot be null');
+        if (is_null($pageInfo)) {
+            throw new \InvalidArgumentException('non-nullable pageInfo cannot be null');
         }
-        $this->container['isWithheld'] = $isWithheld;
+        $this->container['pageInfo'] = $pageInfo;
+
+        return $this;
+    }
+
+    /**
+     * Gets statistics
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getStatistics()
+    {
+        return $this->container['statistics'];
+    }
+
+    /**
+     * Sets statistics
+     *
+     * @param array<string,mixed>|null $statistics Totais agregados do filtro
+     *
+     * @return self
+     */
+    public function setStatistics($statistics)
+    {
+        if (is_null($statistics)) {
+            throw new \InvalidArgumentException('non-nullable statistics cannot be null');
+        }
+        $this->container['statistics'] = $statistics;
 
         return $this;
     }

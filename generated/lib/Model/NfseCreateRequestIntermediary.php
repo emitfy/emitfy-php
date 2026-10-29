@@ -59,7 +59,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPITypes = [
         'taxId' => 'string',
         'name' => 'string',
-        'municipalRegistration' => 'string'
+        'municipalRegistration' => 'string',
+        'address' => '\EmitfyGenerated\Model\DfeAddressLayout'
     ];
 
     /**
@@ -72,7 +73,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static $openAPIFormats = [
         'taxId' => null,
         'name' => null,
-        'municipalRegistration' => null
+        'municipalRegistration' => null,
+        'address' => null
     ];
 
     /**
@@ -83,7 +85,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static array $openAPINullables = [
         'taxId' => false,
         'name' => false,
-        'municipalRegistration' => false
+        'municipalRegistration' => false,
+        'address' => false
     ];
 
     /**
@@ -174,7 +177,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static $attributeMap = [
         'taxId' => 'taxId',
         'name' => 'name',
-        'municipalRegistration' => 'municipalRegistration'
+        'municipalRegistration' => 'municipalRegistration',
+        'address' => 'address'
     ];
 
     /**
@@ -185,7 +189,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static $setters = [
         'taxId' => 'setTaxId',
         'name' => 'setName',
-        'municipalRegistration' => 'setMunicipalRegistration'
+        'municipalRegistration' => 'setMunicipalRegistration',
+        'address' => 'setAddress'
     ];
 
     /**
@@ -196,7 +201,8 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
     protected static $getters = [
         'taxId' => 'getTaxId',
         'name' => 'getName',
-        'municipalRegistration' => 'getMunicipalRegistration'
+        'municipalRegistration' => 'getMunicipalRegistration',
+        'address' => 'getAddress'
     ];
 
     /**
@@ -259,6 +265,7 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
         $this->setIfExists('taxId', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('municipalRegistration', $data ?? [], null);
+        $this->setIfExists('address', $data ?? [], null);
     }
 
     /**
@@ -291,9 +298,17 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
         if ($this->container['taxId'] === null) {
             $invalidProperties[] = "'taxId' can't be null";
         }
+        if ((mb_strlen($this->container['taxId']) < 11)) {
+            $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 11.";
+        }
+
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
+        if ((mb_strlen($this->container['name']) < 2)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 2.";
+        }
+
         return $invalidProperties;
     }
 
@@ -331,6 +346,11 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
         if (is_null($taxId)) {
             throw new \InvalidArgumentException('non-nullable taxId cannot be null');
         }
+
+        if ((mb_strlen($taxId) < 11)) {
+            throw new \InvalidArgumentException('invalid length for $taxId when calling NfseCreateRequestIntermediary., must be bigger than or equal to 11.');
+        }
+
         $this->container['taxId'] = $taxId;
 
         return $this;
@@ -358,6 +378,11 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
         if (is_null($name)) {
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
+
+        if ((mb_strlen($name) < 2)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfseCreateRequestIntermediary., must be bigger than or equal to 2.');
+        }
+
         $this->container['name'] = $name;
 
         return $this;
@@ -386,6 +411,33 @@ class NfseCreateRequestIntermediary implements ModelInterface, ArrayAccess, \Jso
             throw new \InvalidArgumentException('non-nullable municipalRegistration cannot be null');
         }
         $this->container['municipalRegistration'] = $municipalRegistration;
+
+        return $this;
+    }
+
+    /**
+     * Gets address
+     *
+     * @return \EmitfyGenerated\Model\DfeAddressLayout|null
+     */
+    public function getAddress()
+    {
+        return $this->container['address'];
+    }
+
+    /**
+     * Sets address
+     *
+     * @param \EmitfyGenerated\Model\DfeAddressLayout|null $address address
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        if (is_null($address)) {
+            throw new \InvalidArgumentException('non-nullable address cannot be null');
+        }
+        $this->container['address'] = $address;
 
         return $this;
     }

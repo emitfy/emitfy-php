@@ -288,6 +288,13 @@ class NfseCreateRequestSubstitution implements ModelInterface, ArrayAccess, \Jso
     {
         $invalidProperties = [];
 
+        if ($this->container['replacedKey'] === null) {
+            $invalidProperties[] = "'replacedKey' can't be null";
+        }
+        if ((mb_strlen($this->container['replacedKey']) < 1)) {
+            $invalidProperties[] = "invalid value for 'replacedKey', the character length must be bigger than or equal to 1.";
+        }
+
         return $invalidProperties;
     }
 
@@ -306,7 +313,7 @@ class NfseCreateRequestSubstitution implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets replacedKey
      *
-     * @return string|null
+     * @return string
      */
     public function getReplacedKey()
     {
@@ -316,7 +323,7 @@ class NfseCreateRequestSubstitution implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets replacedKey
      *
-     * @param string|null $replacedKey replacedKey
+     * @param string $replacedKey replacedKey
      *
      * @return self
      */
@@ -325,6 +332,11 @@ class NfseCreateRequestSubstitution implements ModelInterface, ArrayAccess, \Jso
         if (is_null($replacedKey)) {
             throw new \InvalidArgumentException('non-nullable replacedKey cannot be null');
         }
+
+        if ((mb_strlen($replacedKey) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $replacedKey when calling NfseCreateRequestSubstitution., must be bigger than or equal to 1.');
+        }
+
         $this->container['replacedKey'] = $replacedKey;
 
         return $this;

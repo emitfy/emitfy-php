@@ -68,10 +68,13 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'documents' => '\EmitfyGenerated\Model\MdfeUnloadCity[]',
         'modal' => '\EmitfyGenerated\Model\MdfeModal',
         'drivers' => '\EmitfyGenerated\Model\MdfeDriver[]',
-        'insurance' => 'object[]',
-        'additional' => 'object',
-        'techResponsible' => 'object',
-        'payments' => 'object[]',
+        'insurance' => '\EmitfyGenerated\Model\MdfeEmitRequestInsuranceInner[]',
+        'predominantProduct' => '\EmitfyGenerated\Model\MdfeEmitRequestPredominantProduct',
+        'seals' => 'string[]',
+        'autXml' => '\EmitfyGenerated\Model\DfeAutXml[]',
+        'additional' => '\EmitfyGenerated\Model\MdfeEmitRequestAdditional',
+        'techResponsible' => '\EmitfyGenerated\Model\DfeTechResponsible',
+        'payments' => '\EmitfyGenerated\Model\MdfePayment[]',
         'issueDate' => '\DateTime'
     ];
 
@@ -95,6 +98,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'modal' => null,
         'drivers' => null,
         'insurance' => null,
+        'predominantProduct' => null,
+        'seals' => null,
+        'autXml' => null,
         'additional' => null,
         'techResponsible' => null,
         'payments' => null,
@@ -119,6 +125,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'modal' => false,
         'drivers' => false,
         'insurance' => false,
+        'predominantProduct' => false,
+        'seals' => false,
+        'autXml' => false,
         'additional' => false,
         'techResponsible' => false,
         'payments' => false,
@@ -223,6 +232,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'modal' => 'modal',
         'drivers' => 'drivers',
         'insurance' => 'insurance',
+        'predominantProduct' => 'predominantProduct',
+        'seals' => 'seals',
+        'autXml' => 'autXml',
         'additional' => 'additional',
         'techResponsible' => 'techResponsible',
         'payments' => 'payments',
@@ -247,6 +259,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'modal' => 'setModal',
         'drivers' => 'setDrivers',
         'insurance' => 'setInsurance',
+        'predominantProduct' => 'setPredominantProduct',
+        'seals' => 'setSeals',
+        'autXml' => 'setAutXml',
         'additional' => 'setAdditional',
         'techResponsible' => 'setTechResponsible',
         'payments' => 'setPayments',
@@ -271,6 +286,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'modal' => 'getModal',
         'drivers' => 'getDrivers',
         'insurance' => 'getInsurance',
+        'predominantProduct' => 'getPredominantProduct',
+        'seals' => 'getSeals',
+        'autXml' => 'getAutXml',
         'additional' => 'getAdditional',
         'techResponsible' => 'getTechResponsible',
         'payments' => 'getPayments',
@@ -346,6 +364,9 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('modal', $data ?? [], null);
         $this->setIfExists('drivers', $data ?? [], null);
         $this->setIfExists('insurance', $data ?? [], null);
+        $this->setIfExists('predominantProduct', $data ?? [], null);
+        $this->setIfExists('seals', $data ?? [], null);
+        $this->setIfExists('autXml', $data ?? [], null);
         $this->setIfExists('additional', $data ?? [], null);
         $this->setIfExists('techResponsible', $data ?? [], null);
         $this->setIfExists('payments', $data ?? [], null);
@@ -814,7 +835,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets insurance
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\MdfeEmitRequestInsuranceInner[]|null
      */
     public function getInsurance()
     {
@@ -824,7 +845,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets insurance
      *
-     * @param object[]|null $insurance insurance
+     * @param \EmitfyGenerated\Model\MdfeEmitRequestInsuranceInner[]|null $insurance insurance
      *
      * @return self
      */
@@ -839,9 +860,90 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets predominantProduct
+     *
+     * @return \EmitfyGenerated\Model\MdfeEmitRequestPredominantProduct|null
+     */
+    public function getPredominantProduct()
+    {
+        return $this->container['predominantProduct'];
+    }
+
+    /**
+     * Sets predominantProduct
+     *
+     * @param \EmitfyGenerated\Model\MdfeEmitRequestPredominantProduct|null $predominantProduct predominantProduct
+     *
+     * @return self
+     */
+    public function setPredominantProduct($predominantProduct)
+    {
+        if (is_null($predominantProduct)) {
+            throw new \InvalidArgumentException('non-nullable predominantProduct cannot be null');
+        }
+        $this->container['predominantProduct'] = $predominantProduct;
+
+        return $this;
+    }
+
+    /**
+     * Gets seals
+     *
+     * @return string[]|null
+     */
+    public function getSeals()
+    {
+        return $this->container['seals'];
+    }
+
+    /**
+     * Sets seals
+     *
+     * @param string[]|null $seals seals
+     *
+     * @return self
+     */
+    public function setSeals($seals)
+    {
+        if (is_null($seals)) {
+            throw new \InvalidArgumentException('non-nullable seals cannot be null');
+        }
+        $this->container['seals'] = $seals;
+
+        return $this;
+    }
+
+    /**
+     * Gets autXml
+     *
+     * @return \EmitfyGenerated\Model\DfeAutXml[]|null
+     */
+    public function getAutXml()
+    {
+        return $this->container['autXml'];
+    }
+
+    /**
+     * Sets autXml
+     *
+     * @param \EmitfyGenerated\Model\DfeAutXml[]|null $autXml autXml
+     *
+     * @return self
+     */
+    public function setAutXml($autXml)
+    {
+        if (is_null($autXml)) {
+            throw new \InvalidArgumentException('non-nullable autXml cannot be null');
+        }
+        $this->container['autXml'] = $autXml;
+
+        return $this;
+    }
+
+    /**
      * Gets additional
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\MdfeEmitRequestAdditional|null
      */
     public function getAdditional()
     {
@@ -851,7 +953,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets additional
      *
-     * @param object|null $additional additional
+     * @param \EmitfyGenerated\Model\MdfeEmitRequestAdditional|null $additional additional
      *
      * @return self
      */
@@ -868,7 +970,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets techResponsible
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\DfeTechResponsible|null
      */
     public function getTechResponsible()
     {
@@ -878,7 +980,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets techResponsible
      *
-     * @param object|null $techResponsible techResponsible
+     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible techResponsible
      *
      * @return self
      */
@@ -895,7 +997,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets payments
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\MdfePayment[]|null
      */
     public function getPayments()
     {
@@ -905,7 +1007,7 @@ class MdfeEmitRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets payments
      *
-     * @param object[]|null $payments payments
+     * @param \EmitfyGenerated\Model\MdfePayment[]|null $payments payments
      *
      * @return self
      */

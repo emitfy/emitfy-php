@@ -74,7 +74,7 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPIFormats = [
         'taxId' => null,
         'name' => null,
-        'email' => null,
+        'email' => 'email',
         'phone' => null,
         'address' => null
     ];
@@ -305,9 +305,21 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
         if ($this->container['taxId'] === null) {
             $invalidProperties[] = "'taxId' can't be null";
         }
+        if ((mb_strlen($this->container['taxId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['name'] === null) {
             $invalidProperties[] = "'name' can't be null";
         }
+        if ((mb_strlen($this->container['name']) > 200)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 200.";
+        }
+
+        if ((mb_strlen($this->container['name']) < 1)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
+        }
+
         return $invalidProperties;
     }
 
@@ -345,6 +357,11 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
         if (is_null($taxId)) {
             throw new \InvalidArgumentException('non-nullable taxId cannot be null');
         }
+
+        if ((mb_strlen($taxId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $taxId when calling NfeCreateRequestRecipient., must be bigger than or equal to 1.');
+        }
+
         $this->container['taxId'] = $taxId;
 
         return $this;
@@ -372,6 +389,13 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
         if (is_null($name)) {
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
+        if ((mb_strlen($name) > 200)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfeCreateRequestRecipient., must be smaller than or equal to 200.');
+        }
+        if ((mb_strlen($name) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfeCreateRequestRecipient., must be bigger than or equal to 1.');
+        }
+
         $this->container['name'] = $name;
 
         return $this;

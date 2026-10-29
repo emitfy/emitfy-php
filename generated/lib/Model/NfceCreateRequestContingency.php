@@ -281,7 +281,17 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['reason']) && (mb_strlen($this->container['reason']) < 15)) {
+        if ($this->container['startedAt'] === null) {
+            $invalidProperties[] = "'startedAt' can't be null";
+        }
+        if ($this->container['reason'] === null) {
+            $invalidProperties[] = "'reason' can't be null";
+        }
+        if ((mb_strlen($this->container['reason']) > 256)) {
+            $invalidProperties[] = "invalid value for 'reason', the character length must be smaller than or equal to 256.";
+        }
+
+        if ((mb_strlen($this->container['reason']) < 15)) {
             $invalidProperties[] = "invalid value for 'reason', the character length must be bigger than or equal to 15.";
         }
 
@@ -303,7 +313,7 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets startedAt
      *
-     * @return \DateTime|null
+     * @return \DateTime
      */
     public function getStartedAt()
     {
@@ -313,7 +323,7 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets startedAt
      *
-     * @param \DateTime|null $startedAt startedAt
+     * @param \DateTime $startedAt startedAt
      *
      * @return self
      */
@@ -330,7 +340,7 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets reason
      *
-     * @return string|null
+     * @return string
      */
     public function getReason()
     {
@@ -340,7 +350,7 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets reason
      *
-     * @param string|null $reason reason
+     * @param string $reason reason
      *
      * @return self
      */
@@ -349,7 +359,9 @@ class NfceCreateRequestContingency implements ModelInterface, ArrayAccess, \Json
         if (is_null($reason)) {
             throw new \InvalidArgumentException('non-nullable reason cannot be null');
         }
-
+        if ((mb_strlen($reason) > 256)) {
+            throw new \InvalidArgumentException('invalid length for $reason when calling NfceCreateRequestContingency., must be smaller than or equal to 256.');
+        }
         if ((mb_strlen($reason) < 15)) {
             throw new \InvalidArgumentException('invalid length for $reason when calling NfceCreateRequestContingency., must be bigger than or equal to 15.');
         }

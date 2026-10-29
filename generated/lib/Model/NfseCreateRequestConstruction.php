@@ -58,7 +58,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static $openAPITypes = [
         'art' => 'string',
-        'workCode' => 'string'
+        'workCode' => 'string',
+        'cib' => 'string',
+        'municipalRegistration' => 'string',
+        'address' => '\EmitfyGenerated\Model\DfeAddressLayout'
     ];
 
     /**
@@ -70,7 +73,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static $openAPIFormats = [
         'art' => null,
-        'workCode' => null
+        'workCode' => null,
+        'cib' => null,
+        'municipalRegistration' => null,
+        'address' => null
     ];
 
     /**
@@ -80,7 +86,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static array $openAPINullables = [
         'art' => false,
-        'workCode' => false
+        'workCode' => false,
+        'cib' => false,
+        'municipalRegistration' => false,
+        'address' => false
     ];
 
     /**
@@ -170,7 +179,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static $attributeMap = [
         'art' => 'art',
-        'workCode' => 'workCode'
+        'workCode' => 'workCode',
+        'cib' => 'cib',
+        'municipalRegistration' => 'municipalRegistration',
+        'address' => 'address'
     ];
 
     /**
@@ -180,7 +192,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static $setters = [
         'art' => 'setArt',
-        'workCode' => 'setWorkCode'
+        'workCode' => 'setWorkCode',
+        'cib' => 'setCib',
+        'municipalRegistration' => 'setMunicipalRegistration',
+        'address' => 'setAddress'
     ];
 
     /**
@@ -190,7 +205,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
      */
     protected static $getters = [
         'art' => 'getArt',
-        'workCode' => 'getWorkCode'
+        'workCode' => 'getWorkCode',
+        'cib' => 'getCib',
+        'municipalRegistration' => 'getMunicipalRegistration',
+        'address' => 'getAddress'
     ];
 
     /**
@@ -252,6 +270,9 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
     {
         $this->setIfExists('art', $data ?? [], null);
         $this->setIfExists('workCode', $data ?? [], null);
+        $this->setIfExists('cib', $data ?? [], null);
+        $this->setIfExists('municipalRegistration', $data ?? [], null);
+        $this->setIfExists('address', $data ?? [], null);
     }
 
     /**
@@ -280,6 +301,22 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['art']) && (mb_strlen($this->container['art']) > 40)) {
+            $invalidProperties[] = "invalid value for 'art', the character length must be smaller than or equal to 40.";
+        }
+
+        if (!is_null($this->container['workCode']) && (mb_strlen($this->container['workCode']) > 30)) {
+            $invalidProperties[] = "invalid value for 'workCode', the character length must be smaller than or equal to 30.";
+        }
+
+        if (!is_null($this->container['cib']) && (mb_strlen($this->container['cib']) > 8)) {
+            $invalidProperties[] = "invalid value for 'cib', the character length must be smaller than or equal to 8.";
+        }
+
+        if (!is_null($this->container['municipalRegistration']) && (mb_strlen($this->container['municipalRegistration']) > 30)) {
+            $invalidProperties[] = "invalid value for 'municipalRegistration', the character length must be smaller than or equal to 30.";
+        }
 
         return $invalidProperties;
     }
@@ -318,6 +355,10 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
         if (is_null($art)) {
             throw new \InvalidArgumentException('non-nullable art cannot be null');
         }
+        if ((mb_strlen($art) > 40)) {
+            throw new \InvalidArgumentException('invalid length for $art when calling NfseCreateRequestConstruction., must be smaller than or equal to 40.');
+        }
+
         $this->container['art'] = $art;
 
         return $this;
@@ -345,7 +386,100 @@ class NfseCreateRequestConstruction implements ModelInterface, ArrayAccess, \Jso
         if (is_null($workCode)) {
             throw new \InvalidArgumentException('non-nullable workCode cannot be null');
         }
+        if ((mb_strlen($workCode) > 30)) {
+            throw new \InvalidArgumentException('invalid length for $workCode when calling NfseCreateRequestConstruction., must be smaller than or equal to 30.');
+        }
+
         $this->container['workCode'] = $workCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets cib
+     *
+     * @return string|null
+     */
+    public function getCib()
+    {
+        return $this->container['cib'];
+    }
+
+    /**
+     * Sets cib
+     *
+     * @param string|null $cib cib
+     *
+     * @return self
+     */
+    public function setCib($cib)
+    {
+        if (is_null($cib)) {
+            throw new \InvalidArgumentException('non-nullable cib cannot be null');
+        }
+        if ((mb_strlen($cib) > 8)) {
+            throw new \InvalidArgumentException('invalid length for $cib when calling NfseCreateRequestConstruction., must be smaller than or equal to 8.');
+        }
+
+        $this->container['cib'] = $cib;
+
+        return $this;
+    }
+
+    /**
+     * Gets municipalRegistration
+     *
+     * @return string|null
+     */
+    public function getMunicipalRegistration()
+    {
+        return $this->container['municipalRegistration'];
+    }
+
+    /**
+     * Sets municipalRegistration
+     *
+     * @param string|null $municipalRegistration municipalRegistration
+     *
+     * @return self
+     */
+    public function setMunicipalRegistration($municipalRegistration)
+    {
+        if (is_null($municipalRegistration)) {
+            throw new \InvalidArgumentException('non-nullable municipalRegistration cannot be null');
+        }
+        if ((mb_strlen($municipalRegistration) > 30)) {
+            throw new \InvalidArgumentException('invalid length for $municipalRegistration when calling NfseCreateRequestConstruction., must be smaller than or equal to 30.');
+        }
+
+        $this->container['municipalRegistration'] = $municipalRegistration;
+
+        return $this;
+    }
+
+    /**
+     * Gets address
+     *
+     * @return \EmitfyGenerated\Model\DfeAddressLayout|null
+     */
+    public function getAddress()
+    {
+        return $this->container['address'];
+    }
+
+    /**
+     * Sets address
+     *
+     * @param \EmitfyGenerated\Model\DfeAddressLayout|null $address address
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        if (is_null($address)) {
+            throw new \InvalidArgumentException('non-nullable address cannot be null');
+        }
+        $this->container['address'] = $address;
 
         return $this;
     }

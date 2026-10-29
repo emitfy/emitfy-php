@@ -58,12 +58,12 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $openAPITypes = [
-        'iss' => '\EmitfyGenerated\Model\NfseCreateRequestTaxesIss',
-        'pis' => 'object',
-        'cofins' => 'object',
-        'csll' => 'object',
-        'ir' => 'object',
-        'inss' => 'object'
+        'iss' => '\EmitfyGenerated\Model\NfseTaxEntry',
+        'pis' => '\EmitfyGenerated\Model\NfseTaxEntry',
+        'cofins' => '\EmitfyGenerated\Model\NfseTaxEntry',
+        'csll' => '\EmitfyGenerated\Model\NfseTaxEntry',
+        'ir' => '\EmitfyGenerated\Model\NfseTaxEntry',
+        'inss' => '\EmitfyGenerated\Model\NfseTaxEntry'
     ];
 
     /**
@@ -328,7 +328,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets iss
      *
-     * @return \EmitfyGenerated\Model\NfseCreateRequestTaxesIss|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getIss()
     {
@@ -338,7 +338,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets iss
      *
-     * @param \EmitfyGenerated\Model\NfseCreateRequestTaxesIss|null $iss iss
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $iss iss
      *
      * @return self
      */
@@ -355,7 +355,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets pis
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getPis()
     {
@@ -365,7 +365,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets pis
      *
-     * @param object|null $pis pis
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $pis pis
      *
      * @return self
      */
@@ -382,7 +382,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets cofins
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getCofins()
     {
@@ -392,7 +392,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets cofins
      *
-     * @param object|null $cofins cofins
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $cofins cofins
      *
      * @return self
      */
@@ -409,7 +409,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets csll
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getCsll()
     {
@@ -419,7 +419,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets csll
      *
-     * @param object|null $csll csll
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $csll csll
      *
      * @return self
      */
@@ -436,7 +436,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets ir
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getIr()
     {
@@ -446,7 +446,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets ir
      *
-     * @param object|null $ir ir
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $ir ir
      *
      * @return self
      */
@@ -463,7 +463,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets inss
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfseTaxEntry|null
      */
     public function getInss()
     {
@@ -473,7 +473,7 @@ class NfseCreateRequestTaxes implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets inss
      *
-     * @param object|null $inss inss
+     * @param \EmitfyGenerated\Model\NfseTaxEntry|null $inss inss
      *
      * @return self
      */

@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfseCreateRequestBorrowerAddress Class Doc Comment
  *
  * @category Class
+ * @description Endereço do tomador. Não aceita código IBGE (&#x60;cityCode&#x60;/&#x60;ibge&#x60;) — campo desconhecido retorna 422.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -63,9 +64,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => 'string',
         'city' => 'string',
         'state' => 'string',
-        'zipcode' => 'string',
-        'cityCode' => 'string',
-        'ibge' => 'string'
+        'zipcode' => 'string'
     ];
 
     /**
@@ -82,9 +81,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => null,
         'city' => null,
         'state' => null,
-        'zipcode' => null,
-        'cityCode' => null,
-        'ibge' => null
+        'zipcode' => null
     ];
 
     /**
@@ -99,9 +96,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => false,
         'city' => false,
         'state' => false,
-        'zipcode' => false,
-        'cityCode' => false,
-        'ibge' => false
+        'zipcode' => false
     ];
 
     /**
@@ -196,9 +191,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => 'district',
         'city' => 'city',
         'state' => 'state',
-        'zipcode' => 'zipcode',
-        'cityCode' => 'cityCode',
-        'ibge' => 'ibge'
+        'zipcode' => 'zipcode'
     ];
 
     /**
@@ -213,9 +206,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => 'setDistrict',
         'city' => 'setCity',
         'state' => 'setState',
-        'zipcode' => 'setZipcode',
-        'cityCode' => 'setCityCode',
-        'ibge' => 'setIbge'
+        'zipcode' => 'setZipcode'
     ];
 
     /**
@@ -230,9 +221,7 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         'district' => 'getDistrict',
         'city' => 'getCity',
         'state' => 'getState',
-        'zipcode' => 'getZipcode',
-        'cityCode' => 'getCityCode',
-        'ibge' => 'getIbge'
+        'zipcode' => 'getZipcode'
     ];
 
     /**
@@ -299,8 +288,6 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
         $this->setIfExists('city', $data ?? [], null);
         $this->setIfExists('state', $data ?? [], null);
         $this->setIfExists('zipcode', $data ?? [], null);
-        $this->setIfExists('cityCode', $data ?? [], null);
-        $this->setIfExists('ibge', $data ?? [], null);
     }
 
     /**
@@ -530,60 +517,6 @@ class NfseCreateRequestBorrowerAddress implements ModelInterface, ArrayAccess, \
             throw new \InvalidArgumentException('non-nullable zipcode cannot be null');
         }
         $this->container['zipcode'] = $zipcode;
-
-        return $this;
-    }
-
-    /**
-     * Gets cityCode
-     *
-     * @return string|null
-     */
-    public function getCityCode()
-    {
-        return $this->container['cityCode'];
-    }
-
-    /**
-     * Sets cityCode
-     *
-     * @param string|null $cityCode cityCode
-     *
-     * @return self
-     */
-    public function setCityCode($cityCode)
-    {
-        if (is_null($cityCode)) {
-            throw new \InvalidArgumentException('non-nullable cityCode cannot be null');
-        }
-        $this->container['cityCode'] = $cityCode;
-
-        return $this;
-    }
-
-    /**
-     * Gets ibge
-     *
-     * @return string|null
-     */
-    public function getIbge()
-    {
-        return $this->container['ibge'];
-    }
-
-    /**
-     * Sets ibge
-     *
-     * @param string|null $ibge ibge
-     *
-     * @return self
-     */
-    public function setIbge($ibge)
-    {
-        if (is_null($ibge)) {
-            throw new \InvalidArgumentException('non-nullable ibge cannot be null');
-        }
-        $this->container['ibge'] = $ibge;
 
         return $this;
     }

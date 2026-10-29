@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfceCreateRequestRecipient Class Doc Comment
  *
  * @category Class
+ * @description Opcional (padrão consumidor final); todos os campos opcionais.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -60,7 +61,8 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         'taxId' => 'string',
         'name' => 'string',
         'email' => 'string',
-        'phone' => 'string'
+        'phone' => 'string',
+        'address' => '\EmitfyGenerated\Model\NfeAddress'
     ];
 
     /**
@@ -73,8 +75,9 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
     protected static $openAPIFormats = [
         'taxId' => null,
         'name' => null,
-        'email' => null,
-        'phone' => null
+        'email' => 'email',
+        'phone' => null,
+        'address' => null
     ];
 
     /**
@@ -86,7 +89,8 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         'taxId' => false,
         'name' => false,
         'email' => false,
-        'phone' => false
+        'phone' => false,
+        'address' => false
     ];
 
     /**
@@ -178,7 +182,8 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         'taxId' => 'taxId',
         'name' => 'name',
         'email' => 'email',
-        'phone' => 'phone'
+        'phone' => 'phone',
+        'address' => 'address'
     ];
 
     /**
@@ -190,7 +195,8 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         'taxId' => 'setTaxId',
         'name' => 'setName',
         'email' => 'setEmail',
-        'phone' => 'setPhone'
+        'phone' => 'setPhone',
+        'address' => 'setAddress'
     ];
 
     /**
@@ -202,7 +208,8 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         'taxId' => 'getTaxId',
         'name' => 'getName',
         'email' => 'getEmail',
-        'phone' => 'getPhone'
+        'phone' => 'getPhone',
+        'address' => 'getAddress'
     ];
 
     /**
@@ -266,6 +273,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('phone', $data ?? [], null);
+        $this->setIfExists('address', $data ?? [], null);
     }
 
     /**
@@ -294,6 +302,18 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!is_null($this->container['taxId']) && (mb_strlen($this->container['taxId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['name']) && (mb_strlen($this->container['name']) > 200)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 200.";
+        }
+
+        if (!is_null($this->container['name']) && (mb_strlen($this->container['name']) < 1)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
+        }
 
         return $invalidProperties;
     }
@@ -332,6 +352,11 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         if (is_null($taxId)) {
             throw new \InvalidArgumentException('non-nullable taxId cannot be null');
         }
+
+        if ((mb_strlen($taxId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $taxId when calling NfceCreateRequestRecipient., must be bigger than or equal to 1.');
+        }
+
         $this->container['taxId'] = $taxId;
 
         return $this;
@@ -359,6 +384,13 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         if (is_null($name)) {
             throw new \InvalidArgumentException('non-nullable name cannot be null');
         }
+        if ((mb_strlen($name) > 200)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfceCreateRequestRecipient., must be smaller than or equal to 200.');
+        }
+        if ((mb_strlen($name) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling NfceCreateRequestRecipient., must be bigger than or equal to 1.');
+        }
+
         $this->container['name'] = $name;
 
         return $this;
@@ -414,6 +446,33 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
             throw new \InvalidArgumentException('non-nullable phone cannot be null');
         }
         $this->container['phone'] = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Gets address
+     *
+     * @return \EmitfyGenerated\Model\NfeAddress|null
+     */
+    public function getAddress()
+    {
+        return $this->container['address'];
+    }
+
+    /**
+     * Sets address
+     *
+     * @param \EmitfyGenerated\Model\NfeAddress|null $address address
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        if (is_null($address)) {
+            throw new \InvalidArgumentException('non-nullable address cannot be null');
+        }
+        $this->container['address'] = $address;
 
         return $this;
     }

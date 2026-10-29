@@ -68,6 +68,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => 'string',
         'cfopInternal' => 'string',
         'cfopExternal' => 'string',
+        'cfopExternalNonTaxpayer' => 'string',
         'cfopInternational' => 'string',
         'quantity' => 'float',
         'unitValue' => 'float',
@@ -78,10 +79,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => 'string',
         'icmsCst' => 'string',
         'icmsTaxRate' => 'float',
+        'icmsModBc' => 'string',
+        'icmsTaxBenefitCode' => 'string',
         'pisCst' => 'string',
         'pisTaxRate' => 'float',
         'cofinsCst' => 'string',
         'cofinsTaxRate' => 'float',
+        'ipiCst' => 'string',
+        'ipiTaxRate' => 'float',
+        'ipiLegalCode' => 'string',
+        'cest' => 'string',
+        'fci' => 'string',
+        'nve' => 'string[]',
+        'extipi' => 'string',
+        'orderNumber' => 'string',
+        'orderItem' => 'int',
+        'freight' => 'float',
+        'insurance' => 'float',
+        'discount' => 'float',
+        'other' => 'float',
         'taxClassification' => 'string',
         'ibsCst' => 'string',
         'cbsCst' => 'string',
@@ -114,6 +130,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => null,
         'cfopInternal' => null,
         'cfopExternal' => null,
+        'cfopExternalNonTaxpayer' => null,
         'cfopInternational' => null,
         'quantity' => null,
         'unitValue' => null,
@@ -124,10 +141,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => null,
         'icmsCst' => null,
         'icmsTaxRate' => null,
+        'icmsModBc' => null,
+        'icmsTaxBenefitCode' => null,
         'pisCst' => null,
         'pisTaxRate' => null,
         'cofinsCst' => null,
         'cofinsTaxRate' => null,
+        'ipiCst' => null,
+        'ipiTaxRate' => null,
+        'ipiLegalCode' => null,
+        'cest' => null,
+        'fci' => null,
+        'nve' => null,
+        'extipi' => null,
+        'orderNumber' => null,
+        'orderItem' => null,
+        'freight' => null,
+        'insurance' => null,
+        'discount' => null,
+        'other' => null,
         'taxClassification' => null,
         'ibsCst' => null,
         'cbsCst' => null,
@@ -158,6 +190,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => false,
         'cfopInternal' => false,
         'cfopExternal' => false,
+        'cfopExternalNonTaxpayer' => false,
         'cfopInternational' => false,
         'quantity' => false,
         'unitValue' => false,
@@ -168,10 +201,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => false,
         'icmsCst' => false,
         'icmsTaxRate' => false,
+        'icmsModBc' => false,
+        'icmsTaxBenefitCode' => false,
         'pisCst' => false,
         'pisTaxRate' => false,
         'cofinsCst' => false,
         'cofinsTaxRate' => false,
+        'ipiCst' => false,
+        'ipiTaxRate' => false,
+        'ipiLegalCode' => false,
+        'cest' => false,
+        'fci' => false,
+        'nve' => false,
+        'extipi' => false,
+        'orderNumber' => false,
+        'orderItem' => false,
+        'freight' => false,
+        'insurance' => false,
+        'discount' => false,
+        'other' => false,
         'taxClassification' => false,
         'ibsCst' => false,
         'cbsCst' => false,
@@ -282,6 +330,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => 'cfop',
         'cfopInternal' => 'cfopInternal',
         'cfopExternal' => 'cfopExternal',
+        'cfopExternalNonTaxpayer' => 'cfopExternalNonTaxpayer',
         'cfopInternational' => 'cfopInternational',
         'quantity' => 'quantity',
         'unitValue' => 'unitValue',
@@ -292,10 +341,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => 'icmsOrigin',
         'icmsCst' => 'icmsCst',
         'icmsTaxRate' => 'icmsTaxRate',
+        'icmsModBc' => 'icmsModBc',
+        'icmsTaxBenefitCode' => 'icmsTaxBenefitCode',
         'pisCst' => 'pisCst',
         'pisTaxRate' => 'pisTaxRate',
         'cofinsCst' => 'cofinsCst',
         'cofinsTaxRate' => 'cofinsTaxRate',
+        'ipiCst' => 'ipiCst',
+        'ipiTaxRate' => 'ipiTaxRate',
+        'ipiLegalCode' => 'ipiLegalCode',
+        'cest' => 'cest',
+        'fci' => 'fci',
+        'nve' => 'nve',
+        'extipi' => 'extipi',
+        'orderNumber' => 'orderNumber',
+        'orderItem' => 'orderItem',
+        'freight' => 'freight',
+        'insurance' => 'insurance',
+        'discount' => 'discount',
+        'other' => 'other',
         'taxClassification' => 'taxClassification',
         'ibsCst' => 'ibsCst',
         'cbsCst' => 'cbsCst',
@@ -326,6 +390,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => 'setCfop',
         'cfopInternal' => 'setCfopInternal',
         'cfopExternal' => 'setCfopExternal',
+        'cfopExternalNonTaxpayer' => 'setCfopExternalNonTaxpayer',
         'cfopInternational' => 'setCfopInternational',
         'quantity' => 'setQuantity',
         'unitValue' => 'setUnitValue',
@@ -336,10 +401,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => 'setIcmsOrigin',
         'icmsCst' => 'setIcmsCst',
         'icmsTaxRate' => 'setIcmsTaxRate',
+        'icmsModBc' => 'setIcmsModBc',
+        'icmsTaxBenefitCode' => 'setIcmsTaxBenefitCode',
         'pisCst' => 'setPisCst',
         'pisTaxRate' => 'setPisTaxRate',
         'cofinsCst' => 'setCofinsCst',
         'cofinsTaxRate' => 'setCofinsTaxRate',
+        'ipiCst' => 'setIpiCst',
+        'ipiTaxRate' => 'setIpiTaxRate',
+        'ipiLegalCode' => 'setIpiLegalCode',
+        'cest' => 'setCest',
+        'fci' => 'setFci',
+        'nve' => 'setNve',
+        'extipi' => 'setExtipi',
+        'orderNumber' => 'setOrderNumber',
+        'orderItem' => 'setOrderItem',
+        'freight' => 'setFreight',
+        'insurance' => 'setInsurance',
+        'discount' => 'setDiscount',
+        'other' => 'setOther',
         'taxClassification' => 'setTaxClassification',
         'ibsCst' => 'setIbsCst',
         'cbsCst' => 'setCbsCst',
@@ -370,6 +450,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'cfop' => 'getCfop',
         'cfopInternal' => 'getCfopInternal',
         'cfopExternal' => 'getCfopExternal',
+        'cfopExternalNonTaxpayer' => 'getCfopExternalNonTaxpayer',
         'cfopInternational' => 'getCfopInternational',
         'quantity' => 'getQuantity',
         'unitValue' => 'getUnitValue',
@@ -380,10 +461,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icmsOrigin' => 'getIcmsOrigin',
         'icmsCst' => 'getIcmsCst',
         'icmsTaxRate' => 'getIcmsTaxRate',
+        'icmsModBc' => 'getIcmsModBc',
+        'icmsTaxBenefitCode' => 'getIcmsTaxBenefitCode',
         'pisCst' => 'getPisCst',
         'pisTaxRate' => 'getPisTaxRate',
         'cofinsCst' => 'getCofinsCst',
         'cofinsTaxRate' => 'getCofinsTaxRate',
+        'ipiCst' => 'getIpiCst',
+        'ipiTaxRate' => 'getIpiTaxRate',
+        'ipiLegalCode' => 'getIpiLegalCode',
+        'cest' => 'getCest',
+        'fci' => 'getFci',
+        'nve' => 'getNve',
+        'extipi' => 'getExtipi',
+        'orderNumber' => 'getOrderNumber',
+        'orderItem' => 'getOrderItem',
+        'freight' => 'getFreight',
+        'insurance' => 'getInsurance',
+        'discount' => 'getDiscount',
+        'other' => 'getOther',
         'taxClassification' => 'getTaxClassification',
         'ibsCst' => 'getIbsCst',
         'cbsCst' => 'getCbsCst',
@@ -465,6 +561,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('cfop', $data ?? [], null);
         $this->setIfExists('cfopInternal', $data ?? [], null);
         $this->setIfExists('cfopExternal', $data ?? [], null);
+        $this->setIfExists('cfopExternalNonTaxpayer', $data ?? [], null);
         $this->setIfExists('cfopInternational', $data ?? [], null);
         $this->setIfExists('quantity', $data ?? [], null);
         $this->setIfExists('unitValue', $data ?? [], null);
@@ -475,10 +572,25 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('icmsOrigin', $data ?? [], null);
         $this->setIfExists('icmsCst', $data ?? [], null);
         $this->setIfExists('icmsTaxRate', $data ?? [], null);
+        $this->setIfExists('icmsModBc', $data ?? [], null);
+        $this->setIfExists('icmsTaxBenefitCode', $data ?? [], null);
         $this->setIfExists('pisCst', $data ?? [], null);
         $this->setIfExists('pisTaxRate', $data ?? [], null);
         $this->setIfExists('cofinsCst', $data ?? [], null);
         $this->setIfExists('cofinsTaxRate', $data ?? [], null);
+        $this->setIfExists('ipiCst', $data ?? [], null);
+        $this->setIfExists('ipiTaxRate', $data ?? [], null);
+        $this->setIfExists('ipiLegalCode', $data ?? [], null);
+        $this->setIfExists('cest', $data ?? [], null);
+        $this->setIfExists('fci', $data ?? [], null);
+        $this->setIfExists('nve', $data ?? [], null);
+        $this->setIfExists('extipi', $data ?? [], null);
+        $this->setIfExists('orderNumber', $data ?? [], null);
+        $this->setIfExists('orderItem', $data ?? [], null);
+        $this->setIfExists('freight', $data ?? [], null);
+        $this->setIfExists('insurance', $data ?? [], null);
+        $this->setIfExists('discount', $data ?? [], null);
+        $this->setIfExists('other', $data ?? [], null);
         $this->setIfExists('taxClassification', $data ?? [], null);
         $this->setIfExists('ibsCst', $data ?? [], null);
         $this->setIfExists('cbsCst', $data ?? [], null);
@@ -535,6 +647,18 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = "invalid value for 'description', the character length must be smaller than or equal to 120.";
         }
 
+        if ((mb_strlen($this->container['description']) < 1)) {
+            $invalidProperties[] = "invalid value for 'description', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['fiscalDescription']) && (mb_strlen($this->container['fiscalDescription']) > 2000)) {
+            $invalidProperties[] = "invalid value for 'fiscalDescription', the character length must be smaller than or equal to 2000.";
+        }
+
+        if (!is_null($this->container['fiscalDescription']) && (mb_strlen($this->container['fiscalDescription']) < 1)) {
+            $invalidProperties[] = "invalid value for 'fiscalDescription', the character length must be bigger than or equal to 1.";
+        }
+
         if (!is_null($this->container['guarantee']) && ($this->container['guarantee'] > 365)) {
             $invalidProperties[] = "invalid value for 'guarantee', must be smaller than or equal to 365.";
         }
@@ -546,9 +670,53 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['quantity'] === null) {
             $invalidProperties[] = "'quantity' can't be null";
         }
+        if (($this->container['quantity'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'quantity', must be bigger than 0.";
+        }
+
         if ($this->container['unitValue'] === null) {
             $invalidProperties[] = "'unitValue' can't be null";
         }
+        if (($this->container['unitValue'] <= 0)) {
+            $invalidProperties[] = "invalid value for 'unitValue', must be bigger than 0.";
+        }
+
+        if (!is_null($this->container['unit']) && (mb_strlen($this->container['unit']) > 6)) {
+            $invalidProperties[] = "invalid value for 'unit', the character length must be smaller than or equal to 6.";
+        }
+
+        if (!is_null($this->container['commercialUnit']) && (mb_strlen($this->container['commercialUnit']) > 6)) {
+            $invalidProperties[] = "invalid value for 'commercialUnit', the character length must be smaller than or equal to 6.";
+        }
+
+        if (!is_null($this->container['taxableUnit']) && (mb_strlen($this->container['taxableUnit']) > 6)) {
+            $invalidProperties[] = "invalid value for 'taxableUnit', the character length must be smaller than or equal to 6.";
+        }
+
+        if (!is_null($this->container['orderItem']) && ($this->container['orderItem'] < 1)) {
+            $invalidProperties[] = "invalid value for 'orderItem', must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['freight']) && ($this->container['freight'] < 0)) {
+            $invalidProperties[] = "invalid value for 'freight', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['insurance']) && ($this->container['insurance'] < 0)) {
+            $invalidProperties[] = "invalid value for 'insurance', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['discount']) && ($this->container['discount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'discount', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['other']) && ($this->container['other'] < 0)) {
+            $invalidProperties[] = "invalid value for 'other', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['additionalInfo']) && (mb_strlen($this->container['additionalInfo']) > 500)) {
+            $invalidProperties[] = "invalid value for 'additionalInfo', the character length must be smaller than or equal to 500.";
+        }
+
         return $invalidProperties;
     }
 
@@ -677,6 +845,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if ((mb_strlen($description) > 120)) {
             throw new \InvalidArgumentException('invalid length for $description when calling ProductEmitItem., must be smaller than or equal to 120.');
         }
+        if ((mb_strlen($description) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $description when calling ProductEmitItem., must be bigger than or equal to 1.');
+        }
 
         $this->container['description'] = $description;
 
@@ -696,7 +867,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets fiscalDescription
      *
-     * @param string|null $fiscalDescription fiscalDescription
+     * @param string|null $fiscalDescription Descrição na nota (xProd). Default = description
      *
      * @return self
      */
@@ -705,6 +876,13 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($fiscalDescription)) {
             throw new \InvalidArgumentException('non-nullable fiscalDescription cannot be null');
         }
+        if ((mb_strlen($fiscalDescription) > 2000)) {
+            throw new \InvalidArgumentException('invalid length for $fiscalDescription when calling ProductEmitItem., must be smaller than or equal to 2000.');
+        }
+        if ((mb_strlen($fiscalDescription) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $fiscalDescription when calling ProductEmitItem., must be bigger than or equal to 1.');
+        }
+
         $this->container['fiscalDescription'] = $fiscalDescription;
 
         return $this;
@@ -853,6 +1031,33 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets cfopExternalNonTaxpayer
+     *
+     * @return string|null
+     */
+    public function getCfopExternalNonTaxpayer()
+    {
+        return $this->container['cfopExternalNonTaxpayer'];
+    }
+
+    /**
+     * Sets cfopExternalNonTaxpayer
+     *
+     * @param string|null $cfopExternalNonTaxpayer cfopExternalNonTaxpayer
+     *
+     * @return self
+     */
+    public function setCfopExternalNonTaxpayer($cfopExternalNonTaxpayer)
+    {
+        if (is_null($cfopExternalNonTaxpayer)) {
+            throw new \InvalidArgumentException('non-nullable cfopExternalNonTaxpayer cannot be null');
+        }
+        $this->container['cfopExternalNonTaxpayer'] = $cfopExternalNonTaxpayer;
+
+        return $this;
+    }
+
+    /**
      * Gets cfopInternational
      *
      * @return string|null
@@ -901,6 +1106,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($quantity)) {
             throw new \InvalidArgumentException('non-nullable quantity cannot be null');
         }
+        if (($quantity <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $quantity when calling ProductEmitItem., must be bigger than 0.');
+        }
+
         $this->container['quantity'] = $quantity;
 
         return $this;
@@ -928,6 +1137,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($unitValue)) {
             throw new \InvalidArgumentException('non-nullable unitValue cannot be null');
         }
+        if (($unitValue <= 0)) {
+            throw new \InvalidArgumentException('invalid value for $unitValue when calling ProductEmitItem., must be bigger than 0.');
+        }
+
         $this->container['unitValue'] = $unitValue;
 
         return $this;
@@ -946,7 +1159,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets unit
      *
-     * @param string|null $unit unit
+     * @param string|null $unit Alias legado de commercialUnit
      *
      * @return self
      */
@@ -955,6 +1168,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($unit)) {
             throw new \InvalidArgumentException('non-nullable unit cannot be null');
         }
+        if ((mb_strlen($unit) > 6)) {
+            throw new \InvalidArgumentException('invalid length for $unit when calling ProductEmitItem., must be smaller than or equal to 6.');
+        }
+
         $this->container['unit'] = $unit;
 
         return $this;
@@ -982,6 +1199,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($commercialUnit)) {
             throw new \InvalidArgumentException('non-nullable commercialUnit cannot be null');
         }
+        if ((mb_strlen($commercialUnit) > 6)) {
+            throw new \InvalidArgumentException('invalid length for $commercialUnit when calling ProductEmitItem., must be smaller than or equal to 6.');
+        }
+
         $this->container['commercialUnit'] = $commercialUnit;
 
         return $this;
@@ -1009,6 +1230,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($taxableUnit)) {
             throw new \InvalidArgumentException('non-nullable taxableUnit cannot be null');
         }
+        if ((mb_strlen($taxableUnit) > 6)) {
+            throw new \InvalidArgumentException('invalid length for $taxableUnit when calling ProductEmitItem., must be smaller than or equal to 6.');
+        }
+
         $this->container['taxableUnit'] = $taxableUnit;
 
         return $this;
@@ -1123,6 +1348,60 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets icmsModBc
+     *
+     * @return string|null
+     */
+    public function getIcmsModBc()
+    {
+        return $this->container['icmsModBc'];
+    }
+
+    /**
+     * Sets icmsModBc
+     *
+     * @param string|null $icmsModBc icmsModBc
+     *
+     * @return self
+     */
+    public function setIcmsModBc($icmsModBc)
+    {
+        if (is_null($icmsModBc)) {
+            throw new \InvalidArgumentException('non-nullable icmsModBc cannot be null');
+        }
+        $this->container['icmsModBc'] = $icmsModBc;
+
+        return $this;
+    }
+
+    /**
+     * Gets icmsTaxBenefitCode
+     *
+     * @return string|null
+     */
+    public function getIcmsTaxBenefitCode()
+    {
+        return $this->container['icmsTaxBenefitCode'];
+    }
+
+    /**
+     * Sets icmsTaxBenefitCode
+     *
+     * @param string|null $icmsTaxBenefitCode icmsTaxBenefitCode
+     *
+     * @return self
+     */
+    public function setIcmsTaxBenefitCode($icmsTaxBenefitCode)
+    {
+        if (is_null($icmsTaxBenefitCode)) {
+            throw new \InvalidArgumentException('non-nullable icmsTaxBenefitCode cannot be null');
+        }
+        $this->container['icmsTaxBenefitCode'] = $icmsTaxBenefitCode;
+
+        return $this;
+    }
+
+    /**
      * Gets pisCst
      *
      * @return string|null
@@ -1226,6 +1505,377 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable cofinsTaxRate cannot be null');
         }
         $this->container['cofinsTaxRate'] = $cofinsTaxRate;
+
+        return $this;
+    }
+
+    /**
+     * Gets ipiCst
+     *
+     * @return string|null
+     */
+    public function getIpiCst()
+    {
+        return $this->container['ipiCst'];
+    }
+
+    /**
+     * Sets ipiCst
+     *
+     * @param string|null $ipiCst ipiCst
+     *
+     * @return self
+     */
+    public function setIpiCst($ipiCst)
+    {
+        if (is_null($ipiCst)) {
+            throw new \InvalidArgumentException('non-nullable ipiCst cannot be null');
+        }
+        $this->container['ipiCst'] = $ipiCst;
+
+        return $this;
+    }
+
+    /**
+     * Gets ipiTaxRate
+     *
+     * @return float|null
+     */
+    public function getIpiTaxRate()
+    {
+        return $this->container['ipiTaxRate'];
+    }
+
+    /**
+     * Sets ipiTaxRate
+     *
+     * @param float|null $ipiTaxRate ipiTaxRate
+     *
+     * @return self
+     */
+    public function setIpiTaxRate($ipiTaxRate)
+    {
+        if (is_null($ipiTaxRate)) {
+            throw new \InvalidArgumentException('non-nullable ipiTaxRate cannot be null');
+        }
+        $this->container['ipiTaxRate'] = $ipiTaxRate;
+
+        return $this;
+    }
+
+    /**
+     * Gets ipiLegalCode
+     *
+     * @return string|null
+     */
+    public function getIpiLegalCode()
+    {
+        return $this->container['ipiLegalCode'];
+    }
+
+    /**
+     * Sets ipiLegalCode
+     *
+     * @param string|null $ipiLegalCode ipiLegalCode
+     *
+     * @return self
+     */
+    public function setIpiLegalCode($ipiLegalCode)
+    {
+        if (is_null($ipiLegalCode)) {
+            throw new \InvalidArgumentException('non-nullable ipiLegalCode cannot be null');
+        }
+        $this->container['ipiLegalCode'] = $ipiLegalCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets cest
+     *
+     * @return string|null
+     */
+    public function getCest()
+    {
+        return $this->container['cest'];
+    }
+
+    /**
+     * Sets cest
+     *
+     * @param string|null $cest cest
+     *
+     * @return self
+     */
+    public function setCest($cest)
+    {
+        if (is_null($cest)) {
+            throw new \InvalidArgumentException('non-nullable cest cannot be null');
+        }
+        $this->container['cest'] = $cest;
+
+        return $this;
+    }
+
+    /**
+     * Gets fci
+     *
+     * @return string|null
+     */
+    public function getFci()
+    {
+        return $this->container['fci'];
+    }
+
+    /**
+     * Sets fci
+     *
+     * @param string|null $fci fci
+     *
+     * @return self
+     */
+    public function setFci($fci)
+    {
+        if (is_null($fci)) {
+            throw new \InvalidArgumentException('non-nullable fci cannot be null');
+        }
+        $this->container['fci'] = $fci;
+
+        return $this;
+    }
+
+    /**
+     * Gets nve
+     *
+     * @return string[]|null
+     */
+    public function getNve()
+    {
+        return $this->container['nve'];
+    }
+
+    /**
+     * Sets nve
+     *
+     * @param string[]|null $nve nve
+     *
+     * @return self
+     */
+    public function setNve($nve)
+    {
+        if (is_null($nve)) {
+            throw new \InvalidArgumentException('non-nullable nve cannot be null');
+        }
+        $this->container['nve'] = $nve;
+
+        return $this;
+    }
+
+    /**
+     * Gets extipi
+     *
+     * @return string|null
+     */
+    public function getExtipi()
+    {
+        return $this->container['extipi'];
+    }
+
+    /**
+     * Sets extipi
+     *
+     * @param string|null $extipi extipi
+     *
+     * @return self
+     */
+    public function setExtipi($extipi)
+    {
+        if (is_null($extipi)) {
+            throw new \InvalidArgumentException('non-nullable extipi cannot be null');
+        }
+        $this->container['extipi'] = $extipi;
+
+        return $this;
+    }
+
+    /**
+     * Gets orderNumber
+     *
+     * @return string|null
+     */
+    public function getOrderNumber()
+    {
+        return $this->container['orderNumber'];
+    }
+
+    /**
+     * Sets orderNumber
+     *
+     * @param string|null $orderNumber orderNumber
+     *
+     * @return self
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        if (is_null($orderNumber)) {
+            throw new \InvalidArgumentException('non-nullable orderNumber cannot be null');
+        }
+        $this->container['orderNumber'] = $orderNumber;
+
+        return $this;
+    }
+
+    /**
+     * Gets orderItem
+     *
+     * @return int|null
+     */
+    public function getOrderItem()
+    {
+        return $this->container['orderItem'];
+    }
+
+    /**
+     * Sets orderItem
+     *
+     * @param int|null $orderItem orderItem
+     *
+     * @return self
+     */
+    public function setOrderItem($orderItem)
+    {
+        if (is_null($orderItem)) {
+            throw new \InvalidArgumentException('non-nullable orderItem cannot be null');
+        }
+        if (($orderItem < 1)) {
+            throw new \InvalidArgumentException('invalid value for $orderItem when calling ProductEmitItem., must be bigger than or equal to 1.');
+        }
+
+        $this->container['orderItem'] = $orderItem;
+
+        return $this;
+    }
+
+    /**
+     * Gets freight
+     *
+     * @return float|null
+     */
+    public function getFreight()
+    {
+        return $this->container['freight'];
+    }
+
+    /**
+     * Sets freight
+     *
+     * @param float|null $freight freight
+     *
+     * @return self
+     */
+    public function setFreight($freight)
+    {
+        if (is_null($freight)) {
+            throw new \InvalidArgumentException('non-nullable freight cannot be null');
+        }
+        if (($freight < 0)) {
+            throw new \InvalidArgumentException('invalid value for $freight when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['freight'] = $freight;
+
+        return $this;
+    }
+
+    /**
+     * Gets insurance
+     *
+     * @return float|null
+     */
+    public function getInsurance()
+    {
+        return $this->container['insurance'];
+    }
+
+    /**
+     * Sets insurance
+     *
+     * @param float|null $insurance insurance
+     *
+     * @return self
+     */
+    public function setInsurance($insurance)
+    {
+        if (is_null($insurance)) {
+            throw new \InvalidArgumentException('non-nullable insurance cannot be null');
+        }
+        if (($insurance < 0)) {
+            throw new \InvalidArgumentException('invalid value for $insurance when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['insurance'] = $insurance;
+
+        return $this;
+    }
+
+    /**
+     * Gets discount
+     *
+     * @return float|null
+     */
+    public function getDiscount()
+    {
+        return $this->container['discount'];
+    }
+
+    /**
+     * Sets discount
+     *
+     * @param float|null $discount discount
+     *
+     * @return self
+     */
+    public function setDiscount($discount)
+    {
+        if (is_null($discount)) {
+            throw new \InvalidArgumentException('non-nullable discount cannot be null');
+        }
+        if (($discount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $discount when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['discount'] = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Gets other
+     *
+     * @return float|null
+     */
+    public function getOther()
+    {
+        return $this->container['other'];
+    }
+
+    /**
+     * Sets other
+     *
+     * @param float|null $other other
+     *
+     * @return self
+     */
+    public function setOther($other)
+    {
+        if (is_null($other)) {
+            throw new \InvalidArgumentException('non-nullable other cannot be null');
+        }
+        if (($other < 0)) {
+            throw new \InvalidArgumentException('invalid value for $other when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['other'] = $other;
 
         return $this;
     }
@@ -1549,6 +2199,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($additionalInfo)) {
             throw new \InvalidArgumentException('non-nullable additionalInfo cannot be null');
         }
+        if ((mb_strlen($additionalInfo) > 500)) {
+            throw new \InvalidArgumentException('invalid length for $additionalInfo when calling ProductEmitItem., must be smaller than or equal to 500.');
+        }
+
         $this->container['additionalInfo'] = $additionalInfo;
 
         return $this;

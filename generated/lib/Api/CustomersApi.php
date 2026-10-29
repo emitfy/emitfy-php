@@ -142,7 +142,7 @@ class CustomersApi
      *
      * Create customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed> $requestBody requestBody (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersCreate'] to see the possible values for this operation
      *
@@ -160,7 +160,7 @@ class CustomersApi
      *
      * Create customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed> $requestBody (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersCreate'] to see the possible values for this operation
      *
@@ -218,7 +218,7 @@ class CustomersApi
      *
      * Create customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed> $requestBody (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersCreate'] to see the possible values for this operation
      *
@@ -240,7 +240,7 @@ class CustomersApi
      *
      * Create customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed> $requestBody (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersCreate'] to see the possible values for this operation
      *
@@ -278,7 +278,7 @@ class CustomersApi
     /**
      * Create request for operation 'customersCreate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  array<string,mixed> $requestBody (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersCreate'] to see the possible values for this operation
      *
@@ -397,7 +397,7 @@ class CustomersApi
      *
      * Delete customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersDelete'] to see the possible values for this operation
      *
@@ -415,7 +415,7 @@ class CustomersApi
      *
      * Delete customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersDelete'] to see the possible values for this operation
      *
@@ -465,7 +465,7 @@ class CustomersApi
      *
      * Delete customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersDelete'] to see the possible values for this operation
      *
@@ -487,7 +487,7 @@ class CustomersApi
      *
      * Delete customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersDelete'] to see the possible values for this operation
      *
@@ -525,7 +525,7 @@ class CustomersApi
     /**
      * Create request for operation 'customersDelete'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersDelete'] to see the possible values for this operation
      *
@@ -645,7 +645,7 @@ class CustomersApi
      *
      * Get customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersGet'] to see the possible values for this operation
      *
@@ -663,7 +663,7 @@ class CustomersApi
      *
      * Get customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersGet'] to see the possible values for this operation
      *
@@ -713,7 +713,7 @@ class CustomersApi
      *
      * Get customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersGet'] to see the possible values for this operation
      *
@@ -735,7 +735,7 @@ class CustomersApi
      *
      * Get customer
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersGet'] to see the possible values for this operation
      *
@@ -773,7 +773,7 @@ class CustomersApi
     /**
      * Create request for operation 'customersGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersGet'] to see the possible values for this operation
      *
@@ -893,19 +893,22 @@ class CustomersApi
      *
      * List customers
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $pageSize pageSize (optional)
      * @param  string|null $search search (optional)
+     * @param  string|null $filter filter (optional, default to 'all')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function customersList($companyId, $page = 1, $pageSize = null, $search = null, string $contentType = self::contentTypes['customersList'][0])
+    public function customersList($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $search = null, $filter = 'all', string $contentType = self::contentTypes['customersList'][0])
     {
-        $this->customersListWithHttpInfo($companyId, $page, $pageSize, $search, $contentType);
+        $this->customersListWithHttpInfo($companyId, $limit, $action, $cursor, $page, $search, $filter, $contentType);
     }
 
     /**
@@ -913,19 +916,22 @@ class CustomersApi
      *
      * List customers
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
      * @param  string|null $search (optional)
+     * @param  string|null $filter (optional, default to 'all')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function customersListWithHttpInfo($companyId, $page = 1, $pageSize = null, $search = null, string $contentType = self::contentTypes['customersList'][0])
+    public function customersListWithHttpInfo($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $search = null, $filter = 'all', string $contentType = self::contentTypes['customersList'][0])
     {
-        $request = $this->customersListRequest($companyId, $page, $pageSize, $search, $contentType);
+        $request = $this->customersListRequest($companyId, $limit, $action, $cursor, $page, $search, $filter, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -965,18 +971,21 @@ class CustomersApi
      *
      * List customers
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
      * @param  string|null $search (optional)
+     * @param  string|null $filter (optional, default to 'all')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function customersListAsync($companyId, $page = 1, $pageSize = null, $search = null, string $contentType = self::contentTypes['customersList'][0])
+    public function customersListAsync($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $search = null, $filter = 'all', string $contentType = self::contentTypes['customersList'][0])
     {
-        return $this->customersListAsyncWithHttpInfo($companyId, $page, $pageSize, $search, $contentType)
+        return $this->customersListAsyncWithHttpInfo($companyId, $limit, $action, $cursor, $page, $search, $filter, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -989,19 +998,22 @@ class CustomersApi
      *
      * List customers
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
      * @param  string|null $search (optional)
+     * @param  string|null $filter (optional, default to 'all')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function customersListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = null, $search = null, string $contentType = self::contentTypes['customersList'][0])
+    public function customersListAsyncWithHttpInfo($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $search = null, $filter = 'all', string $contentType = self::contentTypes['customersList'][0])
     {
         $returnType = '';
-        $request = $this->customersListRequest($companyId, $page, $pageSize, $search, $contentType);
+        $request = $this->customersListRequest($companyId, $limit, $action, $cursor, $page, $search, $filter, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1029,16 +1041,19 @@ class CustomersApi
     /**
      * Create request for operation 'customersList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  int|null $limit (optional, default to 15)
+     * @param  string|null $action Navegação por cursor. &#x60;first&#x60; (padrão) volta para a primeira página e ignora &#x60;cursor&#x60;; &#x60;next&#x60; usa como &#x60;cursor&#x60; o &#x60;id&#x60; do último item da página atual; &#x60;prev&#x60; usa o &#x60;id&#x60; do primeiro item; &#x60;last&#x60; vai para a última página. &#x60;page&#x60; só é ecoado/ajustado em &#x60;pageInfo&#x60;. (optional, default to 'first')
+     * @param  string|null $cursor &#x60;id&#x60; do item de referência (usado com &#x60;action&#x3D;next|prev&#x60;). (optional)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
      * @param  string|null $search (optional)
+     * @param  string|null $filter (optional, default to 'all')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function customersListRequest($companyId, $page = 1, $pageSize = null, $search = null, string $contentType = self::contentTypes['customersList'][0])
+    public function customersListRequest($companyId, $limit = 15, $action = 'first', $cursor = null, $page = 1, $search = null, $filter = 'all', string $contentType = self::contentTypes['customersList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1048,17 +1063,20 @@ class CustomersApi
             );
         }
 
+        if ($limit !== null && $limit > 50) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling CustomersApi.customersList, must be smaller than or equal to 50.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling CustomersApi.customersList, must be bigger than or equal to 1.');
+        }
+        
+
+
         if ($page !== null && $page < 1) {
             throw new \InvalidArgumentException('invalid value for "$page" when calling CustomersApi.customersList, must be bigger than or equal to 1.');
         }
         
-        if ($pageSize !== null && $pageSize > 100) {
-            throw new \InvalidArgumentException('invalid value for "$pageSize" when calling CustomersApi.customersList, must be smaller than or equal to 100.');
-        }
-        if ($pageSize !== null && $pageSize < 1) {
-            throw new \InvalidArgumentException('invalid value for "$pageSize" when calling CustomersApi.customersList, must be bigger than or equal to 1.');
-        }
-        
+
 
 
         $resourcePath = '/companies/{companyId}/customers';
@@ -1070,6 +1088,33 @@ class CustomersApi
 
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $limit,
+            'limit', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $action,
+            'action', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $cursor,
+            'cursor', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $page,
             'page', // param base name
             'integer', // openApiType
@@ -1079,17 +1124,17 @@ class CustomersApi
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $pageSize,
-            'pageSize', // param base name
-            'integer', // openApiType
+            $search,
+            'search', // param base name
+            'string', // openApiType
             'form', // style
             true, // explode
             false // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $search,
-            'search', // param base name
+            $filter,
+            'filter', // param base name
             'string', // openApiType
             'form', // style
             true, // explode
@@ -1175,7 +1220,7 @@ class CustomersApi
      *
      * Update customer (overwrite)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  array<string,mixed>|null $requestBody requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersUpdate'] to see the possible values for this operation
@@ -1194,7 +1239,7 @@ class CustomersApi
      *
      * Update customer (overwrite)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersUpdate'] to see the possible values for this operation
@@ -1245,7 +1290,7 @@ class CustomersApi
      *
      * Update customer (overwrite)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersUpdate'] to see the possible values for this operation
@@ -1268,7 +1313,7 @@ class CustomersApi
      *
      * Update customer (overwrite)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersUpdate'] to see the possible values for this operation
@@ -1307,7 +1352,7 @@ class CustomersApi
     /**
      * Create request for operation 'customersUpdate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  array<string,mixed>|null $requestBody (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['customersUpdate'] to see the possible values for this operation

@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfceCreateRequest Class Doc Comment
  *
  * @category Class
+ * @description Com &#x60;issueMode: offlineContingency&#x60; a validação exige &#x60;contingency&#x60;, &#x60;accessKey&#x60; (44 dígitos, modelo 65, tpEmis 9), &#x60;number&#x60;, &#x60;series&#x60; e &#x60;issuedAt&#x60; (ou &#x60;issueDate&#x60;). Falha → 422 &#x60;VALIDATION_ERROR&#x60;.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -60,12 +61,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => 'string',
         'items' => '\EmitfyGenerated\Model\ProductEmitItem[]',
         'recipient' => '\EmitfyGenerated\Model\NfceCreateRequestRecipient',
+        'nature' => 'string',
+        'cfop' => 'string',
+        'issueDate' => '\DateTime',
         'additional' => 'object',
-        'techResponsible' => 'object',
+        'techResponsible' => '\EmitfyGenerated\Model\DfeTechResponsible',
         'externalId' => 'string',
         'issueMode' => 'string',
         'contingency' => '\EmitfyGenerated\Model\NfceCreateRequestContingency',
         'accessKey' => 'string',
+        'number' => 'int',
+        'series' => 'int',
+        'issuedAt' => '\DateTime',
+        'signedXml' => 'string',
         'transmit' => 'string'
     ];
 
@@ -80,12 +88,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => null,
         'items' => null,
         'recipient' => null,
+        'nature' => null,
+        'cfop' => null,
+        'issueDate' => 'date-time',
         'additional' => null,
         'techResponsible' => null,
         'externalId' => null,
         'issueMode' => null,
         'contingency' => null,
         'accessKey' => null,
+        'number' => null,
+        'series' => null,
+        'issuedAt' => 'date-time',
+        'signedXml' => null,
         'transmit' => null
     ];
 
@@ -98,12 +113,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => false,
         'items' => false,
         'recipient' => false,
+        'nature' => false,
+        'cfop' => false,
+        'issueDate' => false,
         'additional' => false,
         'techResponsible' => false,
         'externalId' => false,
         'issueMode' => false,
         'contingency' => false,
         'accessKey' => false,
+        'number' => false,
+        'series' => false,
+        'issuedAt' => false,
+        'signedXml' => false,
         'transmit' => false
     ];
 
@@ -196,12 +218,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => 'paymentMethod',
         'items' => 'items',
         'recipient' => 'recipient',
+        'nature' => 'nature',
+        'cfop' => 'cfop',
+        'issueDate' => 'issueDate',
         'additional' => 'additional',
         'techResponsible' => 'techResponsible',
         'externalId' => 'externalId',
         'issueMode' => 'issueMode',
         'contingency' => 'contingency',
         'accessKey' => 'accessKey',
+        'number' => 'number',
+        'series' => 'series',
+        'issuedAt' => 'issuedAt',
+        'signedXml' => 'signedXml',
         'transmit' => 'transmit'
     ];
 
@@ -214,12 +243,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => 'setPaymentMethod',
         'items' => 'setItems',
         'recipient' => 'setRecipient',
+        'nature' => 'setNature',
+        'cfop' => 'setCfop',
+        'issueDate' => 'setIssueDate',
         'additional' => 'setAdditional',
         'techResponsible' => 'setTechResponsible',
         'externalId' => 'setExternalId',
         'issueMode' => 'setIssueMode',
         'contingency' => 'setContingency',
         'accessKey' => 'setAccessKey',
+        'number' => 'setNumber',
+        'series' => 'setSeries',
+        'issuedAt' => 'setIssuedAt',
+        'signedXml' => 'setSignedXml',
         'transmit' => 'setTransmit'
     ];
 
@@ -232,12 +268,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         'paymentMethod' => 'getPaymentMethod',
         'items' => 'getItems',
         'recipient' => 'getRecipient',
+        'nature' => 'getNature',
+        'cfop' => 'getCfop',
+        'issueDate' => 'getIssueDate',
         'additional' => 'getAdditional',
         'techResponsible' => 'getTechResponsible',
         'externalId' => 'getExternalId',
         'issueMode' => 'getIssueMode',
         'contingency' => 'getContingency',
         'accessKey' => 'getAccessKey',
+        'number' => 'getNumber',
+        'series' => 'getSeries',
+        'issuedAt' => 'getIssuedAt',
+        'signedXml' => 'getSignedXml',
         'transmit' => 'getTransmit'
     ];
 
@@ -356,12 +399,19 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         $this->setIfExists('paymentMethod', $data ?? [], null);
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
+        $this->setIfExists('nature', $data ?? [], null);
+        $this->setIfExists('cfop', $data ?? [], null);
+        $this->setIfExists('issueDate', $data ?? [], null);
         $this->setIfExists('additional', $data ?? [], null);
         $this->setIfExists('techResponsible', $data ?? [], null);
         $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('issueMode', $data ?? [], 'normal');
         $this->setIfExists('contingency', $data ?? [], null);
         $this->setIfExists('accessKey', $data ?? [], null);
+        $this->setIfExists('number', $data ?? [], null);
+        $this->setIfExists('series', $data ?? [], null);
+        $this->setIfExists('issuedAt', $data ?? [], null);
+        $this->setIfExists('signedXml', $data ?? [], null);
         $this->setIfExists('transmit', $data ?? [], 'now');
     }
 
@@ -411,6 +461,22 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             $invalidProperties[] = "invalid value for 'items', number of items must be greater than or equal to 1.";
         }
 
+        if (!is_null($this->container['nature']) && (mb_strlen($this->container['nature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be smaller than or equal to 60.";
+        }
+
+        if (!is_null($this->container['nature']) && (mb_strlen($this->container['nature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be bigger than or equal to 1.";
+        }
+
         $allowedValues = $this->getIssueModeAllowableValues();
         if (!is_null($this->container['issueMode']) && !in_array($this->container['issueMode'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -418,6 +484,18 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
                 $this->container['issueMode'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if (!is_null($this->container['number']) && ($this->container['number'] < 1)) {
+            $invalidProperties[] = "invalid value for 'number', must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['series']) && ($this->container['series'] < 1)) {
+            $invalidProperties[] = "invalid value for 'series', must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['signedXml']) && (mb_strlen($this->container['signedXml']) < 1)) {
+            $invalidProperties[] = "invalid value for 'signedXml', the character length must be bigger than or equal to 1.";
         }
 
         $allowedValues = $this->getTransmitAllowableValues();
@@ -540,6 +618,94 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     }
 
     /**
+     * Gets nature
+     *
+     * @return string|null
+     */
+    public function getNature()
+    {
+        return $this->container['nature'];
+    }
+
+    /**
+     * Sets nature
+     *
+     * @param string|null $nature nature
+     *
+     * @return self
+     */
+    public function setNature($nature)
+    {
+        if (is_null($nature)) {
+            throw new \InvalidArgumentException('non-nullable nature cannot be null');
+        }
+        if ((mb_strlen($nature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling NfceCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($nature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['nature'] = $nature;
+
+        return $this;
+    }
+
+    /**
+     * Gets cfop
+     *
+     * @return string|null
+     */
+    public function getCfop()
+    {
+        return $this->container['cfop'];
+    }
+
+    /**
+     * Sets cfop
+     *
+     * @param string|null $cfop cfop
+     *
+     * @return self
+     */
+    public function setCfop($cfop)
+    {
+        if (is_null($cfop)) {
+            throw new \InvalidArgumentException('non-nullable cfop cannot be null');
+        }
+        $this->container['cfop'] = $cfop;
+
+        return $this;
+    }
+
+    /**
+     * Gets issueDate
+     *
+     * @return \DateTime|null
+     */
+    public function getIssueDate()
+    {
+        return $this->container['issueDate'];
+    }
+
+    /**
+     * Sets issueDate
+     *
+     * @param \DateTime|null $issueDate issueDate
+     *
+     * @return self
+     */
+    public function setIssueDate($issueDate)
+    {
+        if (is_null($issueDate)) {
+            throw new \InvalidArgumentException('non-nullable issueDate cannot be null');
+        }
+        $this->container['issueDate'] = $issueDate;
+
+        return $this;
+    }
+
+    /**
      * Gets additional
      *
      * @return object|null
@@ -569,7 +735,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets techResponsible
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\DfeTechResponsible|null
      */
     public function getTechResponsible()
     {
@@ -579,7 +745,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets techResponsible
      *
-     * @param object|null $techResponsible techResponsible
+     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible techResponsible
      *
      * @return self
      */
@@ -606,7 +772,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets externalId
      *
-     * @param string|null $externalId externalId
+     * @param string|null $externalId Idempotência (o header `Idempotency-Key` tem prioridade)
      *
      * @return self
      */
@@ -615,6 +781,13 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
         if (is_null($externalId)) {
             throw new \InvalidArgumentException('non-nullable externalId cannot be null');
         }
+        if ((mb_strlen($externalId) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfceCreateRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($externalId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['externalId'] = $externalId;
 
         return $this;
@@ -697,7 +870,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets accessKey
      *
-     * @param string|null $accessKey accessKey
+     * @param string|null $accessKey Chave de 44 dígitos gerada pelo PDV (contingência offline)
      *
      * @return self
      */
@@ -707,6 +880,127 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             throw new \InvalidArgumentException('non-nullable accessKey cannot be null');
         }
         $this->container['accessKey'] = $accessKey;
+
+        return $this;
+    }
+
+    /**
+     * Gets number
+     *
+     * @return int|null
+     */
+    public function getNumber()
+    {
+        return $this->container['number'];
+    }
+
+    /**
+     * Sets number
+     *
+     * @param int|null $number Número da NFC-e atribuído pelo PDV (contingência offline)
+     *
+     * @return self
+     */
+    public function setNumber($number)
+    {
+        if (is_null($number)) {
+            throw new \InvalidArgumentException('non-nullable number cannot be null');
+        }
+        if (($number < 1)) {
+            throw new \InvalidArgumentException('invalid value for $number when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['number'] = $number;
+
+        return $this;
+    }
+
+    /**
+     * Gets series
+     *
+     * @return int|null
+     */
+    public function getSeries()
+    {
+        return $this->container['series'];
+    }
+
+    /**
+     * Sets series
+     *
+     * @param int|null $series Série da NFC-e atribuída pelo PDV (contingência offline)
+     *
+     * @return self
+     */
+    public function setSeries($series)
+    {
+        if (is_null($series)) {
+            throw new \InvalidArgumentException('non-nullable series cannot be null');
+        }
+        if (($series < 1)) {
+            throw new \InvalidArgumentException('invalid value for $series when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['series'] = $series;
+
+        return $this;
+    }
+
+    /**
+     * Gets issuedAt
+     *
+     * @return \DateTime|null
+     */
+    public function getIssuedAt()
+    {
+        return $this->container['issuedAt'];
+    }
+
+    /**
+     * Sets issuedAt
+     *
+     * @param \DateTime|null $issuedAt Data/hora de emissão (dhEmi) do cupom impresso em contingência
+     *
+     * @return self
+     */
+    public function setIssuedAt($issuedAt)
+    {
+        if (is_null($issuedAt)) {
+            throw new \InvalidArgumentException('non-nullable issuedAt cannot be null');
+        }
+        $this->container['issuedAt'] = $issuedAt;
+
+        return $this;
+    }
+
+    /**
+     * Gets signedXml
+     *
+     * @return string|null
+     */
+    public function getSignedXml()
+    {
+        return $this->container['signedXml'];
+    }
+
+    /**
+     * Sets signedXml
+     *
+     * @param string|null $signedXml XML já assinado pelo PDV (contingência offline), quando houver
+     *
+     * @return self
+     */
+    public function setSignedXml($signedXml)
+    {
+        if (is_null($signedXml)) {
+            throw new \InvalidArgumentException('non-nullable signedXml cannot be null');
+        }
+
+        if ((mb_strlen($signedXml) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $signedXml when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['signedXml'] = $signedXml;
 
         return $this;
     }
@@ -724,7 +1018,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets transmit
      *
-     * @param string|null $transmit transmit
+     * @param string|null $transmit `later` = cria sem transmitir; envie depois com `POST .../nfce/{id}/transmit`
      *
      * @return self
      */

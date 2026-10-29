@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * WebhookCreateEvents Class Doc Comment
  *
  * @category Class
+ * @description Informe ao menos um evento (422 se todas as listas vierem vazias).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -240,6 +241,65 @@ class WebhookCreateEvents implements ModelInterface, ArrayAccess, \JsonSerializa
         return self::$openAPIModelName;
     }
 
+    public const INVOICE_NFSE_AUTHORIZED = 'nfse.authorized';
+    public const INVOICE_NFSE_CANCELLED = 'nfse.cancelled';
+    public const INVOICE_NFSE_REJECTED = 'nfse.rejected';
+    public const INVOICE_NFE_AUTHORIZED = 'nfe.authorized';
+    public const INVOICE_NFE_CANCELLED = 'nfe.cancelled';
+    public const INVOICE_NFE_REJECTED = 'nfe.rejected';
+    public const CTE_CTE_AUTHORIZED = 'cte.authorized';
+    public const CTE_CTE_CANCELLED = 'cte.cancelled';
+    public const CTE_CTE_REJECTED = 'cte.rejected';
+    public const MDFE_MDFE_AUTHORIZED = 'mdfe.authorized';
+    public const MDFE_MDFE_CANCELLED = 'mdfe.cancelled';
+    public const MDFE_MDFE_REJECTED = 'mdfe.rejected';
+    public const MDFE_MDFE_CLOSED = 'mdfe.closed';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getInvoiceAllowableValues()
+    {
+        return [
+            self::INVOICE_NFSE_AUTHORIZED,
+            self::INVOICE_NFSE_CANCELLED,
+            self::INVOICE_NFSE_REJECTED,
+            self::INVOICE_NFE_AUTHORIZED,
+            self::INVOICE_NFE_CANCELLED,
+            self::INVOICE_NFE_REJECTED,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getCteAllowableValues()
+    {
+        return [
+            self::CTE_CTE_AUTHORIZED,
+            self::CTE_CTE_CANCELLED,
+            self::CTE_CTE_REJECTED,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getMdfeAllowableValues()
+    {
+        return [
+            self::MDFE_MDFE_AUTHORIZED,
+            self::MDFE_MDFE_CANCELLED,
+            self::MDFE_MDFE_REJECTED,
+            self::MDFE_MDFE_CLOSED,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -325,6 +385,15 @@ class WebhookCreateEvents implements ModelInterface, ArrayAccess, \JsonSerializa
         if (is_null($invoice)) {
             throw new \InvalidArgumentException('non-nullable invoice cannot be null');
         }
+        $allowedValues = $this->getInvoiceAllowableValues();
+        if (array_diff($invoice, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'invoice', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
         $this->container['invoice'] = $invoice;
 
         return $this;
@@ -352,6 +421,15 @@ class WebhookCreateEvents implements ModelInterface, ArrayAccess, \JsonSerializa
         if (is_null($cte)) {
             throw new \InvalidArgumentException('non-nullable cte cannot be null');
         }
+        $allowedValues = $this->getCteAllowableValues();
+        if (array_diff($cte, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'cte', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
         $this->container['cte'] = $cte;
 
         return $this;
@@ -378,6 +456,15 @@ class WebhookCreateEvents implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         if (is_null($mdfe)) {
             throw new \InvalidArgumentException('non-nullable mdfe cannot be null');
+        }
+        $allowedValues = $this->getMdfeAllowableValues();
+        if (array_diff($mdfe, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'mdfe', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
         }
         $this->container['mdfe'] = $mdfe;
 

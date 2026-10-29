@@ -145,17 +145,18 @@ class CteApi
      *
      * Cancel CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\TransportDocumentAccepted
      */
     public function cteCancel($companyId, $id, string $contentType = self::contentTypes['cteCancel'][0])
     {
-        $this->cteCancelWithHttpInfo($companyId, $id, $contentType);
+        list($response) = $this->cteCancelWithHttpInfo($companyId, $id, $contentType);
+        return $response;
     }
 
     /**
@@ -163,13 +164,13 @@ class CteApi
      *
      * Cancel CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCancel'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\TransportDocumentAccepted, HTTP status code, HTTP response headers (array of strings)
      */
     public function cteCancelWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['cteCancel'][0])
     {
@@ -198,9 +199,45 @@ class CteApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\TransportDocumentAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -213,7 +250,7 @@ class CteApi
      *
      * Cancel CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCancel'] to see the possible values for this operation
      *
@@ -235,7 +272,7 @@ class CteApi
      *
      * Cancel CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCancel'] to see the possible values for this operation
      *
@@ -244,14 +281,27 @@ class CteApi
      */
     public function cteCancelAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['cteCancel'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\TransportDocumentAccepted';
         $request = $this->cteCancelRequest($companyId, $id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -273,7 +323,7 @@ class CteApi
     /**
      * Create request for operation 'cteCancel'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCancel'] to see the possible values for this operation
      *
@@ -326,7 +376,7 @@ class CteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -393,7 +443,7 @@ class CteApi
      *
      * Consult CT-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteConsult'] to see the possible values for this operation
      *
@@ -411,7 +461,7 @@ class CteApi
      *
      * Consult CT-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteConsult'] to see the possible values for this operation
      *
@@ -461,7 +511,7 @@ class CteApi
      *
      * Consult CT-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteConsult'] to see the possible values for this operation
      *
@@ -483,7 +533,7 @@ class CteApi
      *
      * Consult CT-e at SEFAZ
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteConsult'] to see the possible values for this operation
      *
@@ -521,7 +571,7 @@ class CteApi
     /**
      * Create request for operation 'cteConsult'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteConsult'] to see the possible values for this operation
      *
@@ -641,18 +691,19 @@ class CteApi
      *
      * Emit CT-e (modelo 57)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteCreateRequest $cteCreateRequest cteCreateRequest (required)
      * @param  string|null $idempotencyKey idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\CteEmitAccepted|\EmitfyGenerated\Model\ErrorBody
      */
     public function cteCreate($companyId, $cteCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteCreate'][0])
     {
-        $this->cteCreateWithHttpInfo($companyId, $cteCreateRequest, $idempotencyKey, $contentType);
+        list($response) = $this->cteCreateWithHttpInfo($companyId, $cteCreateRequest, $idempotencyKey, $contentType);
+        return $response;
     }
 
     /**
@@ -660,14 +711,14 @@ class CteApi
      *
      * Emit CT-e (modelo 57)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteCreateRequest $cteCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\CteEmitAccepted|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
     public function cteCreateWithHttpInfo($companyId, $cteCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteCreate'][0])
     {
@@ -696,9 +747,59 @@ class CteApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\CteEmitAccepted',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\CteEmitAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\CteEmitAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -711,7 +812,7 @@ class CteApi
      *
      * Emit CT-e (modelo 57)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteCreateRequest $cteCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCreate'] to see the possible values for this operation
@@ -734,7 +835,7 @@ class CteApi
      *
      * Emit CT-e (modelo 57)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteCreateRequest $cteCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCreate'] to see the possible values for this operation
@@ -744,14 +845,27 @@ class CteApi
      */
     public function cteCreateAsyncWithHttpInfo($companyId, $cteCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteCreate'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\CteEmitAccepted';
         $request = $this->cteCreateRequest($companyId, $cteCreateRequest, $idempotencyKey, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -773,7 +887,7 @@ class CteApi
     /**
      * Create request for operation 'cteCreate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteCreateRequest $cteCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteCreate'] to see the possible values for this operation
@@ -824,7 +938,7 @@ class CteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -898,7 +1012,7 @@ class CteApi
      *
      * Get CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteGet'] to see the possible values for this operation
      *
@@ -916,7 +1030,7 @@ class CteApi
      *
      * Get CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteGet'] to see the possible values for this operation
      *
@@ -966,7 +1080,7 @@ class CteApi
      *
      * Get CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteGet'] to see the possible values for this operation
      *
@@ -988,7 +1102,7 @@ class CteApi
      *
      * Get CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteGet'] to see the possible values for this operation
      *
@@ -1026,7 +1140,7 @@ class CteApi
     /**
      * Create request for operation 'cteGet'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  string $id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteGet'] to see the possible values for this operation
      *
@@ -1146,19 +1260,23 @@ class CteApi
      *
      * List CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $pageSize pageSize (optional)
+     * @param  int|null $pageSize pageSize (optional, default to 20)
      * @param  string|null $status status (optional)
+     * @param  string|null $model &#x60;57&#x60; &#x3D; CT-e (padrão), &#x60;67&#x60; &#x3D; CT-e OS. Sem &#x60;model&#x3D;67&#x60; a lista não traz CT-e OS. (optional, default to '57')
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\CteList200Response
      */
-    public function cteList($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['cteList'][0])
+    public function cteList($companyId, $page = 1, $pageSize = 20, $status = null, $model = '57', $startDate = null, $endDate = null, string $contentType = self::contentTypes['cteList'][0])
     {
-        $this->cteListWithHttpInfo($companyId, $page, $pageSize, $status, $contentType);
+        list($response) = $this->cteListWithHttpInfo($companyId, $page, $pageSize, $status, $model, $startDate, $endDate, $contentType);
+        return $response;
     }
 
     /**
@@ -1166,19 +1284,22 @@ class CteApi
      *
      * List CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  string|null $model &#x60;57&#x60; &#x3D; CT-e (padrão), &#x60;67&#x60; &#x3D; CT-e OS. Sem &#x60;model&#x3D;67&#x60; a lista não traz CT-e OS. (optional, default to '57')
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\CteList200Response, HTTP status code, HTTP response headers (array of strings)
      */
-    public function cteListWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['cteList'][0])
+    public function cteListWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, $model = '57', $startDate = null, $endDate = null, string $contentType = self::contentTypes['cteList'][0])
     {
-        $request = $this->cteListRequest($companyId, $page, $pageSize, $status, $contentType);
+        $request = $this->cteListRequest($companyId, $page, $pageSize, $status, $model, $startDate, $endDate, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1203,9 +1324,45 @@ class CteApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\CteList200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\CteList200Response',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\CteList200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1218,18 +1375,21 @@ class CteApi
      *
      * List CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  string|null $model &#x60;57&#x60; &#x3D; CT-e (padrão), &#x60;67&#x60; &#x3D; CT-e OS. Sem &#x60;model&#x3D;67&#x60; a lista não traz CT-e OS. (optional, default to '57')
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cteListAsync($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['cteList'][0])
+    public function cteListAsync($companyId, $page = 1, $pageSize = 20, $status = null, $model = '57', $startDate = null, $endDate = null, string $contentType = self::contentTypes['cteList'][0])
     {
-        return $this->cteListAsyncWithHttpInfo($companyId, $page, $pageSize, $status, $contentType)
+        return $this->cteListAsyncWithHttpInfo($companyId, $page, $pageSize, $status, $model, $startDate, $endDate, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1242,25 +1402,41 @@ class CteApi
      *
      * List CT-e
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  string|null $model &#x60;57&#x60; &#x3D; CT-e (padrão), &#x60;67&#x60; &#x3D; CT-e OS. Sem &#x60;model&#x3D;67&#x60; a lista não traz CT-e OS. (optional, default to '57')
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cteListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['cteList'][0])
+    public function cteListAsyncWithHttpInfo($companyId, $page = 1, $pageSize = 20, $status = null, $model = '57', $startDate = null, $endDate = null, string $contentType = self::contentTypes['cteList'][0])
     {
-        $returnType = '';
-        $request = $this->cteListRequest($companyId, $page, $pageSize, $status, $contentType);
+        $returnType = '\EmitfyGenerated\Model\CteList200Response';
+        $request = $this->cteListRequest($companyId, $page, $pageSize, $status, $model, $startDate, $endDate, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1282,16 +1458,19 @@ class CteApi
     /**
      * Create request for operation 'cteList'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $pageSize (optional)
+     * @param  int|null $pageSize (optional, default to 20)
      * @param  string|null $status (optional)
+     * @param  string|null $model &#x60;57&#x60; &#x3D; CT-e (padrão), &#x60;67&#x60; &#x3D; CT-e OS. Sem &#x60;model&#x3D;67&#x60; a lista não traz CT-e OS. (optional, default to '57')
+     * @param  int|null $startDate Início do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;endDate&#x60;. (optional)
+     * @param  int|null $endDate Fim do período (epoch em ms; dia inclusivo em America/Sao_Paulo). Só filtra com &#x60;startDate&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function cteListRequest($companyId, $page = 1, $pageSize = null, $status = null, string $contentType = self::contentTypes['cteList'][0])
+    public function cteListRequest($companyId, $page = 1, $pageSize = 20, $status = null, $model = '57', $startDate = null, $endDate = null, string $contentType = self::contentTypes['cteList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -1312,6 +1491,9 @@ class CteApi
             throw new \InvalidArgumentException('invalid value for "$pageSize" when calling CteApi.cteList, must be bigger than or equal to 1.');
         }
         
+
+
+
 
 
         $resourcePath = '/companies/{companyId}/cte';
@@ -1348,6 +1530,33 @@ class CteApi
             true, // explode
             false // required
         ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $model,
+            'model', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
 
 
         // path params
@@ -1361,7 +1570,7 @@ class CteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -1428,18 +1637,19 @@ class CteApi
      *
      * Emit CT-e OS (modelo 67)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteOsCreateRequest $cteOsCreateRequest cteOsCreateRequest (required)
      * @param  string|null $idempotencyKey idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteOsCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \EmitfyGenerated\Model\CteEmitAccepted|\EmitfyGenerated\Model\ErrorBody
      */
     public function cteOsCreate($companyId, $cteOsCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteOsCreate'][0])
     {
-        $this->cteOsCreateWithHttpInfo($companyId, $cteOsCreateRequest, $idempotencyKey, $contentType);
+        list($response) = $this->cteOsCreateWithHttpInfo($companyId, $cteOsCreateRequest, $idempotencyKey, $contentType);
+        return $response;
     }
 
     /**
@@ -1447,14 +1657,14 @@ class CteApi
      *
      * Emit CT-e OS (modelo 67)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteOsCreateRequest $cteOsCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteOsCreate'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \EmitfyGenerated\Model\CteEmitAccepted|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
      */
     public function cteOsCreateWithHttpInfo($companyId, $cteOsCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteOsCreate'][0])
     {
@@ -1483,9 +1693,59 @@ class CteApi
             $statusCode = $response->getStatusCode();
 
 
-            return [null, $statusCode, $response->getHeaders()];
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\CteEmitAccepted',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\CteEmitAccepted',
+                $request,
+                $response,
+            );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\CteEmitAccepted',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
             }
         
 
@@ -1498,7 +1758,7 @@ class CteApi
      *
      * Emit CT-e OS (modelo 67)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteOsCreateRequest $cteOsCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteOsCreate'] to see the possible values for this operation
@@ -1521,7 +1781,7 @@ class CteApi
      *
      * Emit CT-e OS (modelo 67)
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteOsCreateRequest $cteOsCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteOsCreate'] to see the possible values for this operation
@@ -1531,14 +1791,27 @@ class CteApi
      */
     public function cteOsCreateAsyncWithHttpInfo($companyId, $cteOsCreateRequest, $idempotencyKey = null, string $contentType = self::contentTypes['cteOsCreate'][0])
     {
-        $returnType = '';
+        $returnType = '\EmitfyGenerated\Model\CteEmitAccepted';
         $request = $this->cteOsCreateRequest($companyId, $cteOsCreateRequest, $idempotencyKey, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -1560,7 +1833,7 @@ class CteApi
     /**
      * Create request for operation 'cteOsCreate'
      *
-     * @param  string $companyId ID da empresa (CNPJ operacional) no path (required)
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  \EmitfyGenerated\Model\CteOsCreateRequest $cteOsCreateRequest (required)
      * @param  string|null $idempotencyKey (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteOsCreate'] to see the possible values for this operation
@@ -1611,7 +1884,7 @@ class CteApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            [],
+            ['application/json', ],
             $contentType,
             $multipart
         );

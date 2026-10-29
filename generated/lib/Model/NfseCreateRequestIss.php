@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfseCreateRequestIss Class Doc Comment
  *
  * @category Class
+ * @description ISS canônico. &#x60;rate&#x60; obrigatório (0 permitido), salvo se enviado em &#x60;taxes.iss&#x60;.
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech

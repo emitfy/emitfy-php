@@ -57,21 +57,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
+        'externalId' => 'string',
         'cfop' => 'string',
         'nature' => 'string',
-        'shipper' => 'object',
-        'recipient' => 'object',
+        'serviceType' => 'string',
+        'taker' => 'string',
+        'shipper' => '\EmitfyGenerated\Model\CteParty',
+        'recipient' => '\EmitfyGenerated\Model\CteParty',
+        'dispatcher' => '\EmitfyGenerated\Model\CteParty',
+        'receiver' => '\EmitfyGenerated\Model\CteParty',
+        'takerParty' => '\EmitfyGenerated\Model\CteParty',
         'municipalityStartIbge' => 'string',
         'municipalityEndIbge' => 'string',
         'cargoValue' => 'float',
         'cargoProduct' => 'string',
-        'cargoQuantities' => 'object[]',
+        'cargoQuantities' => '\EmitfyGenerated\Model\CteCargoQuantity[]',
+        'linkedNfeAccessKeys' => 'string[]',
         'serviceAmount' => 'float',
-        'icms' => 'object',
-        'components' => 'object[]',
-        'complement' => 'object',
-        'autXml' => 'object[]',
-        'techResponsible' => 'object'
+        'icms' => '\EmitfyGenerated\Model\CteIcms',
+        'rntrc' => 'string',
+        'complement' => '\EmitfyGenerated\Model\CteCreateRequestComplement',
+        'components' => '\EmitfyGenerated\Model\DfeComponent[]',
+        'autXml' => '\EmitfyGenerated\Model\DfeAutXml[]',
+        'techResponsible' => '\EmitfyGenerated\Model\DfeTechResponsible',
+        'modal' => 'string'
     ];
 
     /**
@@ -82,21 +91,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
+        'externalId' => null,
         'cfop' => null,
         'nature' => null,
+        'serviceType' => null,
+        'taker' => null,
         'shipper' => null,
         'recipient' => null,
+        'dispatcher' => null,
+        'receiver' => null,
+        'takerParty' => null,
         'municipalityStartIbge' => null,
         'municipalityEndIbge' => null,
         'cargoValue' => null,
         'cargoProduct' => null,
         'cargoQuantities' => null,
+        'linkedNfeAccessKeys' => null,
         'serviceAmount' => null,
         'icms' => null,
-        'components' => null,
+        'rntrc' => null,
         'complement' => null,
+        'components' => null,
         'autXml' => null,
-        'techResponsible' => null
+        'techResponsible' => null,
+        'modal' => null
     ];
 
     /**
@@ -105,21 +123,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
+        'externalId' => false,
         'cfop' => false,
         'nature' => false,
+        'serviceType' => false,
+        'taker' => false,
         'shipper' => false,
         'recipient' => false,
+        'dispatcher' => false,
+        'receiver' => false,
+        'takerParty' => false,
         'municipalityStartIbge' => false,
         'municipalityEndIbge' => false,
         'cargoValue' => false,
         'cargoProduct' => false,
         'cargoQuantities' => false,
+        'linkedNfeAccessKeys' => false,
         'serviceAmount' => false,
         'icms' => false,
-        'components' => false,
+        'rntrc' => false,
         'complement' => false,
+        'components' => false,
         'autXml' => false,
-        'techResponsible' => false
+        'techResponsible' => false,
+        'modal' => false
     ];
 
     /**
@@ -208,21 +235,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'externalId' => 'externalId',
         'cfop' => 'cfop',
         'nature' => 'nature',
+        'serviceType' => 'serviceType',
+        'taker' => 'taker',
         'shipper' => 'shipper',
         'recipient' => 'recipient',
+        'dispatcher' => 'dispatcher',
+        'receiver' => 'receiver',
+        'takerParty' => 'takerParty',
         'municipalityStartIbge' => 'municipalityStartIbge',
         'municipalityEndIbge' => 'municipalityEndIbge',
         'cargoValue' => 'cargoValue',
         'cargoProduct' => 'cargoProduct',
         'cargoQuantities' => 'cargoQuantities',
+        'linkedNfeAccessKeys' => 'linkedNfeAccessKeys',
         'serviceAmount' => 'serviceAmount',
         'icms' => 'icms',
-        'components' => 'components',
+        'rntrc' => 'rntrc',
         'complement' => 'complement',
+        'components' => 'components',
         'autXml' => 'autXml',
-        'techResponsible' => 'techResponsible'
+        'techResponsible' => 'techResponsible',
+        'modal' => 'modal'
     ];
 
     /**
@@ -231,21 +267,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'externalId' => 'setExternalId',
         'cfop' => 'setCfop',
         'nature' => 'setNature',
+        'serviceType' => 'setServiceType',
+        'taker' => 'setTaker',
         'shipper' => 'setShipper',
         'recipient' => 'setRecipient',
+        'dispatcher' => 'setDispatcher',
+        'receiver' => 'setReceiver',
+        'takerParty' => 'setTakerParty',
         'municipalityStartIbge' => 'setMunicipalityStartIbge',
         'municipalityEndIbge' => 'setMunicipalityEndIbge',
         'cargoValue' => 'setCargoValue',
         'cargoProduct' => 'setCargoProduct',
         'cargoQuantities' => 'setCargoQuantities',
+        'linkedNfeAccessKeys' => 'setLinkedNfeAccessKeys',
         'serviceAmount' => 'setServiceAmount',
         'icms' => 'setIcms',
-        'components' => 'setComponents',
+        'rntrc' => 'setRntrc',
         'complement' => 'setComplement',
+        'components' => 'setComponents',
         'autXml' => 'setAutXml',
-        'techResponsible' => 'setTechResponsible'
+        'techResponsible' => 'setTechResponsible',
+        'modal' => 'setModal'
     ];
 
     /**
@@ -254,21 +299,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'externalId' => 'getExternalId',
         'cfop' => 'getCfop',
         'nature' => 'getNature',
+        'serviceType' => 'getServiceType',
+        'taker' => 'getTaker',
         'shipper' => 'getShipper',
         'recipient' => 'getRecipient',
+        'dispatcher' => 'getDispatcher',
+        'receiver' => 'getReceiver',
+        'takerParty' => 'getTakerParty',
         'municipalityStartIbge' => 'getMunicipalityStartIbge',
         'municipalityEndIbge' => 'getMunicipalityEndIbge',
         'cargoValue' => 'getCargoValue',
         'cargoProduct' => 'getCargoProduct',
         'cargoQuantities' => 'getCargoQuantities',
+        'linkedNfeAccessKeys' => 'getLinkedNfeAccessKeys',
         'serviceAmount' => 'getServiceAmount',
         'icms' => 'getIcms',
-        'components' => 'getComponents',
+        'rntrc' => 'getRntrc',
         'complement' => 'getComplement',
+        'components' => 'getComponents',
         'autXml' => 'getAutXml',
-        'techResponsible' => 'getTechResponsible'
+        'techResponsible' => 'getTechResponsible',
+        'modal' => 'getModal'
     ];
 
     /**
@@ -312,6 +366,27 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const TAKER__0 = '0';
+    public const TAKER__1 = '1';
+    public const TAKER__2 = '2';
+    public const TAKER__3 = '3';
+    public const TAKER__4 = '4';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTakerAllowableValues()
+    {
+        return [
+            self::TAKER__0,
+            self::TAKER__1,
+            self::TAKER__2,
+            self::TAKER__3,
+            self::TAKER__4,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -328,21 +403,30 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('cfop', $data ?? [], null);
         $this->setIfExists('nature', $data ?? [], null);
+        $this->setIfExists('serviceType', $data ?? [], '0');
+        $this->setIfExists('taker', $data ?? [], '3');
         $this->setIfExists('shipper', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
+        $this->setIfExists('dispatcher', $data ?? [], null);
+        $this->setIfExists('receiver', $data ?? [], null);
+        $this->setIfExists('takerParty', $data ?? [], null);
         $this->setIfExists('municipalityStartIbge', $data ?? [], null);
         $this->setIfExists('municipalityEndIbge', $data ?? [], null);
         $this->setIfExists('cargoValue', $data ?? [], null);
         $this->setIfExists('cargoProduct', $data ?? [], null);
         $this->setIfExists('cargoQuantities', $data ?? [], null);
+        $this->setIfExists('linkedNfeAccessKeys', $data ?? [], null);
         $this->setIfExists('serviceAmount', $data ?? [], null);
         $this->setIfExists('icms', $data ?? [], null);
-        $this->setIfExists('components', $data ?? [], null);
+        $this->setIfExists('rntrc', $data ?? [], null);
         $this->setIfExists('complement', $data ?? [], null);
+        $this->setIfExists('components', $data ?? [], null);
         $this->setIfExists('autXml', $data ?? [], null);
         $this->setIfExists('techResponsible', $data ?? [], null);
+        $this->setIfExists('modal', $data ?? [], null);
     }
 
     /**
@@ -372,12 +456,45 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
+        }
+
+        if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) < 1)) {
+            $invalidProperties[] = "invalid value for 'externalId', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['cfop'] === null) {
             $invalidProperties[] = "'cfop' can't be null";
         }
+        if ((mb_strlen($this->container['cfop']) > 4)) {
+            $invalidProperties[] = "invalid value for 'cfop', the character length must be smaller than or equal to 4.";
+        }
+
+        if ((mb_strlen($this->container['cfop']) < 4)) {
+            $invalidProperties[] = "invalid value for 'cfop', the character length must be bigger than or equal to 4.";
+        }
+
         if ($this->container['nature'] === null) {
             $invalidProperties[] = "'nature' can't be null";
         }
+        if ((mb_strlen($this->container['nature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be smaller than or equal to 60.";
+        }
+
+        if ((mb_strlen($this->container['nature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'nature', the character length must be bigger than or equal to 1.";
+        }
+
+        $allowedValues = $this->getTakerAllowableValues();
+        if (!is_null($this->container['taker']) && !in_array($this->container['taker'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'taker', must be one of '%s'",
+                $this->container['taker'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         if ($this->container['shipper'] === null) {
             $invalidProperties[] = "'shipper' can't be null";
         }
@@ -387,21 +504,57 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['municipalityStartIbge'] === null) {
             $invalidProperties[] = "'municipalityStartIbge' can't be null";
         }
+        if ((mb_strlen($this->container['municipalityStartIbge']) > 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityStartIbge', the character length must be smaller than or equal to 7.";
+        }
+
+        if ((mb_strlen($this->container['municipalityStartIbge']) < 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityStartIbge', the character length must be bigger than or equal to 7.";
+        }
+
         if ($this->container['municipalityEndIbge'] === null) {
             $invalidProperties[] = "'municipalityEndIbge' can't be null";
         }
+        if ((mb_strlen($this->container['municipalityEndIbge']) > 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityEndIbge', the character length must be smaller than or equal to 7.";
+        }
+
+        if ((mb_strlen($this->container['municipalityEndIbge']) < 7)) {
+            $invalidProperties[] = "invalid value for 'municipalityEndIbge', the character length must be bigger than or equal to 7.";
+        }
+
         if ($this->container['cargoValue'] === null) {
             $invalidProperties[] = "'cargoValue' can't be null";
         }
+        if (($this->container['cargoValue'] < 0)) {
+            $invalidProperties[] = "invalid value for 'cargoValue', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['cargoProduct'] === null) {
             $invalidProperties[] = "'cargoProduct' can't be null";
         }
+        if ((mb_strlen($this->container['cargoProduct']) > 60)) {
+            $invalidProperties[] = "invalid value for 'cargoProduct', the character length must be smaller than or equal to 60.";
+        }
+
+        if ((mb_strlen($this->container['cargoProduct']) < 1)) {
+            $invalidProperties[] = "invalid value for 'cargoProduct', the character length must be bigger than or equal to 1.";
+        }
+
         if ($this->container['cargoQuantities'] === null) {
             $invalidProperties[] = "'cargoQuantities' can't be null";
         }
+        if ((count($this->container['cargoQuantities']) < 1)) {
+            $invalidProperties[] = "invalid value for 'cargoQuantities', number of items must be greater than or equal to 1.";
+        }
+
         if ($this->container['serviceAmount'] === null) {
             $invalidProperties[] = "'serviceAmount' can't be null";
         }
+        if (($this->container['serviceAmount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'serviceAmount', must be bigger than or equal to 0.";
+        }
+
         if ($this->container['icms'] === null) {
             $invalidProperties[] = "'icms' can't be null";
         }
@@ -419,6 +572,40 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets externalId
+     *
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->container['externalId'];
+    }
+
+    /**
+     * Sets externalId
+     *
+     * @param string|null $externalId Idempotência. Obrigatório se não enviar o header `Idempotency-Key` (400 `CTE_EXTERNAL_ID_REQUIRED`).
+     *
+     * @return self
+     */
+    public function setExternalId($externalId)
+    {
+        if (is_null($externalId)) {
+            throw new \InvalidArgumentException('non-nullable externalId cannot be null');
+        }
+        if ((mb_strlen($externalId) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling CteCreateRequest., must be smaller than or equal to 100.');
+        }
+        if ((mb_strlen($externalId) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $externalId when calling CteCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['externalId'] = $externalId;
+
+        return $this;
+    }
 
     /**
      * Gets cfop
@@ -442,6 +629,13 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($cfop)) {
             throw new \InvalidArgumentException('non-nullable cfop cannot be null');
         }
+        if ((mb_strlen($cfop) > 4)) {
+            throw new \InvalidArgumentException('invalid length for $cfop when calling CteCreateRequest., must be smaller than or equal to 4.');
+        }
+        if ((mb_strlen($cfop) < 4)) {
+            throw new \InvalidArgumentException('invalid length for $cfop when calling CteCreateRequest., must be bigger than or equal to 4.');
+        }
+
         $this->container['cfop'] = $cfop;
 
         return $this;
@@ -469,7 +663,78 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($nature)) {
             throw new \InvalidArgumentException('non-nullable nature cannot be null');
         }
+        if ((mb_strlen($nature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling CteCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($nature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $nature when calling CteCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['nature'] = $nature;
+
+        return $this;
+    }
+
+    /**
+     * Gets serviceType
+     *
+     * @return string|null
+     */
+    public function getServiceType()
+    {
+        return $this->container['serviceType'];
+    }
+
+    /**
+     * Sets serviceType
+     *
+     * @param string|null $serviceType Tipo do serviço (tpServ). Default 0.
+     *
+     * @return self
+     */
+    public function setServiceType($serviceType)
+    {
+        if (is_null($serviceType)) {
+            throw new \InvalidArgumentException('non-nullable serviceType cannot be null');
+        }
+        $this->container['serviceType'] = $serviceType;
+
+        return $this;
+    }
+
+    /**
+     * Gets taker
+     *
+     * @return string|null
+     */
+    public function getTaker()
+    {
+        return $this->container['taker'];
+    }
+
+    /**
+     * Sets taker
+     *
+     * @param string|null $taker Tomador (toma). `4` = outro — informe `takerParty`.
+     *
+     * @return self
+     */
+    public function setTaker($taker)
+    {
+        if (is_null($taker)) {
+            throw new \InvalidArgumentException('non-nullable taker cannot be null');
+        }
+        $allowedValues = $this->getTakerAllowableValues();
+        if (!in_array($taker, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'taker', must be one of '%s'",
+                    $taker,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['taker'] = $taker;
 
         return $this;
     }
@@ -477,7 +742,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets shipper
      *
-     * @return object
+     * @return \EmitfyGenerated\Model\CteParty
      */
     public function getShipper()
     {
@@ -487,7 +752,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets shipper
      *
-     * @param object $shipper shipper
+     * @param \EmitfyGenerated\Model\CteParty $shipper shipper
      *
      * @return self
      */
@@ -504,7 +769,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets recipient
      *
-     * @return object
+     * @return \EmitfyGenerated\Model\CteParty
      */
     public function getRecipient()
     {
@@ -514,7 +779,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets recipient
      *
-     * @param object $recipient recipient
+     * @param \EmitfyGenerated\Model\CteParty $recipient recipient
      *
      * @return self
      */
@@ -524,6 +789,87 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable recipient cannot be null');
         }
         $this->container['recipient'] = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * Gets dispatcher
+     *
+     * @return \EmitfyGenerated\Model\CteParty|null
+     */
+    public function getDispatcher()
+    {
+        return $this->container['dispatcher'];
+    }
+
+    /**
+     * Sets dispatcher
+     *
+     * @param \EmitfyGenerated\Model\CteParty|null $dispatcher dispatcher
+     *
+     * @return self
+     */
+    public function setDispatcher($dispatcher)
+    {
+        if (is_null($dispatcher)) {
+            throw new \InvalidArgumentException('non-nullable dispatcher cannot be null');
+        }
+        $this->container['dispatcher'] = $dispatcher;
+
+        return $this;
+    }
+
+    /**
+     * Gets receiver
+     *
+     * @return \EmitfyGenerated\Model\CteParty|null
+     */
+    public function getReceiver()
+    {
+        return $this->container['receiver'];
+    }
+
+    /**
+     * Sets receiver
+     *
+     * @param \EmitfyGenerated\Model\CteParty|null $receiver receiver
+     *
+     * @return self
+     */
+    public function setReceiver($receiver)
+    {
+        if (is_null($receiver)) {
+            throw new \InvalidArgumentException('non-nullable receiver cannot be null');
+        }
+        $this->container['receiver'] = $receiver;
+
+        return $this;
+    }
+
+    /**
+     * Gets takerParty
+     *
+     * @return \EmitfyGenerated\Model\CteParty|null
+     */
+    public function getTakerParty()
+    {
+        return $this->container['takerParty'];
+    }
+
+    /**
+     * Sets takerParty
+     *
+     * @param \EmitfyGenerated\Model\CteParty|null $takerParty takerParty
+     *
+     * @return self
+     */
+    public function setTakerParty($takerParty)
+    {
+        if (is_null($takerParty)) {
+            throw new \InvalidArgumentException('non-nullable takerParty cannot be null');
+        }
+        $this->container['takerParty'] = $takerParty;
 
         return $this;
     }
@@ -550,6 +896,13 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($municipalityStartIbge)) {
             throw new \InvalidArgumentException('non-nullable municipalityStartIbge cannot be null');
         }
+        if ((mb_strlen($municipalityStartIbge) > 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityStartIbge when calling CteCreateRequest., must be smaller than or equal to 7.');
+        }
+        if ((mb_strlen($municipalityStartIbge) < 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityStartIbge when calling CteCreateRequest., must be bigger than or equal to 7.');
+        }
+
         $this->container['municipalityStartIbge'] = $municipalityStartIbge;
 
         return $this;
@@ -577,6 +930,13 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($municipalityEndIbge)) {
             throw new \InvalidArgumentException('non-nullable municipalityEndIbge cannot be null');
         }
+        if ((mb_strlen($municipalityEndIbge) > 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityEndIbge when calling CteCreateRequest., must be smaller than or equal to 7.');
+        }
+        if ((mb_strlen($municipalityEndIbge) < 7)) {
+            throw new \InvalidArgumentException('invalid length for $municipalityEndIbge when calling CteCreateRequest., must be bigger than or equal to 7.');
+        }
+
         $this->container['municipalityEndIbge'] = $municipalityEndIbge;
 
         return $this;
@@ -604,6 +964,10 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($cargoValue)) {
             throw new \InvalidArgumentException('non-nullable cargoValue cannot be null');
         }
+        if (($cargoValue < 0)) {
+            throw new \InvalidArgumentException('invalid value for $cargoValue when calling CteCreateRequest., must be bigger than or equal to 0.');
+        }
+
         $this->container['cargoValue'] = $cargoValue;
 
         return $this;
@@ -631,6 +995,13 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($cargoProduct)) {
             throw new \InvalidArgumentException('non-nullable cargoProduct cannot be null');
         }
+        if ((mb_strlen($cargoProduct) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $cargoProduct when calling CteCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($cargoProduct) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $cargoProduct when calling CteCreateRequest., must be bigger than or equal to 1.');
+        }
+
         $this->container['cargoProduct'] = $cargoProduct;
 
         return $this;
@@ -639,7 +1010,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets cargoQuantities
      *
-     * @return object[]
+     * @return \EmitfyGenerated\Model\CteCargoQuantity[]
      */
     public function getCargoQuantities()
     {
@@ -649,7 +1020,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets cargoQuantities
      *
-     * @param object[] $cargoQuantities cargoQuantities
+     * @param \EmitfyGenerated\Model\CteCargoQuantity[] $cargoQuantities cargoQuantities
      *
      * @return self
      */
@@ -658,7 +1029,38 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($cargoQuantities)) {
             throw new \InvalidArgumentException('non-nullable cargoQuantities cannot be null');
         }
+
+        if ((count($cargoQuantities) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $cargoQuantities when calling CteCreateRequest., number of items must be greater than or equal to 1.');
+        }
         $this->container['cargoQuantities'] = $cargoQuantities;
+
+        return $this;
+    }
+
+    /**
+     * Gets linkedNfeAccessKeys
+     *
+     * @return string[]|null
+     */
+    public function getLinkedNfeAccessKeys()
+    {
+        return $this->container['linkedNfeAccessKeys'];
+    }
+
+    /**
+     * Sets linkedNfeAccessKeys
+     *
+     * @param string[]|null $linkedNfeAccessKeys linkedNfeAccessKeys
+     *
+     * @return self
+     */
+    public function setLinkedNfeAccessKeys($linkedNfeAccessKeys)
+    {
+        if (is_null($linkedNfeAccessKeys)) {
+            throw new \InvalidArgumentException('non-nullable linkedNfeAccessKeys cannot be null');
+        }
+        $this->container['linkedNfeAccessKeys'] = $linkedNfeAccessKeys;
 
         return $this;
     }
@@ -685,6 +1087,10 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($serviceAmount)) {
             throw new \InvalidArgumentException('non-nullable serviceAmount cannot be null');
         }
+        if (($serviceAmount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $serviceAmount when calling CteCreateRequest., must be bigger than or equal to 0.');
+        }
+
         $this->container['serviceAmount'] = $serviceAmount;
 
         return $this;
@@ -693,7 +1099,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets icms
      *
-     * @return object
+     * @return \EmitfyGenerated\Model\CteIcms
      */
     public function getIcms()
     {
@@ -703,7 +1109,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets icms
      *
-     * @param object $icms icms
+     * @param \EmitfyGenerated\Model\CteIcms $icms icms
      *
      * @return self
      */
@@ -718,28 +1124,28 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets components
+     * Gets rntrc
      *
-     * @return object[]|null
+     * @return string|null
      */
-    public function getComponents()
+    public function getRntrc()
     {
-        return $this->container['components'];
+        return $this->container['rntrc'];
     }
 
     /**
-     * Sets components
+     * Sets rntrc
      *
-     * @param object[]|null $components components
+     * @param string|null $rntrc rntrc
      *
      * @return self
      */
-    public function setComponents($components)
+    public function setRntrc($rntrc)
     {
-        if (is_null($components)) {
-            throw new \InvalidArgumentException('non-nullable components cannot be null');
+        if (is_null($rntrc)) {
+            throw new \InvalidArgumentException('non-nullable rntrc cannot be null');
         }
-        $this->container['components'] = $components;
+        $this->container['rntrc'] = $rntrc;
 
         return $this;
     }
@@ -747,7 +1153,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets complement
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\CteCreateRequestComplement|null
      */
     public function getComplement()
     {
@@ -757,7 +1163,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets complement
      *
-     * @param object|null $complement complement
+     * @param \EmitfyGenerated\Model\CteCreateRequestComplement|null $complement complement
      *
      * @return self
      */
@@ -772,9 +1178,36 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets components
+     *
+     * @return \EmitfyGenerated\Model\DfeComponent[]|null
+     */
+    public function getComponents()
+    {
+        return $this->container['components'];
+    }
+
+    /**
+     * Sets components
+     *
+     * @param \EmitfyGenerated\Model\DfeComponent[]|null $components components
+     *
+     * @return self
+     */
+    public function setComponents($components)
+    {
+        if (is_null($components)) {
+            throw new \InvalidArgumentException('non-nullable components cannot be null');
+        }
+        $this->container['components'] = $components;
+
+        return $this;
+    }
+
+    /**
      * Gets autXml
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\DfeAutXml[]|null
      */
     public function getAutXml()
     {
@@ -784,7 +1217,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets autXml
      *
-     * @param object[]|null $autXml autXml
+     * @param \EmitfyGenerated\Model\DfeAutXml[]|null $autXml autXml
      *
      * @return self
      */
@@ -801,7 +1234,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets techResponsible
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\DfeTechResponsible|null
      */
     public function getTechResponsible()
     {
@@ -811,7 +1244,7 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets techResponsible
      *
-     * @param object|null $techResponsible techResponsible
+     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible techResponsible
      *
      * @return self
      */
@@ -821,6 +1254,33 @@ class CteCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable techResponsible cannot be null');
         }
         $this->container['techResponsible'] = $techResponsible;
+
+        return $this;
+    }
+
+    /**
+     * Gets modal
+     *
+     * @return string|null
+     */
+    public function getModal()
+    {
+        return $this->container['modal'];
+    }
+
+    /**
+     * Sets modal
+     *
+     * @param string|null $modal modal
+     *
+     * @return self
+     */
+    public function setModal($modal)
+    {
+        if (is_null($modal)) {
+            throw new \InvalidArgumentException('non-nullable modal cannot be null');
+        }
+        $this->container['modal'] = $modal;
 
         return $this;
     }

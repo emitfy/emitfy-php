@@ -35,7 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * InvoiceCancelAccepted Class Doc Comment
  *
  * @category Class
- * @description Resposta 202 dos DELETE tipados (&#x60;/nfse/{id}&#x60;, &#x60;/nfe/{id}&#x60;, &#x60;/nfce/{id}&#x60;). O cancelamento é assíncrono: logo após o 202 a nota ainda costuma estar &#x60;authorized&#x60;; o resultado final chega no webhook &#x60;*.cancelled&#x60; (NFS-e/NF-e) ou no GET (&#x60;status: cancelled&#x60;).
+ * @description Resposta 202 dos DELETE tipados (&#x60;/nfse/{id}&#x60;, &#x60;/nfe/{id}&#x60;, &#x60;/nfce/{id}&#x60;). O cancelamento é assíncrono: logo após o 202 a nota vem &#x60;processing&#x60; (apiStatus &#x60;transmitting&#x60;); o resultado final chega no webhook &#x60;*.cancelled&#x60; (NFS-e/NF-e) ou no GET (&#x60;status: cancelled&#x60;).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech

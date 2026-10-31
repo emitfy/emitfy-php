@@ -74,6 +74,9 @@ class ReceivedNfesApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'receivedNfesFetchByKey' => [
+            'application/json',
+        ],
         'receivedNfesGet' => [
             'application/json',
         ],
@@ -135,6 +138,253 @@ class ReceivedNfesApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation receivedNfesFetchByKey
+     *
+     * Fetch received NF-e by access key (DistDFe consChNFe)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\ReceivedNfesFetchByKeyRequest $receivedNfesFetchByKeyRequest receivedNfesFetchByKeyRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesFetchByKey'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function receivedNfesFetchByKey($companyId, $receivedNfesFetchByKeyRequest, string $contentType = self::contentTypes['receivedNfesFetchByKey'][0])
+    {
+        $this->receivedNfesFetchByKeyWithHttpInfo($companyId, $receivedNfesFetchByKeyRequest, $contentType);
+    }
+
+    /**
+     * Operation receivedNfesFetchByKeyWithHttpInfo
+     *
+     * Fetch received NF-e by access key (DistDFe consChNFe)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\ReceivedNfesFetchByKeyRequest $receivedNfesFetchByKeyRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesFetchByKey'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function receivedNfesFetchByKeyWithHttpInfo($companyId, $receivedNfesFetchByKeyRequest, string $contentType = self::contentTypes['receivedNfesFetchByKey'][0])
+    {
+        $request = $this->receivedNfesFetchByKeyRequest($companyId, $receivedNfesFetchByKeyRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation receivedNfesFetchByKeyAsync
+     *
+     * Fetch received NF-e by access key (DistDFe consChNFe)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\ReceivedNfesFetchByKeyRequest $receivedNfesFetchByKeyRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesFetchByKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesFetchByKeyAsync($companyId, $receivedNfesFetchByKeyRequest, string $contentType = self::contentTypes['receivedNfesFetchByKey'][0])
+    {
+        return $this->receivedNfesFetchByKeyAsyncWithHttpInfo($companyId, $receivedNfesFetchByKeyRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation receivedNfesFetchByKeyAsyncWithHttpInfo
+     *
+     * Fetch received NF-e by access key (DistDFe consChNFe)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\ReceivedNfesFetchByKeyRequest $receivedNfesFetchByKeyRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesFetchByKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesFetchByKeyAsyncWithHttpInfo($companyId, $receivedNfesFetchByKeyRequest, string $contentType = self::contentTypes['receivedNfesFetchByKey'][0])
+    {
+        $returnType = '';
+        $request = $this->receivedNfesFetchByKeyRequest($companyId, $receivedNfesFetchByKeyRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'receivedNfesFetchByKey'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\ReceivedNfesFetchByKeyRequest $receivedNfesFetchByKeyRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesFetchByKey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function receivedNfesFetchByKeyRequest($companyId, $receivedNfesFetchByKeyRequest, string $contentType = self::contentTypes['receivedNfesFetchByKey'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling receivedNfesFetchByKey'
+            );
+        }
+
+        // verify the required parameter 'receivedNfesFetchByKeyRequest' is set
+        if ($receivedNfesFetchByKeyRequest === null || (is_array($receivedNfesFetchByKeyRequest) && count($receivedNfesFetchByKeyRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $receivedNfesFetchByKeyRequest when calling receivedNfesFetchByKey'
+            );
+        }
+
+
+        $resourcePath = '/companies/{companyId}/received-nfes/fetch-by-key';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            [],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($receivedNfesFetchByKeyRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($receivedNfesFetchByKeyRequest));
+            } else {
+                $httpBody = $receivedNfesFetchByKeyRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -395,15 +645,17 @@ class ReceivedNfesApi
      * @param  int|null $limit limit (optional)
      * @param  string|null $search search (optional)
      * @param  string|null $status status (optional)
+     * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
+     * @param  string|null $endDate Fim do período de emissão, inclusivo (23:59:59.999 BRT do dia informado). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function receivedNfesList($companyId, $page = 1, $limit = null, $search = null, $status = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesList($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
-        $this->receivedNfesListWithHttpInfo($companyId, $page, $limit, $search, $status, $contentType);
+        $this->receivedNfesListWithHttpInfo($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
     }
 
     /**
@@ -416,15 +668,17 @@ class ReceivedNfesApi
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
+     * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
+     * @param  string|null $endDate Fim do período de emissão, inclusivo (23:59:59.999 BRT do dia informado). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesList'] to see the possible values for this operation
      *
      * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function receivedNfesListWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
-        $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $contentType);
+        $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -469,14 +723,16 @@ class ReceivedNfesApi
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
+     * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
+     * @param  string|null $endDate Fim do período de emissão, inclusivo (23:59:59.999 BRT do dia informado). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function receivedNfesListAsync($companyId, $page = 1, $limit = null, $search = null, $status = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListAsync($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
-        return $this->receivedNfesListAsyncWithHttpInfo($companyId, $page, $limit, $search, $status, $contentType)
+        return $this->receivedNfesListAsyncWithHttpInfo($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -494,15 +750,17 @@ class ReceivedNfesApi
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
+     * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
+     * @param  string|null $endDate Fim do período de emissão, inclusivo (23:59:59.999 BRT do dia informado). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function receivedNfesListAsyncWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListAsyncWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
         $returnType = '';
-        $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $contentType);
+        $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -535,12 +793,14 @@ class ReceivedNfesApi
      * @param  int|null $limit (optional)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
+     * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
+     * @param  string|null $endDate Fim do período de emissão, inclusivo (23:59:59.999 BRT do dia informado). (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesList'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function receivedNfesListRequest($companyId, $page = 1, $limit = null, $search = null, $status = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListRequest($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -554,6 +814,8 @@ class ReceivedNfesApi
             throw new \InvalidArgumentException('invalid value for "$page" when calling ReceivedNfesApi.receivedNfesList, must be bigger than or equal to 1.');
         }
         
+
+
 
 
 
@@ -596,6 +858,24 @@ class ReceivedNfesApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $status,
             'status', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
             'string', // openApiType
             'form', // style
             true, // explode

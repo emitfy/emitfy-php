@@ -101,6 +101,12 @@ class MdfeApi
         'mdfeList' => [
             'application/json',
         ],
+        'mdfeSettingsGet' => [
+            'application/json',
+        ],
+        'mdfeSettingsUpdate' => [
+            'application/json',
+        ],
     ];
 
     /**
@@ -2907,6 +2913,638 @@ class MdfeApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation mdfeSettingsGet
+     *
+     * Get MDF-e settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \EmitfyGenerated\Model\MdfeSettingsGet200Response
+     */
+    public function mdfeSettingsGet($companyId, string $contentType = self::contentTypes['mdfeSettingsGet'][0])
+    {
+        list($response) = $this->mdfeSettingsGetWithHttpInfo($companyId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation mdfeSettingsGetWithHttpInfo
+     *
+     * Get MDF-e settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \EmitfyGenerated\Model\MdfeSettingsGet200Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function mdfeSettingsGetWithHttpInfo($companyId, string $contentType = self::contentTypes['mdfeSettingsGet'][0])
+    {
+        $request = $this->mdfeSettingsGetRequest($companyId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation mdfeSettingsGetAsync
+     *
+     * Get MDF-e settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function mdfeSettingsGetAsync($companyId, string $contentType = self::contentTypes['mdfeSettingsGet'][0])
+    {
+        return $this->mdfeSettingsGetAsyncWithHttpInfo($companyId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation mdfeSettingsGetAsyncWithHttpInfo
+     *
+     * Get MDF-e settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function mdfeSettingsGetAsyncWithHttpInfo($companyId, string $contentType = self::contentTypes['mdfeSettingsGet'][0])
+    {
+        $returnType = '\EmitfyGenerated\Model\MdfeSettingsGet200Response';
+        $request = $this->mdfeSettingsGetRequest($companyId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'mdfeSettingsGet'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function mdfeSettingsGetRequest($companyId, string $contentType = self::contentTypes['mdfeSettingsGet'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling mdfeSettingsGet'
+            );
+        }
+
+
+        $resourcePath = '/companies/{companyId}/mdfe/settings';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation mdfeSettingsUpdate
+     *
+     * Enable, disable or configure MDF-e
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\MdfeSettingsPatch $mdfeSettingsPatch mdfeSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \EmitfyGenerated\Model\MdfeSettingsGet200Response|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody
+     */
+    public function mdfeSettingsUpdate($companyId, $mdfeSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['mdfeSettingsUpdate'][0])
+    {
+        list($response) = $this->mdfeSettingsUpdateWithHttpInfo($companyId, $mdfeSettingsPatch, $confirmNumber, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation mdfeSettingsUpdateWithHttpInfo
+     *
+     * Enable, disable or configure MDF-e
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\MdfeSettingsPatch $mdfeSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \EmitfyGenerated\Model\MdfeSettingsGet200Response|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function mdfeSettingsUpdateWithHttpInfo($companyId, $mdfeSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['mdfeSettingsUpdate'][0])
+    {
+        $request = $this->mdfeSettingsUpdateRequest($companyId, $mdfeSettingsPatch, $confirmNumber, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\MdfeSettingsGet200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation mdfeSettingsUpdateAsync
+     *
+     * Enable, disable or configure MDF-e
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\MdfeSettingsPatch $mdfeSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function mdfeSettingsUpdateAsync($companyId, $mdfeSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['mdfeSettingsUpdate'][0])
+    {
+        return $this->mdfeSettingsUpdateAsyncWithHttpInfo($companyId, $mdfeSettingsPatch, $confirmNumber, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation mdfeSettingsUpdateAsyncWithHttpInfo
+     *
+     * Enable, disable or configure MDF-e
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\MdfeSettingsPatch $mdfeSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function mdfeSettingsUpdateAsyncWithHttpInfo($companyId, $mdfeSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['mdfeSettingsUpdate'][0])
+    {
+        $returnType = '\EmitfyGenerated\Model\MdfeSettingsGet200Response';
+        $request = $this->mdfeSettingsUpdateRequest($companyId, $mdfeSettingsPatch, $confirmNumber, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'mdfeSettingsUpdate'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\MdfeSettingsPatch $mdfeSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['mdfeSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function mdfeSettingsUpdateRequest($companyId, $mdfeSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['mdfeSettingsUpdate'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling mdfeSettingsUpdate'
+            );
+        }
+
+        // verify the required parameter 'mdfeSettingsPatch' is set
+        if ($mdfeSettingsPatch === null || (is_array($mdfeSettingsPatch) && count($mdfeSettingsPatch) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $mdfeSettingsPatch when calling mdfeSettingsUpdate'
+            );
+        }
+
+
+
+        $resourcePath = '/companies/{companyId}/mdfe/settings';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $confirmNumber,
+            'confirmNumber', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($mdfeSettingsPatch)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mdfeSettingsPatch));
+            } else {
+                $httpBody = $mdfeSettingsPatch;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

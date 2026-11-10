@@ -92,6 +92,12 @@ class CteApi
         'cteOsCreate' => [
             'application/json',
         ],
+        'cteSettingsGet' => [
+            'application/json',
+        ],
+        'cteSettingsUpdate' => [
+            'application/json',
+        ],
     ];
 
     /**
@@ -1947,6 +1953,638 @@ class CteApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation cteSettingsGet
+     *
+     * Get CT-e e CT-e OS settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \EmitfyGenerated\Model\CteSettingsGet200Response
+     */
+    public function cteSettingsGet($companyId, string $contentType = self::contentTypes['cteSettingsGet'][0])
+    {
+        list($response) = $this->cteSettingsGetWithHttpInfo($companyId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation cteSettingsGetWithHttpInfo
+     *
+     * Get CT-e e CT-e OS settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \EmitfyGenerated\Model\CteSettingsGet200Response, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function cteSettingsGetWithHttpInfo($companyId, string $contentType = self::contentTypes['cteSettingsGet'][0])
+    {
+        $request = $this->cteSettingsGetRequest($companyId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation cteSettingsGetAsync
+     *
+     * Get CT-e e CT-e OS settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cteSettingsGetAsync($companyId, string $contentType = self::contentTypes['cteSettingsGet'][0])
+    {
+        return $this->cteSettingsGetAsyncWithHttpInfo($companyId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation cteSettingsGetAsyncWithHttpInfo
+     *
+     * Get CT-e e CT-e OS settings
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cteSettingsGetAsyncWithHttpInfo($companyId, string $contentType = self::contentTypes['cteSettingsGet'][0])
+    {
+        $returnType = '\EmitfyGenerated\Model\CteSettingsGet200Response';
+        $request = $this->cteSettingsGetRequest($companyId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'cteSettingsGet'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsGet'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function cteSettingsGetRequest($companyId, string $contentType = self::contentTypes['cteSettingsGet'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling cteSettingsGet'
+            );
+        }
+
+
+        $resourcePath = '/companies/{companyId}/cte/settings';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation cteSettingsUpdate
+     *
+     * Enable, disable or configure CT-e e CT-e OS
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\CteSettingsPatch $cteSettingsPatch cteSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \EmitfyGenerated\Model\CteSettingsGet200Response|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody
+     */
+    public function cteSettingsUpdate($companyId, $cteSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['cteSettingsUpdate'][0])
+    {
+        list($response) = $this->cteSettingsUpdateWithHttpInfo($companyId, $cteSettingsPatch, $confirmNumber, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation cteSettingsUpdateWithHttpInfo
+     *
+     * Enable, disable or configure CT-e e CT-e OS
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\CteSettingsPatch $cteSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \EmitfyGenerated\Model\CteSettingsGet200Response|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody|\EmitfyGenerated\Model\ErrorBody, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function cteSettingsUpdateWithHttpInfo($companyId, $cteSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['cteSettingsUpdate'][0])
+    {
+        $request = $this->cteSettingsUpdateRequest($companyId, $cteSettingsPatch, $confirmNumber, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+                case 422:
+                    return $this->handleResponseWithDataType(
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\CteSettingsGet200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 422:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\EmitfyGenerated\Model\ErrorBody',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation cteSettingsUpdateAsync
+     *
+     * Enable, disable or configure CT-e e CT-e OS
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\CteSettingsPatch $cteSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cteSettingsUpdateAsync($companyId, $cteSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['cteSettingsUpdate'][0])
+    {
+        return $this->cteSettingsUpdateAsyncWithHttpInfo($companyId, $cteSettingsPatch, $confirmNumber, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation cteSettingsUpdateAsyncWithHttpInfo
+     *
+     * Enable, disable or configure CT-e e CT-e OS
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\CteSettingsPatch $cteSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cteSettingsUpdateAsyncWithHttpInfo($companyId, $cteSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['cteSettingsUpdate'][0])
+    {
+        $returnType = '\EmitfyGenerated\Model\CteSettingsGet200Response';
+        $request = $this->cteSettingsUpdateRequest($companyId, $cteSettingsPatch, $confirmNumber, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'cteSettingsUpdate'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  \EmitfyGenerated\Model\CteSettingsPatch $cteSettingsPatch (required)
+     * @param  string|null $confirmNumber &#x60;1&#x60; aceita voltar o próximo número na mesma série. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cteSettingsUpdate'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function cteSettingsUpdateRequest($companyId, $cteSettingsPatch, $confirmNumber = null, string $contentType = self::contentTypes['cteSettingsUpdate'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling cteSettingsUpdate'
+            );
+        }
+
+        // verify the required parameter 'cteSettingsPatch' is set
+        if ($cteSettingsPatch === null || (is_array($cteSettingsPatch) && count($cteSettingsPatch) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $cteSettingsPatch when calling cteSettingsUpdate'
+            );
+        }
+
+
+
+        $resourcePath = '/companies/{companyId}/cte/settings';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $confirmNumber,
+            'confirmNumber', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($cteSettingsPatch)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($cteSettingsPatch));
+            } else {
+                $httpBody = $cteSettingsPatch;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

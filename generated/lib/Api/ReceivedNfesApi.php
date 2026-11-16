@@ -74,6 +74,9 @@ class ReceivedNfesApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'receivedNfesDownload' => [
+            'application/json',
+        ],
         'receivedNfesFetchByKey' => [
             'application/json',
         ],
@@ -84,6 +87,12 @@ class ReceivedNfesApi
             'application/json',
         ],
         'receivedNfesManifest' => [
+            'application/json',
+        ],
+        'receivedNfesPdf' => [
+            'application/json',
+        ],
+        'receivedNfesSummary' => [
             'application/json',
         ],
         'receivedNfesSync' => [
@@ -138,6 +147,374 @@ class ReceivedNfesApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation receivedNfesDownload
+     *
+     * Download received NF-e as .zip
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $format format (optional, default to 'xml')
+     * @param  string|null $ids ids (optional)
+     * @param  string|null $search search (optional)
+     * @param  string|null $status status (optional)
+     * @param  string|null $startDate startDate (optional)
+     * @param  string|null $endDate endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesDownload'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \SplFileObject
+     */
+    public function receivedNfesDownload($companyId, $format = 'xml', $ids = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesDownload'][0])
+    {
+        list($response) = $this->receivedNfesDownloadWithHttpInfo($companyId, $format, $ids, $search, $status, $startDate, $endDate, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation receivedNfesDownloadWithHttpInfo
+     *
+     * Download received NF-e as .zip
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $format (optional, default to 'xml')
+     * @param  string|null $ids (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $status (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesDownload'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \SplFileObject, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function receivedNfesDownloadWithHttpInfo($companyId, $format = 'xml', $ids = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesDownload'][0])
+    {
+        $request = $this->receivedNfesDownloadRequest($companyId, $format, $ids, $search, $status, $startDate, $endDate, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\SplFileObject',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\SplFileObject',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\SplFileObject',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation receivedNfesDownloadAsync
+     *
+     * Download received NF-e as .zip
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $format (optional, default to 'xml')
+     * @param  string|null $ids (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $status (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesDownload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesDownloadAsync($companyId, $format = 'xml', $ids = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesDownload'][0])
+    {
+        return $this->receivedNfesDownloadAsyncWithHttpInfo($companyId, $format, $ids, $search, $status, $startDate, $endDate, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation receivedNfesDownloadAsyncWithHttpInfo
+     *
+     * Download received NF-e as .zip
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $format (optional, default to 'xml')
+     * @param  string|null $ids (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $status (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesDownload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesDownloadAsyncWithHttpInfo($companyId, $format = 'xml', $ids = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesDownload'][0])
+    {
+        $returnType = '\SplFileObject';
+        $request = $this->receivedNfesDownloadRequest($companyId, $format, $ids, $search, $status, $startDate, $endDate, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'receivedNfesDownload'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $format (optional, default to 'xml')
+     * @param  string|null $ids (optional)
+     * @param  string|null $search (optional)
+     * @param  string|null $status (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesDownload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function receivedNfesDownloadRequest($companyId, $format = 'xml', $ids = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesDownload'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling receivedNfesDownload'
+            );
+        }
+
+
+
+
+
+
+
+
+        $resourcePath = '/companies/{companyId}/received-nfes/download';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $format,
+            'format', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ids,
+            'ids', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $status,
+            'status', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/zip', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -642,7 +1019,7 @@ class ReceivedNfesApi
      *
      * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page page (optional, default to 1)
-     * @param  int|null $limit limit (optional)
+     * @param  int|null $limit Itens por página (1–100). Padrão 20. (optional, default to 20)
      * @param  string|null $search search (optional)
      * @param  string|null $status status (optional)
      * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
@@ -653,7 +1030,7 @@ class ReceivedNfesApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function receivedNfesList($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesList($companyId, $page = 1, $limit = 20, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
         $this->receivedNfesListWithHttpInfo($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
     }
@@ -665,7 +1042,7 @@ class ReceivedNfesApi
      *
      * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional)
+     * @param  int|null $limit Itens por página (1–100). Padrão 20. (optional, default to 20)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
      * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
@@ -676,7 +1053,7 @@ class ReceivedNfesApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function receivedNfesListWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListWithHttpInfo($companyId, $page = 1, $limit = 20, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
         $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
 
@@ -720,7 +1097,7 @@ class ReceivedNfesApi
      *
      * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional)
+     * @param  int|null $limit Itens por página (1–100). Padrão 20. (optional, default to 20)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
      * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
@@ -730,7 +1107,7 @@ class ReceivedNfesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function receivedNfesListAsync($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListAsync($companyId, $page = 1, $limit = 20, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
         return $this->receivedNfesListAsyncWithHttpInfo($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType)
             ->then(
@@ -747,7 +1124,7 @@ class ReceivedNfesApi
      *
      * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional)
+     * @param  int|null $limit Itens por página (1–100). Padrão 20. (optional, default to 20)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
      * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
@@ -757,7 +1134,7 @@ class ReceivedNfesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function receivedNfesListAsyncWithHttpInfo($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListAsyncWithHttpInfo($companyId, $page = 1, $limit = 20, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
         $returnType = '';
         $request = $this->receivedNfesListRequest($companyId, $page, $limit, $search, $status, $startDate, $endDate, $contentType);
@@ -790,7 +1167,7 @@ class ReceivedNfesApi
      *
      * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
      * @param  int|null $page (optional, default to 1)
-     * @param  int|null $limit (optional)
+     * @param  int|null $limit Itens por página (1–100). Padrão 20. (optional, default to 20)
      * @param  string|null $search (optional)
      * @param  string|null $status (optional)
      * @param  string|null $startDate Início do período de emissão (&#x60;issuedOn&#x60;). &#x60;YYYY-MM-DD&#x60; &#x3D; dia civil de Brasília (00:00 BRT); também aceita ISO 8601 ou epoch ms (recortado ao dia em BRT). (optional)
@@ -800,7 +1177,7 @@ class ReceivedNfesApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function receivedNfesListRequest($companyId, $page = 1, $limit = null, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
+    public function receivedNfesListRequest($companyId, $page = 1, $limit = 20, $search = null, $status = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesList'][0])
     {
 
         // verify the required parameter 'companyId' is set
@@ -814,7 +1191,13 @@ class ReceivedNfesApi
             throw new \InvalidArgumentException('invalid value for "$page" when calling ReceivedNfesApi.receivedNfesList, must be bigger than or equal to 1.');
         }
         
-
+        if ($limit !== null && $limit > 100) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling ReceivedNfesApi.receivedNfesList, must be smaller than or equal to 100.');
+        }
+        if ($limit !== null && $limit < 1) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling ReceivedNfesApi.receivedNfesList, must be bigger than or equal to 1.');
+        }
+        
 
 
 
@@ -1217,6 +1600,577 @@ class ReceivedNfesApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation receivedNfesPdf
+     *
+     * Get received NF-e DANFE (PDF)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesPdf'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \SplFileObject
+     */
+    public function receivedNfesPdf($companyId, $id, string $contentType = self::contentTypes['receivedNfesPdf'][0])
+    {
+        list($response) = $this->receivedNfesPdfWithHttpInfo($companyId, $id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation receivedNfesPdfWithHttpInfo
+     *
+     * Get received NF-e DANFE (PDF)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesPdf'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \SplFileObject, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function receivedNfesPdfWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['receivedNfesPdf'][0])
+    {
+        $request = $this->receivedNfesPdfRequest($companyId, $id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\SplFileObject',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\SplFileObject',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\SplFileObject',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation receivedNfesPdfAsync
+     *
+     * Get received NF-e DANFE (PDF)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesPdf'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesPdfAsync($companyId, $id, string $contentType = self::contentTypes['receivedNfesPdf'][0])
+    {
+        return $this->receivedNfesPdfAsyncWithHttpInfo($companyId, $id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation receivedNfesPdfAsyncWithHttpInfo
+     *
+     * Get received NF-e DANFE (PDF)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesPdf'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesPdfAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['receivedNfesPdf'][0])
+    {
+        $returnType = '\SplFileObject';
+        $request = $this->receivedNfesPdfRequest($companyId, $id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'receivedNfesPdf'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesPdf'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function receivedNfesPdfRequest($companyId, $id, string $contentType = self::contentTypes['receivedNfesPdf'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling receivedNfesPdf'
+            );
+        }
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling receivedNfesPdf'
+            );
+        }
+
+
+        $resourcePath = '/companies/{companyId}/received-nfes/{id}/pdf';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/pdf', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation receivedNfesSummary
+     *
+     * Received NF-e totals
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $search search (optional)
+     * @param  string|null $startDate startDate (optional)
+     * @param  string|null $endDate endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSummary'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function receivedNfesSummary($companyId, $search = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesSummary'][0])
+    {
+        $this->receivedNfesSummaryWithHttpInfo($companyId, $search, $startDate, $endDate, $contentType);
+    }
+
+    /**
+     * Operation receivedNfesSummaryWithHttpInfo
+     *
+     * Received NF-e totals
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $search (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSummary'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function receivedNfesSummaryWithHttpInfo($companyId, $search = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesSummary'][0])
+    {
+        $request = $this->receivedNfesSummaryRequest($companyId, $search, $startDate, $endDate, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation receivedNfesSummaryAsync
+     *
+     * Received NF-e totals
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $search (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSummary'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesSummaryAsync($companyId, $search = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesSummary'][0])
+    {
+        return $this->receivedNfesSummaryAsyncWithHttpInfo($companyId, $search, $startDate, $endDate, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation receivedNfesSummaryAsyncWithHttpInfo
+     *
+     * Received NF-e totals
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $search (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSummary'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function receivedNfesSummaryAsyncWithHttpInfo($companyId, $search = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesSummary'][0])
+    {
+        $returnType = '';
+        $request = $this->receivedNfesSummaryRequest($companyId, $search, $startDate, $endDate, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'receivedNfesSummary'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string|null $search (optional)
+     * @param  string|null $startDate (optional)
+     * @param  string|null $endDate (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['receivedNfesSummary'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function receivedNfesSummaryRequest($companyId, $search = null, $startDate = null, $endDate = null, string $contentType = self::contentTypes['receivedNfesSummary'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling receivedNfesSummary'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/companies/{companyId}/received-nfes/summary';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $search,
+            'search', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $startDate,
+            'startDate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $endDate,
+            'endDate', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            [],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

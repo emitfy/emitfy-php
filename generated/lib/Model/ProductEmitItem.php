@@ -693,6 +693,14 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = "invalid value for 'taxableUnit', the character length must be smaller than or equal to 6.";
         }
 
+        if (!is_null($this->container['nve']) && (count($this->container['nve']) > 8)) {
+            $invalidProperties[] = "invalid value for 'nve', number of items must be less than or equal to 8.";
+        }
+
+        if (!is_null($this->container['extipi']) && !preg_match("/^[0-9]{2,3}$/", $this->container['extipi'])) {
+            $invalidProperties[] = "invalid value for 'extipi', must be conform to the pattern /^[0-9]{2,3}$/.";
+        }
+
         if (!is_null($this->container['orderItem']) && ($this->container['orderItem'] < 1)) {
             $invalidProperties[] = "invalid value for 'orderItem', must be bigger than or equal to 1.";
         }
@@ -1603,7 +1611,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets cest
      *
-     * @param string|null $cest cest
+     * @param string|null $cest CEST (7 dígitos). Sai uma única vez no `prod`; prevalece sobre o do cadastro
      *
      * @return self
      */
@@ -1657,7 +1665,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets nve
      *
-     * @param string[]|null $nve nve
+     * @param string[]|null $nve NF-e — Nomenclatura de Valor Aduaneiro (NVE, ex. AA0001), até 8 por item
      *
      * @return self
      */
@@ -1665,6 +1673,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         if (is_null($nve)) {
             throw new \InvalidArgumentException('non-nullable nve cannot be null');
+        }
+        if ((count($nve) > 8)) {
+            throw new \InvalidArgumentException('invalid value for $nve when calling ProductEmitItem., number of items must be less than or equal to 8.');
         }
         $this->container['nve'] = $nve;
 
@@ -1684,7 +1695,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets extipi
      *
-     * @param string|null $extipi extipi
+     * @param string|null $extipi NF-e — código EX da TIPI (EXTIPI), 2 ou 3 dígitos
      *
      * @return self
      */
@@ -1693,6 +1704,11 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($extipi)) {
             throw new \InvalidArgumentException('non-nullable extipi cannot be null');
         }
+
+        if ((!preg_match("/^[0-9]{2,3}$/", ObjectSerializer::toString($extipi)))) {
+            throw new \InvalidArgumentException("invalid value for \$extipi when calling ProductEmitItem., must conform to the pattern /^[0-9]{2,3}$/.");
+        }
+
         $this->container['extipi'] = $extipi;
 
         return $this;
@@ -1769,7 +1785,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets freight
      *
-     * @param float|null $freight freight
+     * @param float|null $freight vFrete do item (prevalece sobre o rateio)
      *
      * @return self
      */
@@ -1800,7 +1816,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets insurance
      *
-     * @param float|null $insurance insurance
+     * @param float|null $insurance NF-e — vSeg do item; soma em ICMSTot/vSeg e no vNF
      *
      * @return self
      */
@@ -1831,7 +1847,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets discount
      *
-     * @param float|null $discount discount
+     * @param float|null $discount NF-e — vDesc do item (não pode passar do valor do item); soma em ICMSTot/vDesc
      *
      * @return self
      */
@@ -1862,7 +1878,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets other
      *
-     * @param float|null $other other
+     * @param float|null $other NF-e — vOutro (outras despesas acessórias) do item; soma em ICMSTot/vOutro e no vNF
      *
      * @return self
      */

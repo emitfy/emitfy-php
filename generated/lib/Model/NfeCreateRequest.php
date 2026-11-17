@@ -60,6 +60,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => '\EmitfyGenerated\Model\ProductEmitItem[]',
         'recipient' => '\EmitfyGenerated\Model\NfeCreateRequestRecipient',
         'transport' => '\EmitfyGenerated\Model\NfeCreateRequestTransport',
+        'paymentMethod' => 'string',
         'externalId' => 'string',
         'operationNature' => 'string',
         'nature' => 'string',
@@ -71,23 +72,23 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'stateRegistrationId' => 'string',
         'cfop' => 'string',
         'issueDate' => '\DateTime',
-        'ide' => 'object',
+        'ide' => '\EmitfyGenerated\Model\NfeCreateRequestIde',
         'avulsa' => 'object',
         'retirada' => '\EmitfyGenerated\Model\NfeCreateRequestRetirada',
         'entrega' => '\EmitfyGenerated\Model\NfeCreateRequestEntrega',
         'autXml' => '\EmitfyGenerated\Model\DfeAutXml[]',
-        'billing' => 'object',
-        'payments' => 'object[]',
+        'billing' => '\EmitfyGenerated\Model\NfeCreateRequestBilling',
+        'payments' => '\EmitfyGenerated\Model\NfeCreateRequestPaymentsInner[]',
         'change' => 'float',
         'intermediary' => 'object',
-        'additional' => 'object',
+        'additional' => '\EmitfyGenerated\Model\NfeCreateRequestAdditional',
         'export' => 'object',
         'purchase' => 'object',
         'sugarcane' => 'object',
         'techResponsible' => '\EmitfyGenerated\Model\DfeTechResponsible',
         'nffRequest' => 'string',
         'farming' => 'object',
-        'totals' => 'object'
+        'totals' => '\EmitfyGenerated\Model\NfeCreateRequestTotals'
     ];
 
     /**
@@ -101,6 +102,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => null,
         'recipient' => null,
         'transport' => null,
+        'paymentMethod' => null,
         'externalId' => null,
         'operationNature' => null,
         'nature' => null,
@@ -140,6 +142,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => false,
         'recipient' => false,
         'transport' => false,
+        'paymentMethod' => false,
         'externalId' => false,
         'operationNature' => false,
         'nature' => false,
@@ -259,6 +262,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => 'items',
         'recipient' => 'recipient',
         'transport' => 'transport',
+        'paymentMethod' => 'paymentMethod',
         'externalId' => 'externalId',
         'operationNature' => 'operationNature',
         'nature' => 'nature',
@@ -298,6 +302,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => 'setItems',
         'recipient' => 'setRecipient',
         'transport' => 'setTransport',
+        'paymentMethod' => 'setPaymentMethod',
         'externalId' => 'setExternalId',
         'operationNature' => 'setOperationNature',
         'nature' => 'setNature',
@@ -337,6 +342,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'items' => 'getItems',
         'recipient' => 'getRecipient',
         'transport' => 'getTransport',
+        'paymentMethod' => 'getPaymentMethod',
         'externalId' => 'getExternalId',
         'operationNature' => 'getOperationNature',
         'nature' => 'getNature',
@@ -408,6 +414,14 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const PAYMENT_METHOD_CREDIT_CARD = 'credit_card';
+    public const PAYMENT_METHOD_DEBIT_CARD = 'debit_card';
+    public const PAYMENT_METHOD_PIX = 'pix';
+    public const PAYMENT_METHOD_BANK_TRANSFER = 'bank_transfer';
+    public const PAYMENT_METHOD_CASH = 'cash';
+    public const PAYMENT_METHOD_BANK_SLIP = 'bank_slip';
+    public const PAYMENT_METHOD_OTHER = 'other';
+    public const PAYMENT_METHOD_NO_PAYMENT = 'no_payment';
     public const OPERATION_TYPE_OUTGOING = 'outgoing';
     public const OPERATION_TYPE_INCOMING = 'incoming';
     public const PRINT_TYPE_NFE_NORMAL_PORTRAIT = 'nfeNormalPortrait';
@@ -420,6 +434,25 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     public const PRESENCE_TYPE_TELEPHONE = 'telephone';
     public const PRESENCE_TYPE_DELIVERY = 'delivery';
     public const PRESENCE_TYPE_OTHERS = 'others';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPaymentMethodAllowableValues()
+    {
+        return [
+            self::PAYMENT_METHOD_CREDIT_CARD,
+            self::PAYMENT_METHOD_DEBIT_CARD,
+            self::PAYMENT_METHOD_PIX,
+            self::PAYMENT_METHOD_BANK_TRANSFER,
+            self::PAYMENT_METHOD_CASH,
+            self::PAYMENT_METHOD_BANK_SLIP,
+            self::PAYMENT_METHOD_OTHER,
+            self::PAYMENT_METHOD_NO_PAYMENT,
+        ];
+    }
 
     /**
      * Gets allowable values of the enum
@@ -495,6 +528,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
         $this->setIfExists('transport', $data ?? [], null);
+        $this->setIfExists('paymentMethod', $data ?? [], null);
         $this->setIfExists('externalId', $data ?? [], null);
         $this->setIfExists('operationNature', $data ?? [], null);
         $this->setIfExists('nature', $data ?? [], null);
@@ -562,6 +596,15 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['recipient'] === null) {
             $invalidProperties[] = "'recipient' can't be null";
         }
+        $allowedValues = $this->getPaymentMethodAllowableValues();
+        if (!is_null($this->container['paymentMethod']) && !in_array($this->container['paymentMethod'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'paymentMethod', must be one of '%s'",
+                $this->container['paymentMethod'],
+                implode("', '", $allowedValues)
+            );
+        }
+
         if (!is_null($this->container['externalId']) && (mb_strlen($this->container['externalId']) > 100)) {
             $invalidProperties[] = "invalid value for 'externalId', the character length must be smaller than or equal to 100.";
         }
@@ -620,6 +663,10 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
                 $this->container['presenceType'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if (!is_null($this->container['payments']) && (count($this->container['payments']) > 100)) {
+            $invalidProperties[] = "invalid value for 'payments', number of items must be less than or equal to 100.";
         }
 
         if (!is_null($this->container['change']) && ($this->container['change'] < 0)) {
@@ -722,6 +769,43 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable transport cannot be null');
         }
         $this->container['transport'] = $transport;
+
+        return $this;
+    }
+
+    /**
+     * Gets paymentMethod
+     *
+     * @return string|null
+     */
+    public function getPaymentMethod()
+    {
+        return $this->container['paymentMethod'];
+    }
+
+    /**
+     * Sets paymentMethod
+     *
+     * @param string|null $paymentMethod Atalho de forma de pagamento (um `detPag` com o valor total da nota). pix=17, credit_card=03, debit_card=04, cash=01, bank_slip=15, bank_transfer=18, no_payment=90, other=99. Com `payments[]`, os pagamentos detalhados prevalecem.
+     *
+     * @return self
+     */
+    public function setPaymentMethod($paymentMethod)
+    {
+        if (is_null($paymentMethod)) {
+            throw new \InvalidArgumentException('non-nullable paymentMethod cannot be null');
+        }
+        $allowedValues = $this->getPaymentMethodAllowableValues();
+        if (!in_array($paymentMethod, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'paymentMethod', must be one of '%s'",
+                    $paymentMethod,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['paymentMethod'] = $paymentMethod;
 
         return $this;
     }
@@ -880,7 +964,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets printType
      *
-     * @param string|null $printType printType
+     * @param string|null $printType tpImp do XML e orientação do DANFE (1 retrato, 2 paisagem). Omitido: orientação das configurações. `nfeSimplified` (tpImp 3) ainda não é suportado → 422.
      *
      * @return self
      */
@@ -917,7 +1001,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets consumerType
      *
-     * @param string|null $consumerType consumerType
+     * @param string|null $consumerType indFinal. Omitido: 0 quando o destinatário tem IE (indIEDest 1) e 1 para isento (2) ou não contribuinte (9). Não contribuinte (indIEDest 9) sempre sai com indFinal 1 (rejeição 696), mesmo com `normal`.
      *
      * @return self
      */
@@ -991,7 +1075,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ibsConsumptionCityCode
      *
-     * @param string|null $ibsConsumptionCityCode ibsConsumptionCityCode
+     * @param string|null $ibsConsumptionCityCode Reservado (cMunFGIBS, reforma tributária). Ainda não suportado → 422
      *
      * @return self
      */
@@ -1018,7 +1102,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets stateRegistrationId
      *
-     * @param string|null $stateRegistrationId Inscrição estadual da empresa (multi-IE) usada na emissão
+     * @param string|null $stateRegistrationId Inscrição estadual da empresa (multi-IE) usada como emit/IE. Precisa existir no cadastro e ser da UF do emitente; IE de outra UF (IEST) ainda não é suportada → 422.
      *
      * @return self
      */
@@ -1089,7 +1173,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets ide
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfeCreateRequestIde|null
      */
     public function getIde()
     {
@@ -1099,7 +1183,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ide
      *
-     * @param object|null $ide Grupo ide (campos avançados)
+     * @param \EmitfyGenerated\Model\NfeCreateRequestIde|null $ide ide
      *
      * @return self
      */
@@ -1224,7 +1308,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets billing
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfeCreateRequestBilling|null
      */
     public function getBilling()
     {
@@ -1234,7 +1318,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets billing
      *
-     * @param object|null $billing billing
+     * @param \EmitfyGenerated\Model\NfeCreateRequestBilling|null $billing billing
      *
      * @return self
      */
@@ -1251,7 +1335,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets payments
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\NfeCreateRequestPaymentsInner[]|null
      */
     public function getPayments()
     {
@@ -1261,7 +1345,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets payments
      *
-     * @param object[]|null $payments payments
+     * @param \EmitfyGenerated\Model\NfeCreateRequestPaymentsInner[]|null $payments Pagamentos detalhados (`pag/detPag`, um por item). A soma (exceto method 90) não pode ser menor que o vNF (422). Excedente vira troco (`vTroco`) automaticamente. Cartão (03/04) e PIX (17) levam o grupo `card` (tpIntegra 2).
      *
      * @return self
      */
@@ -1269,6 +1353,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         if (is_null($payments)) {
             throw new \InvalidArgumentException('non-nullable payments cannot be null');
+        }
+        if ((count($payments) > 100)) {
+            throw new \InvalidArgumentException('invalid value for $payments when calling NfeCreateRequest., number of items must be less than or equal to 100.');
         }
         $this->container['payments'] = $payments;
 
@@ -1288,7 +1375,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets change
      *
-     * @param float|null $change Troco
+     * @param float|null $change Troco (vTroco). Opcional; quando enviado precisa ser soma(payments) − vNF. Só com `payments`
      *
      * @return self
      */
@@ -1336,7 +1423,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets additional
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfeCreateRequestAdditional|null
      */
     public function getAdditional()
     {
@@ -1346,7 +1433,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets additional
      *
-     * @param object|null $additional additional
+     * @param \EmitfyGenerated\Model\NfeCreateRequestAdditional|null $additional additional
      *
      * @return self
      */
@@ -1454,7 +1541,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets techResponsible
      *
-     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible techResponsible
+     * @param \EmitfyGenerated\Model\DfeTechResponsible|null $techResponsible Na NF-e, csrtId/csrtHash ainda não são suportados → 422
      *
      * @return self
      */
@@ -1525,7 +1612,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets totals
      *
-     * @return object|null
+     * @return \EmitfyGenerated\Model\NfeCreateRequestTotals|null
      */
     public function getTotals()
     {
@@ -1535,7 +1622,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets totals
      *
-     * @param object|null $totals Override de totais
+     * @param \EmitfyGenerated\Model\NfeCreateRequestTotals|null $totals totals
      *
      * @return self
      */

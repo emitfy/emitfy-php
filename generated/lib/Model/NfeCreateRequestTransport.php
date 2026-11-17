@@ -60,7 +60,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPITypes = [
         'freightModality' => 'string',
         'value' => 'float',
-        'carrier' => '\EmitfyGenerated\Model\TransportCarrier'
+        'carrier' => '\EmitfyGenerated\Model\TransportCarrier',
+        'volumes' => '\EmitfyGenerated\Model\NfeCreateRequestTransportVolumesInner[]'
     ];
 
     /**
@@ -73,7 +74,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static $openAPIFormats = [
         'freightModality' => null,
         'value' => null,
-        'carrier' => null
+        'carrier' => null,
+        'volumes' => null
     ];
 
     /**
@@ -84,7 +86,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static array $openAPINullables = [
         'freightModality' => false,
         'value' => false,
-        'carrier' => false
+        'carrier' => false,
+        'volumes' => false
     ];
 
     /**
@@ -175,7 +178,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static $attributeMap = [
         'freightModality' => 'freightModality',
         'value' => 'value',
-        'carrier' => 'carrier'
+        'carrier' => 'carrier',
+        'volumes' => 'volumes'
     ];
 
     /**
@@ -186,7 +190,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static $setters = [
         'freightModality' => 'setFreightModality',
         'value' => 'setValue',
-        'carrier' => 'setCarrier'
+        'carrier' => 'setCarrier',
+        'volumes' => 'setVolumes'
     ];
 
     /**
@@ -197,7 +202,8 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     protected static $getters = [
         'freightModality' => 'getFreightModality',
         'value' => 'getValue',
-        'carrier' => 'getCarrier'
+        'carrier' => 'getCarrier',
+        'volumes' => 'getVolumes'
     ];
 
     /**
@@ -283,6 +289,7 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         $this->setIfExists('freightModality', $data ?? [], null);
         $this->setIfExists('value', $data ?? [], null);
         $this->setIfExists('carrier', $data ?? [], null);
+        $this->setIfExists('volumes', $data ?? [], null);
     }
 
     /**
@@ -323,6 +330,14 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
 
         if (!is_null($this->container['value']) && ($this->container['value'] < 0)) {
             $invalidProperties[] = "invalid value for 'value', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['volumes']) && (count($this->container['volumes']) > 5000)) {
+            $invalidProperties[] = "invalid value for 'volumes', number of items must be less than or equal to 5000.";
+        }
+
+        if (!is_null($this->container['volumes']) && (count($this->container['volumes']) < 1)) {
+            $invalidProperties[] = "invalid value for 'volumes', number of items must be greater than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -390,7 +405,7 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets value
      *
-     * @param float|null $value Valor do frete; compõe o total quando por conta do emitente
+     * @param float|null $value Valor do frete; compõe o total quando por conta do emitente. Sem `freightModality`, um valor maior que zero assume frete por conta do remetente (CIF, modFrete 0).
      *
      * @return self
      */
@@ -431,6 +446,39 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('non-nullable carrier cannot be null');
         }
         $this->container['carrier'] = $carrier;
+
+        return $this;
+    }
+
+    /**
+     * Gets volumes
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestTransportVolumesInner[]|null
+     */
+    public function getVolumes()
+    {
+        return $this->container['volumes'];
+    }
+
+    /**
+     * Sets volumes
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestTransportVolumesInner[]|null $volumes Volumes (`transp/vol`); exige `freightModality`. Aceita também os nomes do leiaute (qVol, esp, marca, nVol, pesoL, pesoB)
+     *
+     * @return self
+     */
+    public function setVolumes($volumes)
+    {
+        if (is_null($volumes)) {
+            throw new \InvalidArgumentException('non-nullable volumes cannot be null');
+        }
+        if ((count($volumes) > 5000)) {
+            throw new \InvalidArgumentException('invalid value for $volumes when calling NfeCreateRequestTransport., number of items must be less than or equal to 5000.');
+        }
+        if ((count($volumes) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $volumes when calling NfeCreateRequestTransport., number of items must be greater than or equal to 1.');
+        }
+        $this->container['volumes'] = $volumes;
 
         return $this;
     }

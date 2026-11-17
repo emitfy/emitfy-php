@@ -71,6 +71,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => 'string',
         'ibsConsumptionCityCode' => 'string',
         'stateRegistrationId' => 'string',
+        'stStateRegistrationId' => 'string',
         'cfop' => 'string',
         'issueDate' => '\DateTime',
         'ide' => '\EmitfyGenerated\Model\NfeCreateRequestIde',
@@ -114,6 +115,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => null,
         'ibsConsumptionCityCode' => null,
         'stateRegistrationId' => 'uuid',
+        'stStateRegistrationId' => 'uuid',
         'cfop' => null,
         'issueDate' => 'date-time',
         'ide' => null,
@@ -155,6 +157,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => false,
         'ibsConsumptionCityCode' => false,
         'stateRegistrationId' => false,
+        'stStateRegistrationId' => false,
         'cfop' => false,
         'issueDate' => false,
         'ide' => false,
@@ -276,6 +279,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => 'presenceType',
         'ibsConsumptionCityCode' => 'ibsConsumptionCityCode',
         'stateRegistrationId' => 'stateRegistrationId',
+        'stStateRegistrationId' => 'stStateRegistrationId',
         'cfop' => 'cfop',
         'issueDate' => 'issueDate',
         'ide' => 'ide',
@@ -317,6 +321,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => 'setPresenceType',
         'ibsConsumptionCityCode' => 'setIbsConsumptionCityCode',
         'stateRegistrationId' => 'setStateRegistrationId',
+        'stStateRegistrationId' => 'setStStateRegistrationId',
         'cfop' => 'setCfop',
         'issueDate' => 'setIssueDate',
         'ide' => 'setIde',
@@ -358,6 +363,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'presenceType' => 'getPresenceType',
         'ibsConsumptionCityCode' => 'getIbsConsumptionCityCode',
         'stateRegistrationId' => 'getStateRegistrationId',
+        'stStateRegistrationId' => 'getStStateRegistrationId',
         'cfop' => 'getCfop',
         'issueDate' => 'getIssueDate',
         'ide' => 'getIde',
@@ -545,6 +551,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('presenceType', $data ?? [], null);
         $this->setIfExists('ibsConsumptionCityCode', $data ?? [], null);
         $this->setIfExists('stateRegistrationId', $data ?? [], null);
+        $this->setIfExists('stStateRegistrationId', $data ?? [], null);
         $this->setIfExists('cfop', $data ?? [], null);
         $this->setIfExists('issueDate', $data ?? [], null);
         $this->setIfExists('ide', $data ?? [], null);
@@ -1144,7 +1151,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets stateRegistrationId
      *
-     * @param string|null $stateRegistrationId Inscrição estadual da empresa (multi-IE) usada como emit/IE. Precisa existir no cadastro e ser da UF do emitente; IE de outra UF (IEST) ainda não é suportada → 422.
+     * @param string|null $stateRegistrationId Inscrição estadual da empresa (multi-IE) usada como emit/IE. Precisa existir no cadastro e ser da UF do emitente; IE de outra UF → 422 (use `stStateRegistrationId` para o IEST).
      *
      * @return self
      */
@@ -1154,6 +1161,33 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable stateRegistrationId cannot be null');
         }
         $this->container['stateRegistrationId'] = $stateRegistrationId;
+
+        return $this;
+    }
+
+    /**
+     * Gets stStateRegistrationId
+     *
+     * @return string|null
+     */
+    public function getStStateRegistrationId()
+    {
+        return $this->container['stStateRegistrationId'];
+    }
+
+    /**
+     * Sets stStateRegistrationId
+     *
+     * @param string|null $stStateRegistrationId IEST — inscrição de substituto tributário da empresa na UF de destino (cadastrada em inscrições estaduais). Sai em emit/IEST, logo após a IE. Precisa ser da UF do destinatário e diferente da UF do emitente → senão 422.
+     *
+     * @return self
+     */
+    public function setStStateRegistrationId($stStateRegistrationId)
+    {
+        if (is_null($stStateRegistrationId)) {
+            throw new \InvalidArgumentException('non-nullable stStateRegistrationId cannot be null');
+        }
+        $this->container['stStateRegistrationId'] = $stStateRegistrationId;
 
         return $this;
     }

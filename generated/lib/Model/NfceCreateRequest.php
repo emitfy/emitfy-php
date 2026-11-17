@@ -572,7 +572,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets items
      *
-     * @param \EmitfyGenerated\Model\ProductEmitItem[] $items Mesmo item da NF-e: `cest` (uma vez, antes do CFOP), `nve`, `extipi`, `discount`, `insurance`, `other`, `orderNumber`/`orderItem` e `additionalInfo` saem no prod/det e entram nos totais (vSeg/vDesc/vOutro). Grupos exclusivos da NF-e (`importDeclarations`, `exports`, `vehicle`, `weapons`, `taxReturn`, `icmsUfDest`) retornam 422 — emita uma NF-e (modelo 55).
+     * @param \EmitfyGenerated\Model\ProductEmitItem[] $items Mesmo item da NF-e: `cest` (uma vez, antes do CFOP), `nve`, `extipi`, `discount`, `insurance`, `other`, `orderNumber`/`orderItem` e `additionalInfo` saem no prod/det e entram nos totais (vSeg/vDesc/vOutro). Grupos exclusivos da NF-e (`importDeclarations`, `exports`, `vehicle`, `weapons`, `taxReturn`, `icmsUfDest`, `icms`, `ipi`, `importTax`) retornam 422 — emita uma NF-e (modelo 55).
      *
      * @return self
      */

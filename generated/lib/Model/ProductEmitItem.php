@@ -88,6 +88,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => 'string',
         'ipiTaxRate' => 'float',
         'ipiLegalCode' => 'string',
+        'icms' => '\EmitfyGenerated\Model\NfeItemIcms',
+        'ipi' => '\EmitfyGenerated\Model\NfeItemIpi',
+        'importTax' => '\EmitfyGenerated\Model\NfeItemImportTax',
         'cest' => 'string',
         'fci' => 'string',
         'nve' => 'string[]',
@@ -101,7 +104,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'taxClassification' => 'string',
         'ibsCst' => 'string',
         'cbsCst' => 'string',
-        'importDeclarations' => 'object[]',
+        'importDeclarations' => '\EmitfyGenerated\Model\NfeImportDeclaration[]',
         'traces' => 'object[]',
         'exports' => 'object[]',
         'vehicle' => 'object',
@@ -150,6 +153,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => null,
         'ipiTaxRate' => null,
         'ipiLegalCode' => null,
+        'icms' => null,
+        'ipi' => null,
+        'importTax' => null,
         'cest' => null,
         'fci' => null,
         'nve' => null,
@@ -210,6 +216,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => false,
         'ipiTaxRate' => false,
         'ipiLegalCode' => false,
+        'icms' => false,
+        'ipi' => false,
+        'importTax' => false,
         'cest' => false,
         'fci' => false,
         'nve' => false,
@@ -350,6 +359,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => 'ipiCst',
         'ipiTaxRate' => 'ipiTaxRate',
         'ipiLegalCode' => 'ipiLegalCode',
+        'icms' => 'icms',
+        'ipi' => 'ipi',
+        'importTax' => 'importTax',
         'cest' => 'cest',
         'fci' => 'fci',
         'nve' => 'nve',
@@ -410,6 +422,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => 'setIpiCst',
         'ipiTaxRate' => 'setIpiTaxRate',
         'ipiLegalCode' => 'setIpiLegalCode',
+        'icms' => 'setIcms',
+        'ipi' => 'setIpi',
+        'importTax' => 'setImportTax',
         'cest' => 'setCest',
         'fci' => 'setFci',
         'nve' => 'setNve',
@@ -470,6 +485,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'ipiCst' => 'getIpiCst',
         'ipiTaxRate' => 'getIpiTaxRate',
         'ipiLegalCode' => 'getIpiLegalCode',
+        'icms' => 'getIcms',
+        'ipi' => 'getIpi',
+        'importTax' => 'getImportTax',
         'cest' => 'getCest',
         'fci' => 'getFci',
         'nve' => 'getNve',
@@ -581,6 +599,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('ipiCst', $data ?? [], null);
         $this->setIfExists('ipiTaxRate', $data ?? [], null);
         $this->setIfExists('ipiLegalCode', $data ?? [], null);
+        $this->setIfExists('icms', $data ?? [], null);
+        $this->setIfExists('ipi', $data ?? [], null);
+        $this->setIfExists('importTax', $data ?? [], null);
         $this->setIfExists('cest', $data ?? [], null);
         $this->setIfExists('fci', $data ?? [], null);
         $this->setIfExists('nve', $data ?? [], null);
@@ -719,6 +740,10 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if (!is_null($this->container['other']) && ($this->container['other'] < 0)) {
             $invalidProperties[] = "invalid value for 'other', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['importDeclarations']) && (count($this->container['importDeclarations']) > 100)) {
+            $invalidProperties[] = "invalid value for 'importDeclarations', number of items must be less than or equal to 100.";
         }
 
         if (!is_null($this->container['additionalInfo']) && (mb_strlen($this->container['additionalInfo']) > 500)) {
@@ -1530,7 +1555,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ipiCst
      *
-     * @param string|null $ipiCst ipiCst
+     * @param string|null $ipiCst NF-e — CST do IPI nesta nota (atalho de `ipi.cst`; com `ipiTaxRate` → pIPI e `ipiLegalCode` → cEnq). Só destaca IPI quando vem na requisição (o cadastro nunca destaca sozinho). Divergir de `ipi.cst` → 422.
      *
      * @return self
      */
@@ -1594,6 +1619,87 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable ipiLegalCode cannot be null');
         }
         $this->container['ipiLegalCode'] = $ipiLegalCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets icms
+     *
+     * @return \EmitfyGenerated\Model\NfeItemIcms|null
+     */
+    public function getIcms()
+    {
+        return $this->container['icms'];
+    }
+
+    /**
+     * Sets icms
+     *
+     * @param \EmitfyGenerated\Model\NfeItemIcms|null $icms icms
+     *
+     * @return self
+     */
+    public function setIcms($icms)
+    {
+        if (is_null($icms)) {
+            throw new \InvalidArgumentException('non-nullable icms cannot be null');
+        }
+        $this->container['icms'] = $icms;
+
+        return $this;
+    }
+
+    /**
+     * Gets ipi
+     *
+     * @return \EmitfyGenerated\Model\NfeItemIpi|null
+     */
+    public function getIpi()
+    {
+        return $this->container['ipi'];
+    }
+
+    /**
+     * Sets ipi
+     *
+     * @param \EmitfyGenerated\Model\NfeItemIpi|null $ipi ipi
+     *
+     * @return self
+     */
+    public function setIpi($ipi)
+    {
+        if (is_null($ipi)) {
+            throw new \InvalidArgumentException('non-nullable ipi cannot be null');
+        }
+        $this->container['ipi'] = $ipi;
+
+        return $this;
+    }
+
+    /**
+     * Gets importTax
+     *
+     * @return \EmitfyGenerated\Model\NfeItemImportTax|null
+     */
+    public function getImportTax()
+    {
+        return $this->container['importTax'];
+    }
+
+    /**
+     * Sets importTax
+     *
+     * @param \EmitfyGenerated\Model\NfeItemImportTax|null $importTax importTax
+     *
+     * @return self
+     */
+    public function setImportTax($importTax)
+    {
+        if (is_null($importTax)) {
+            throw new \InvalidArgumentException('non-nullable importTax cannot be null');
+        }
+        $this->container['importTax'] = $importTax;
 
         return $this;
     }
@@ -1980,7 +2086,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets importDeclarations
      *
-     * @return object[]|null
+     * @return \EmitfyGenerated\Model\NfeImportDeclaration[]|null
      */
     public function getImportDeclarations()
     {
@@ -1990,7 +2096,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets importDeclarations
      *
-     * @param object[]|null $importDeclarations importDeclarations
+     * @param \EmitfyGenerated\Model\NfeImportDeclaration[]|null $importDeclarations NF-e — DI/DSI/DA/DUIMP do item (grupo DI, logo após indTot)
      *
      * @return self
      */
@@ -1998,6 +2104,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         if (is_null($importDeclarations)) {
             throw new \InvalidArgumentException('non-nullable importDeclarations cannot be null');
+        }
+        if ((count($importDeclarations) > 100)) {
+            throw new \InvalidArgumentException('invalid value for $importDeclarations when calling ProductEmitItem., number of items must be less than or equal to 100.');
         }
         $this->container['importDeclarations'] = $importDeclarations;
 

@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfeCreateRequestRecipient Class Doc Comment
  *
  * @category Class
+ * @description Destinatário (dest). Informe &#x60;taxId&#x60; (CPF/CNPJ) ou, no exterior, &#x60;foreignId&#x60; (idEstrangeiro) com &#x60;address.country&#x60; fora do Brasil — nunca os dois. Os campos fiscais valem só para esta nota e prevalecem sobre o cadastro do cliente (IE informada, ISENTO ou não contribuinte).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -58,9 +59,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $openAPITypes = [
         'taxId' => 'string',
+        'foreignId' => 'string',
         'name' => 'string',
         'email' => 'string',
         'phone' => 'string',
+        'stateRegistration' => 'string',
+        'ieIndicator' => '\EmitfyGenerated\Model\NfeCreateRequestRecipientIeIndicator',
+        'suframa' => 'string',
+        'municipalRegistration' => 'string',
         'address' => '\EmitfyGenerated\Model\NfeAddress'
     ];
 
@@ -73,9 +79,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $openAPIFormats = [
         'taxId' => null,
+        'foreignId' => null,
         'name' => null,
         'email' => 'email',
         'phone' => null,
+        'stateRegistration' => null,
+        'ieIndicator' => null,
+        'suframa' => null,
+        'municipalRegistration' => null,
         'address' => null
     ];
 
@@ -86,9 +97,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static array $openAPINullables = [
         'taxId' => false,
+        'foreignId' => false,
         'name' => false,
         'email' => false,
         'phone' => false,
+        'stateRegistration' => false,
+        'ieIndicator' => false,
+        'suframa' => false,
+        'municipalRegistration' => false,
         'address' => false
     ];
 
@@ -179,9 +195,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $attributeMap = [
         'taxId' => 'taxId',
+        'foreignId' => 'foreignId',
         'name' => 'name',
         'email' => 'email',
         'phone' => 'phone',
+        'stateRegistration' => 'stateRegistration',
+        'ieIndicator' => 'ieIndicator',
+        'suframa' => 'suframa',
+        'municipalRegistration' => 'municipalRegistration',
         'address' => 'address'
     ];
 
@@ -192,9 +213,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $setters = [
         'taxId' => 'setTaxId',
+        'foreignId' => 'setForeignId',
         'name' => 'setName',
         'email' => 'setEmail',
         'phone' => 'setPhone',
+        'stateRegistration' => 'setStateRegistration',
+        'ieIndicator' => 'setIeIndicator',
+        'suframa' => 'setSuframa',
+        'municipalRegistration' => 'setMunicipalRegistration',
         'address' => 'setAddress'
     ];
 
@@ -205,9 +231,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
      */
     protected static $getters = [
         'taxId' => 'getTaxId',
+        'foreignId' => 'getForeignId',
         'name' => 'getName',
         'email' => 'getEmail',
         'phone' => 'getPhone',
+        'stateRegistration' => 'getStateRegistration',
+        'ieIndicator' => 'getIeIndicator',
+        'suframa' => 'getSuframa',
+        'municipalRegistration' => 'getMunicipalRegistration',
         'address' => 'getAddress'
     ];
 
@@ -269,9 +300,14 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     public function __construct(?array $data = null)
     {
         $this->setIfExists('taxId', $data ?? [], null);
+        $this->setIfExists('foreignId', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('phone', $data ?? [], null);
+        $this->setIfExists('stateRegistration', $data ?? [], null);
+        $this->setIfExists('ieIndicator', $data ?? [], null);
+        $this->setIfExists('suframa', $data ?? [], null);
+        $this->setIfExists('municipalRegistration', $data ?? [], null);
         $this->setIfExists('address', $data ?? [], null);
     }
 
@@ -302,11 +338,16 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     {
         $invalidProperties = [];
 
-        if ($this->container['taxId'] === null) {
-            $invalidProperties[] = "'taxId' can't be null";
-        }
-        if ((mb_strlen($this->container['taxId']) < 1)) {
+        if (!is_null($this->container['taxId']) && (mb_strlen($this->container['taxId']) < 1)) {
             $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['foreignId']) && (mb_strlen($this->container['foreignId']) > 20)) {
+            $invalidProperties[] = "invalid value for 'foreignId', the character length must be smaller than or equal to 20.";
+        }
+
+        if (!is_null($this->container['foreignId']) && (mb_strlen($this->container['foreignId']) < 5)) {
+            $invalidProperties[] = "invalid value for 'foreignId', the character length must be bigger than or equal to 5.";
         }
 
         if ($this->container['name'] === null) {
@@ -318,6 +359,10 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
 
         if ((mb_strlen($this->container['name']) < 1)) {
             $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['municipalRegistration']) && (mb_strlen($this->container['municipalRegistration']) > 15)) {
+            $invalidProperties[] = "invalid value for 'municipalRegistration', the character length must be smaller than or equal to 15.";
         }
 
         return $invalidProperties;
@@ -338,7 +383,7 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets taxId
      *
-     * @return string
+     * @return string|null
      */
     public function getTaxId()
     {
@@ -348,7 +393,7 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets taxId
      *
-     * @param string $taxId taxId
+     * @param string|null $taxId CPF ou CNPJ (obrigatório sem foreignId)
      *
      * @return self
      */
@@ -363,6 +408,40 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
         }
 
         $this->container['taxId'] = $taxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets foreignId
+     *
+     * @return string|null
+     */
+    public function getForeignId()
+    {
+        return $this->container['foreignId'];
+    }
+
+    /**
+     * Sets foreignId
+     *
+     * @param string|null $foreignId idEstrangeiro (passaporte/ID fiscal estrangeiro). Exige address.country ≠ Brasil; sem IE/SUFRAMA/IM (indIEDest 9)
+     *
+     * @return self
+     */
+    public function setForeignId($foreignId)
+    {
+        if (is_null($foreignId)) {
+            throw new \InvalidArgumentException('non-nullable foreignId cannot be null');
+        }
+        if ((mb_strlen($foreignId) > 20)) {
+            throw new \InvalidArgumentException('invalid length for $foreignId when calling NfeCreateRequestRecipient., must be smaller than or equal to 20.');
+        }
+        if ((mb_strlen($foreignId) < 5)) {
+            throw new \InvalidArgumentException('invalid length for $foreignId when calling NfeCreateRequestRecipient., must be bigger than or equal to 5.');
+        }
+
+        $this->container['foreignId'] = $foreignId;
 
         return $this;
     }
@@ -441,7 +520,7 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets phone
      *
-     * @param string|null $phone phone
+     * @param string|null $phone enderDest/fone (6 a 14 dígitos; máscara é removida)
      *
      * @return self
      */
@@ -451,6 +530,118 @@ class NfeCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('non-nullable phone cannot be null');
         }
         $this->container['phone'] = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Gets stateRegistration
+     *
+     * @return string|null
+     */
+    public function getStateRegistration()
+    {
+        return $this->container['stateRegistration'];
+    }
+
+    /**
+     * Sets stateRegistration
+     *
+     * @param string|null $stateRegistration IE do destinatário (2 a 14 dígitos; máscara é removida) ou \"ISENTO\" (equivale a ieIndicator 2)
+     *
+     * @return self
+     */
+    public function setStateRegistration($stateRegistration)
+    {
+        if (is_null($stateRegistration)) {
+            throw new \InvalidArgumentException('non-nullable stateRegistration cannot be null');
+        }
+        $this->container['stateRegistration'] = $stateRegistration;
+
+        return $this;
+    }
+
+    /**
+     * Gets ieIndicator
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestRecipientIeIndicator|null
+     */
+    public function getIeIndicator()
+    {
+        return $this->container['ieIndicator'];
+    }
+
+    /**
+     * Sets ieIndicator
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestRecipientIeIndicator|null $ieIndicator ieIndicator
+     *
+     * @return self
+     */
+    public function setIeIndicator($ieIndicator)
+    {
+        if (is_null($ieIndicator)) {
+            throw new \InvalidArgumentException('non-nullable ieIndicator cannot be null');
+        }
+        $this->container['ieIndicator'] = $ieIndicator;
+
+        return $this;
+    }
+
+    /**
+     * Gets suframa
+     *
+     * @return string|null
+     */
+    public function getSuframa()
+    {
+        return $this->container['suframa'];
+    }
+
+    /**
+     * Sets suframa
+     *
+     * @param string|null $suframa dest/ISUF — inscrição SUFRAMA (8 ou 9 dígitos)
+     *
+     * @return self
+     */
+    public function setSuframa($suframa)
+    {
+        if (is_null($suframa)) {
+            throw new \InvalidArgumentException('non-nullable suframa cannot be null');
+        }
+        $this->container['suframa'] = $suframa;
+
+        return $this;
+    }
+
+    /**
+     * Gets municipalRegistration
+     *
+     * @return string|null
+     */
+    public function getMunicipalRegistration()
+    {
+        return $this->container['municipalRegistration'];
+    }
+
+    /**
+     * Sets municipalRegistration
+     *
+     * @param string|null $municipalRegistration dest/IM (NF-e conjugada)
+     *
+     * @return self
+     */
+    public function setMunicipalRegistration($municipalRegistration)
+    {
+        if (is_null($municipalRegistration)) {
+            throw new \InvalidArgumentException('non-nullable municipalRegistration cannot be null');
+        }
+        if ((mb_strlen($municipalRegistration) > 15)) {
+            throw new \InvalidArgumentException('invalid length for $municipalRegistration when calling NfeCreateRequestRecipient., must be smaller than or equal to 15.');
+        }
+
+        $this->container['municipalRegistration'] = $municipalRegistration;
 
         return $this;
     }

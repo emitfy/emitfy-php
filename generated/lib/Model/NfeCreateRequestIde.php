@@ -60,6 +60,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPITypes = [
         'purpose' => 'string',
         'referencedKeys' => 'string[]',
+        'references' => '\EmitfyGenerated\Model\NfeCreateRequestIdeReferencesInner[]',
         'departureAt' => '\DateTime',
         'randomCode' => 'string',
         'destinationType' => 'string',
@@ -80,6 +81,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPIFormats = [
         'purpose' => null,
         'referencedKeys' => null,
+        'references' => null,
         'departureAt' => 'date-time',
         'randomCode' => null,
         'destinationType' => null,
@@ -98,6 +100,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static array $openAPINullables = [
         'purpose' => false,
         'referencedKeys' => false,
+        'references' => false,
         'departureAt' => false,
         'randomCode' => false,
         'destinationType' => false,
@@ -196,6 +199,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $attributeMap = [
         'purpose' => 'purpose',
         'referencedKeys' => 'referencedKeys',
+        'references' => 'references',
         'departureAt' => 'departureAt',
         'randomCode' => 'randomCode',
         'destinationType' => 'destinationType',
@@ -214,6 +218,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $setters = [
         'purpose' => 'setPurpose',
         'referencedKeys' => 'setReferencedKeys',
+        'references' => 'setReferences',
         'departureAt' => 'setDepartureAt',
         'randomCode' => 'setRandomCode',
         'destinationType' => 'setDestinationType',
@@ -232,6 +237,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $getters = [
         'purpose' => 'getPurpose',
         'referencedKeys' => 'getReferencedKeys',
+        'references' => 'getReferences',
         'departureAt' => 'getDepartureAt',
         'randomCode' => 'getRandomCode',
         'destinationType' => 'getDestinationType',
@@ -337,6 +343,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     {
         $this->setIfExists('purpose', $data ?? [], null);
         $this->setIfExists('referencedKeys', $data ?? [], null);
+        $this->setIfExists('references', $data ?? [], null);
         $this->setIfExists('departureAt', $data ?? [], null);
         $this->setIfExists('randomCode', $data ?? [], null);
         $this->setIfExists('destinationType', $data ?? [], null);
@@ -381,6 +388,10 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
                 $this->container['purpose'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if (!is_null($this->container['references']) && (count($this->container['references']) > 999)) {
+            $invalidProperties[] = "invalid value for 'references', number of items must be less than or equal to 999.";
         }
 
         if (!is_null($this->container['randomCode']) && !preg_match("/^[0-9]{8}$/", $this->container['randomCode'])) {
@@ -461,7 +472,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets referencedKeys
      *
-     * @param string[]|null $referencedKeys Chaves referenciadas (NFref/refNFe); obrigatório quando purpose ≠ normal
+     * @param string[]|null $referencedKeys Chaves de NF-e referenciadas (NFref/refNFe). Com purpose ≠ normal, informe referencedKeys ou references
      *
      * @return self
      */
@@ -471,6 +482,36 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
             throw new \InvalidArgumentException('non-nullable referencedKeys cannot be null');
         }
         $this->container['referencedKeys'] = $referencedKeys;
+
+        return $this;
+    }
+
+    /**
+     * Gets references
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestIdeReferencesInner[]|null
+     */
+    public function getReferences()
+    {
+        return $this->container['references'];
+    }
+
+    /**
+     * Sets references
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestIdeReferencesInner[]|null $references Documentos referenciados (NFref) de qualquer tipo, discriminados por `type`: `nfe` (refNFe) e `cte` (refCTe) com `key` de 44 dígitos; `nf` (refNF, modelo 01/02) e `producer` (refNFP, nota de produtor modelo 01/04, com `stateRegistration`) com state (UF ou código IBGE), yearMonth (AAMM, AAAAMM ou AAAA-MM), taxId, model, series (0–999) e number; `ecf` (refECF, cupom fiscal modelo 2B/2C/2D) com ecfNumber (1–3 dígitos) e cooNumber (1–6 dígitos).
+     *
+     * @return self
+     */
+    public function setReferences($references)
+    {
+        if (is_null($references)) {
+            throw new \InvalidArgumentException('non-nullable references cannot be null');
+        }
+        if ((count($references) > 999)) {
+            throw new \InvalidArgumentException('invalid value for $references when calling NfeCreateRequestIde., number of items must be less than or equal to 999.');
+        }
+        $this->container['references'] = $references;
 
         return $this;
     }

@@ -59,6 +59,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'items' => '\EmitfyGenerated\Model\ProductEmitItem[]',
         'recipient' => '\EmitfyGenerated\Model\NfeCreateRequestRecipient',
+        'discount' => 'float',
         'transport' => '\EmitfyGenerated\Model\NfeCreateRequestTransport',
         'paymentMethod' => 'string',
         'externalId' => 'string',
@@ -101,6 +102,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'items' => null,
         'recipient' => null,
+        'discount' => null,
         'transport' => null,
         'paymentMethod' => null,
         'externalId' => null,
@@ -141,6 +143,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static array $openAPINullables = [
         'items' => false,
         'recipient' => false,
+        'discount' => false,
         'transport' => false,
         'paymentMethod' => false,
         'externalId' => false,
@@ -261,6 +264,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $attributeMap = [
         'items' => 'items',
         'recipient' => 'recipient',
+        'discount' => 'discount',
         'transport' => 'transport',
         'paymentMethod' => 'paymentMethod',
         'externalId' => 'externalId',
@@ -301,6 +305,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $setters = [
         'items' => 'setItems',
         'recipient' => 'setRecipient',
+        'discount' => 'setDiscount',
         'transport' => 'setTransport',
         'paymentMethod' => 'setPaymentMethod',
         'externalId' => 'setExternalId',
@@ -341,6 +346,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $getters = [
         'items' => 'getItems',
         'recipient' => 'getRecipient',
+        'discount' => 'getDiscount',
         'transport' => 'getTransport',
         'paymentMethod' => 'getPaymentMethod',
         'externalId' => 'getExternalId',
@@ -527,6 +533,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
+        $this->setIfExists('discount', $data ?? [], null);
         $this->setIfExists('transport', $data ?? [], null);
         $this->setIfExists('paymentMethod', $data ?? [], null);
         $this->setIfExists('externalId', $data ?? [], null);
@@ -596,6 +603,10 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['recipient'] === null) {
             $invalidProperties[] = "'recipient' can't be null";
         }
+        if (!is_null($this->container['discount']) && ($this->container['discount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'discount', must be bigger than or equal to 0.";
+        }
+
         $allowedValues = $this->getPaymentMethodAllowableValues();
         if (!is_null($this->container['paymentMethod']) && !in_array($this->container['paymentMethod'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -742,6 +753,37 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable recipient cannot be null');
         }
         $this->container['recipient'] = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * Gets discount
+     *
+     * @return float|null
+     */
+    public function getDiscount()
+    {
+        return $this->container['discount'];
+    }
+
+    /**
+     * Sets discount
+     *
+     * @param float|null $discount Desconto da nota (venda), rateado pelos itens em vDesc sobre o valor líquido e somado ao `items[].discount`. Não pode passar do total dos itens menos os descontos dos itens, nem ser usado junto com `totals.discount` (422).
+     *
+     * @return self
+     */
+    public function setDiscount($discount)
+    {
+        if (is_null($discount)) {
+            throw new \InvalidArgumentException('non-nullable discount cannot be null');
+        }
+        if (($discount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $discount when calling NfeCreateRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['discount'] = $discount;
 
         return $this;
     }

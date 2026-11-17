@@ -62,7 +62,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => 'float',
         'discount' => 'float',
         'netAmount' => 'float',
-        'duplicates' => '\EmitfyGenerated\Model\NfeCreateRequestBillingDuplicatesInner[]'
+        'duplicates' => '\EmitfyGenerated\Model\NfeCreateRequestBillingDuplicatesInner[]',
+        'installments' => '\EmitfyGenerated\Model\NfeCreateRequestBillingInstallmentsInner[]'
     ];
 
     /**
@@ -77,7 +78,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => null,
         'discount' => null,
         'netAmount' => null,
-        'duplicates' => null
+        'duplicates' => null,
+        'installments' => null
     ];
 
     /**
@@ -90,7 +92,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => false,
         'discount' => false,
         'netAmount' => false,
-        'duplicates' => false
+        'duplicates' => false,
+        'installments' => false
     ];
 
     /**
@@ -183,7 +186,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => 'originalAmount',
         'discount' => 'discount',
         'netAmount' => 'netAmount',
-        'duplicates' => 'duplicates'
+        'duplicates' => 'duplicates',
+        'installments' => 'installments'
     ];
 
     /**
@@ -196,7 +200,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => 'setOriginalAmount',
         'discount' => 'setDiscount',
         'netAmount' => 'setNetAmount',
-        'duplicates' => 'setDuplicates'
+        'duplicates' => 'setDuplicates',
+        'installments' => 'setInstallments'
     ];
 
     /**
@@ -209,7 +214,8 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         'originalAmount' => 'getOriginalAmount',
         'discount' => 'getDiscount',
         'netAmount' => 'getNetAmount',
-        'duplicates' => 'getDuplicates'
+        'duplicates' => 'getDuplicates',
+        'installments' => 'getInstallments'
     ];
 
     /**
@@ -274,6 +280,7 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('discount', $data ?? [], null);
         $this->setIfExists('netAmount', $data ?? [], null);
         $this->setIfExists('duplicates', $data ?? [], null);
+        $this->setIfExists('installments', $data ?? [], null);
     }
 
     /**
@@ -313,6 +320,14 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
 
         if (!is_null($this->container['netAmount']) && ($this->container['netAmount'] < 0)) {
             $invalidProperties[] = "invalid value for 'netAmount', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['installments']) && (count($this->container['installments']) > 120)) {
+            $invalidProperties[] = "invalid value for 'installments', number of items must be less than or equal to 120.";
+        }
+
+        if (!is_null($this->container['installments']) && (count($this->container['installments']) < 1)) {
+            $invalidProperties[] = "invalid value for 'installments', number of items must be greater than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -473,6 +488,39 @@ class NfeCreateRequestBilling implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable duplicates cannot be null');
         }
         $this->container['duplicates'] = $duplicates;
+
+        return $this;
+    }
+
+    /**
+     * Gets installments
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestBillingInstallmentsInner[]|null
+     */
+    public function getInstallments()
+    {
+        return $this->container['installments'];
+    }
+
+    /**
+     * Sets installments
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestBillingInstallmentsInner[]|null $installments Atalho das parcelas: gera `dup` numeradas 001, 002… e a fatura (nFat/vOrig/vLiq pelo vNF). Não combina com `duplicates`; a soma não pode passar do vNF (422).
+     *
+     * @return self
+     */
+    public function setInstallments($installments)
+    {
+        if (is_null($installments)) {
+            throw new \InvalidArgumentException('non-nullable installments cannot be null');
+        }
+        if ((count($installments) > 120)) {
+            throw new \InvalidArgumentException('invalid value for $installments when calling NfeCreateRequestBilling., number of items must be less than or equal to 120.');
+        }
+        if ((count($installments) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $installments when calling NfeCreateRequestBilling., number of items must be greater than or equal to 1.');
+        }
+        $this->container['installments'] = $installments;
 
         return $this;
     }

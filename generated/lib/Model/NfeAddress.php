@@ -64,7 +64,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => 'string',
         'state' => 'string',
         'zipcode' => 'string',
-        'cityCode' => 'string'
+        'cityCode' => 'string',
+        'country' => 'string'
     ];
 
     /**
@@ -82,7 +83,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => null,
         'state' => null,
         'zipcode' => null,
-        'cityCode' => null
+        'cityCode' => null,
+        'country' => null
     ];
 
     /**
@@ -98,7 +100,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => false,
         'state' => false,
         'zipcode' => false,
-        'cityCode' => false
+        'cityCode' => false,
+        'country' => false
     ];
 
     /**
@@ -194,7 +197,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => 'city',
         'state' => 'state',
         'zipcode' => 'zipcode',
-        'cityCode' => 'cityCode'
+        'cityCode' => 'cityCode',
+        'country' => 'country'
     ];
 
     /**
@@ -210,7 +214,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => 'setCity',
         'state' => 'setState',
         'zipcode' => 'setZipcode',
-        'cityCode' => 'setCityCode'
+        'cityCode' => 'setCityCode',
+        'country' => 'setCountry'
     ];
 
     /**
@@ -226,7 +231,8 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         'city' => 'getCity',
         'state' => 'getState',
         'zipcode' => 'getZipcode',
-        'cityCode' => 'getCityCode'
+        'cityCode' => 'getCityCode',
+        'country' => 'getCountry'
     ];
 
     /**
@@ -294,6 +300,7 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('state', $data ?? [], null);
         $this->setIfExists('zipcode', $data ?? [], null);
         $this->setIfExists('cityCode', $data ?? [], null);
+        $this->setIfExists('country', $data ?? [], null);
     }
 
     /**
@@ -550,6 +557,33 @@ class NfeAddress implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable cityCode cannot be null');
         }
         $this->container['cityCode'] = $cityCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets country
+     *
+     * @return string|null
+     */
+    public function getCountry()
+    {
+        return $this->container['country'];
+    }
+
+    /**
+     * Sets country
+     *
+     * @param string|null $country País do endereço (ISO 3166 alfa-2/alfa-3, nome ou código BACEN). Fora do Brasil exige `recipient.foreignId` (NF-e para o exterior: cPais/xPais do país, cMun 9999999, UF EX).
+     *
+     * @return self
+     */
+    public function setCountry($country)
+    {
+        if (is_null($country)) {
+            throw new \InvalidArgumentException('non-nullable country cannot be null');
+        }
+        $this->container['country'] = $country;
 
         return $this;
     }

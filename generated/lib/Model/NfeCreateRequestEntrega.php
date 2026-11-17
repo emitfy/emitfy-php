@@ -35,6 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfeCreateRequestEntrega Class Doc Comment
  *
  * @category Class
+ * @description Local de entrega (TLocal). IE é obrigatória pela NT 2026.007 para contribuinte (aceita \&quot;ISENTO\&quot;); address exige street, number, district, city, state e cityCode (IBGE, 7 dígitos). Sem address.country, sai Brasil (1058).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -60,6 +61,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => 'string',
         'name' => 'string',
         'stateRegistration' => 'string',
+        'phone' => 'string',
+        'email' => 'string',
         'address' => '\EmitfyGenerated\Model\DfeAddressLayout'
     ];
 
@@ -74,6 +77,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => null,
         'name' => null,
         'stateRegistration' => null,
+        'phone' => null,
+        'email' => 'email',
         'address' => null
     ];
 
@@ -86,6 +91,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => false,
         'name' => false,
         'stateRegistration' => false,
+        'phone' => false,
+        'email' => false,
         'address' => false
     ];
 
@@ -178,6 +185,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => 'taxId',
         'name' => 'name',
         'stateRegistration' => 'stateRegistration',
+        'phone' => 'phone',
+        'email' => 'email',
         'address' => 'address'
     ];
 
@@ -190,6 +199,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => 'setTaxId',
         'name' => 'setName',
         'stateRegistration' => 'setStateRegistration',
+        'phone' => 'setPhone',
+        'email' => 'setEmail',
         'address' => 'setAddress'
     ];
 
@@ -202,6 +213,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         'taxId' => 'getTaxId',
         'name' => 'getName',
         'stateRegistration' => 'getStateRegistration',
+        'phone' => 'getPhone',
+        'email' => 'getEmail',
         'address' => 'getAddress'
     ];
 
@@ -265,6 +278,8 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('taxId', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('stateRegistration', $data ?? [], null);
+        $this->setIfExists('phone', $data ?? [], null);
+        $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('address', $data ?? [], null);
     }
 
@@ -295,6 +310,10 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['email']) && (mb_strlen($this->container['email']) > 60)) {
+            $invalidProperties[] = "invalid value for 'email', the character length must be smaller than or equal to 60.";
+        }
+
         return $invalidProperties;
     }
 
@@ -323,7 +342,7 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets taxId
      *
-     * @param string|null $taxId taxId
+     * @param string|null $taxId CPF ou CNPJ
      *
      * @return self
      */
@@ -377,7 +396,7 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets stateRegistration
      *
-     * @param string|null $stateRegistration stateRegistration
+     * @param string|null $stateRegistration IE do local (2 a 14 dígitos) ou ISENTO
      *
      * @return self
      */
@@ -387,6 +406,64 @@ class NfeCreateRequestEntrega implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable stateRegistration cannot be null');
         }
         $this->container['stateRegistration'] = $stateRegistration;
+
+        return $this;
+    }
+
+    /**
+     * Gets phone
+     *
+     * @return string|null
+     */
+    public function getPhone()
+    {
+        return $this->container['phone'];
+    }
+
+    /**
+     * Sets phone
+     *
+     * @param string|null $phone fone (6 a 14 dígitos)
+     *
+     * @return self
+     */
+    public function setPhone($phone)
+    {
+        if (is_null($phone)) {
+            throw new \InvalidArgumentException('non-nullable phone cannot be null');
+        }
+        $this->container['phone'] = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Gets email
+     *
+     * @return string|null
+     */
+    public function getEmail()
+    {
+        return $this->container['email'];
+    }
+
+    /**
+     * Sets email
+     *
+     * @param string|null $email email
+     *
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        if (is_null($email)) {
+            throw new \InvalidArgumentException('non-nullable email cannot be null');
+        }
+        if ((mb_strlen($email) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $email when calling NfeCreateRequestEntrega., must be smaller than or equal to 60.');
+        }
+
+        $this->container['email'] = $email;
 
         return $this;
     }

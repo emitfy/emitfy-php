@@ -70,6 +70,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => 'string',
         'presenceType' => 'string',
         'ibsConsumptionCityCode' => 'string',
+        'governmentPurchase' => '\EmitfyGenerated\Model\NfeCreateRequestGovernmentPurchase',
+        'advancePaymentKeys' => 'string[]',
+        'ibsCbsRegime' => 'string',
         'stateRegistrationId' => 'string',
         'stStateRegistrationId' => 'string',
         'cfop' => 'string',
@@ -114,6 +117,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => null,
         'presenceType' => null,
         'ibsConsumptionCityCode' => null,
+        'governmentPurchase' => null,
+        'advancePaymentKeys' => null,
+        'ibsCbsRegime' => null,
         'stateRegistrationId' => 'uuid',
         'stStateRegistrationId' => 'uuid',
         'cfop' => null,
@@ -156,6 +162,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => false,
         'presenceType' => false,
         'ibsConsumptionCityCode' => false,
+        'governmentPurchase' => false,
+        'advancePaymentKeys' => false,
+        'ibsCbsRegime' => false,
         'stateRegistrationId' => false,
         'stStateRegistrationId' => false,
         'cfop' => false,
@@ -278,6 +287,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => 'consumerType',
         'presenceType' => 'presenceType',
         'ibsConsumptionCityCode' => 'ibsConsumptionCityCode',
+        'governmentPurchase' => 'governmentPurchase',
+        'advancePaymentKeys' => 'advancePaymentKeys',
+        'ibsCbsRegime' => 'ibsCbsRegime',
         'stateRegistrationId' => 'stateRegistrationId',
         'stStateRegistrationId' => 'stStateRegistrationId',
         'cfop' => 'cfop',
@@ -320,6 +332,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => 'setConsumerType',
         'presenceType' => 'setPresenceType',
         'ibsConsumptionCityCode' => 'setIbsConsumptionCityCode',
+        'governmentPurchase' => 'setGovernmentPurchase',
+        'advancePaymentKeys' => 'setAdvancePaymentKeys',
+        'ibsCbsRegime' => 'setIbsCbsRegime',
         'stateRegistrationId' => 'setStateRegistrationId',
         'stStateRegistrationId' => 'setStStateRegistrationId',
         'cfop' => 'setCfop',
@@ -362,6 +377,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         'consumerType' => 'getConsumerType',
         'presenceType' => 'getPresenceType',
         'ibsConsumptionCityCode' => 'getIbsConsumptionCityCode',
+        'governmentPurchase' => 'getGovernmentPurchase',
+        'advancePaymentKeys' => 'getAdvancePaymentKeys',
+        'ibsCbsRegime' => 'getIbsCbsRegime',
         'stateRegistrationId' => 'getStateRegistrationId',
         'stStateRegistrationId' => 'getStStateRegistrationId',
         'cfop' => 'getCfop',
@@ -445,7 +463,12 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     public const PRESENCE_TYPE_INTERNET = 'internet';
     public const PRESENCE_TYPE_TELEPHONE = 'telephone';
     public const PRESENCE_TYPE_DELIVERY = 'delivery';
+    public const PRESENCE_TYPE_OUTSIDE_ESTABLISHMENT = 'outsideEstablishment';
     public const PRESENCE_TYPE_OTHERS = 'others';
+    public const IBS_CBS_REGIME__1 = '1';
+    public const IBS_CBS_REGIME__2 = '2';
+    public const IBS_CBS_REGIME__3 = '3';
+    public const IBS_CBS_REGIME__4 = '4';
 
     /**
      * Gets allowable values of the enum
@@ -518,7 +541,23 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             self::PRESENCE_TYPE_INTERNET,
             self::PRESENCE_TYPE_TELEPHONE,
             self::PRESENCE_TYPE_DELIVERY,
+            self::PRESENCE_TYPE_OUTSIDE_ESTABLISHMENT,
             self::PRESENCE_TYPE_OTHERS,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getIbsCbsRegimeAllowableValues()
+    {
+        return [
+            self::IBS_CBS_REGIME__1,
+            self::IBS_CBS_REGIME__2,
+            self::IBS_CBS_REGIME__3,
+            self::IBS_CBS_REGIME__4,
         ];
     }
 
@@ -550,6 +589,9 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('consumerType', $data ?? [], null);
         $this->setIfExists('presenceType', $data ?? [], null);
         $this->setIfExists('ibsConsumptionCityCode', $data ?? [], null);
+        $this->setIfExists('governmentPurchase', $data ?? [], null);
+        $this->setIfExists('advancePaymentKeys', $data ?? [], null);
+        $this->setIfExists('ibsCbsRegime', $data ?? [], null);
         $this->setIfExists('stateRegistrationId', $data ?? [], null);
         $this->setIfExists('stStateRegistrationId', $data ?? [], null);
         $this->setIfExists('cfop', $data ?? [], null);
@@ -679,6 +721,23 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
             $invalidProperties[] = sprintf(
                 "invalid value '%s' for 'presenceType', must be one of '%s'",
                 $this->container['presenceType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['ibsConsumptionCityCode']) && !preg_match("/^[0-9]{7}$/", $this->container['ibsConsumptionCityCode'])) {
+            $invalidProperties[] = "invalid value for 'ibsConsumptionCityCode', must be conform to the pattern /^[0-9]{7}$/.";
+        }
+
+        if (!is_null($this->container['advancePaymentKeys']) && (count($this->container['advancePaymentKeys']) > 99)) {
+            $invalidProperties[] = "invalid value for 'advancePaymentKeys', number of items must be less than or equal to 99.";
+        }
+
+        $allowedValues = $this->getIbsCbsRegimeAllowableValues();
+        if (!is_null($this->container['ibsCbsRegime']) && !in_array($this->container['ibsCbsRegime'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'ibsCbsRegime', must be one of '%s'",
+                $this->container['ibsCbsRegime'],
                 implode("', '", $allowedValues)
             );
         }
@@ -1087,7 +1146,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets presenceType
      *
-     * @param string|null $presenceType presenceType
+     * @param string|null $presenceType indPres (`outsideEstablishment` = 5, operação presencial fora do estabelecimento)
      *
      * @return self
      */
@@ -1124,7 +1183,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets ibsConsumptionCityCode
      *
-     * @param string|null $ibsConsumptionCityCode Reservado (cMunFGIBS, reforma tributária). Ainda não suportado → 422
+     * @param string|null $ibsConsumptionCityCode cMunFGIBS (município de consumo do IBS, código IBGE). Só com presenceType outsideEstablishment (indPres 5)
      *
      * @return self
      */
@@ -1133,7 +1192,106 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($ibsConsumptionCityCode)) {
             throw new \InvalidArgumentException('non-nullable ibsConsumptionCityCode cannot be null');
         }
+
+        if ((!preg_match("/^[0-9]{7}$/", ObjectSerializer::toString($ibsConsumptionCityCode)))) {
+            throw new \InvalidArgumentException("invalid value for \$ibsConsumptionCityCode when calling NfeCreateRequest., must conform to the pattern /^[0-9]{7}$/.");
+        }
+
         $this->container['ibsConsumptionCityCode'] = $ibsConsumptionCityCode;
+
+        return $this;
+    }
+
+    /**
+     * Gets governmentPurchase
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestGovernmentPurchase|null
+     */
+    public function getGovernmentPurchase()
+    {
+        return $this->container['governmentPurchase'];
+    }
+
+    /**
+     * Sets governmentPurchase
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestGovernmentPurchase|null $governmentPurchase governmentPurchase
+     *
+     * @return self
+     */
+    public function setGovernmentPurchase($governmentPurchase)
+    {
+        if (is_null($governmentPurchase)) {
+            throw new \InvalidArgumentException('non-nullable governmentPurchase cannot be null');
+        }
+        $this->container['governmentPurchase'] = $governmentPurchase;
+
+        return $this;
+    }
+
+    /**
+     * Gets advancePaymentKeys
+     *
+     * @return string[]|null
+     */
+    public function getAdvancePaymentKeys()
+    {
+        return $this->container['advancePaymentKeys'];
+    }
+
+    /**
+     * Sets advancePaymentKeys
+     *
+     * @param string[]|null $advancePaymentKeys gPagAntecipado — chaves das NF-e de pagamento antecipado (só NF-e)
+     *
+     * @return self
+     */
+    public function setAdvancePaymentKeys($advancePaymentKeys)
+    {
+        if (is_null($advancePaymentKeys)) {
+            throw new \InvalidArgumentException('non-nullable advancePaymentKeys cannot be null');
+        }
+        if ((count($advancePaymentKeys) > 99)) {
+            throw new \InvalidArgumentException('invalid value for $advancePaymentKeys when calling NfeCreateRequest., number of items must be less than or equal to 99.');
+        }
+        $this->container['advancePaymentKeys'] = $advancePaymentKeys;
+
+        return $this;
+    }
+
+    /**
+     * Gets ibsCbsRegime
+     *
+     * @return string|null
+     */
+    public function getIbsCbsRegime()
+    {
+        return $this->container['ibsCbsRegime'];
+    }
+
+    /**
+     * Sets ibsCbsRegime
+     *
+     * @param string|null $ibsCbsRegime tpRegimeIBSCBS (NT 2026.005 — produção em 14/12/2026). Antes da data → 422
+     *
+     * @return self
+     */
+    public function setIbsCbsRegime($ibsCbsRegime)
+    {
+        if (is_null($ibsCbsRegime)) {
+            throw new \InvalidArgumentException('non-nullable ibsCbsRegime cannot be null');
+        }
+        $allowedValues = $this->getIbsCbsRegimeAllowableValues();
+        if (!in_array($ibsCbsRegime, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'ibsCbsRegime', must be one of '%s'",
+                    $ibsCbsRegime,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['ibsCbsRegime'] = $ibsCbsRegime;
 
         return $this;
     }

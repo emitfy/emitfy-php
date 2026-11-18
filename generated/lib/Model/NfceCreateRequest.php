@@ -572,7 +572,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets items
      *
-     * @param \EmitfyGenerated\Model\ProductEmitItem[] $items Mesmo item da NF-e: `cest` (uma vez, antes do CFOP), `nve`, `extipi`, `discount`, `insurance`, `other`, `orderNumber`/`orderItem` e `additionalInfo` saem no prod/det e entram nos totais (vSeg/vDesc/vOutro). Grupos exclusivos da NF-e (`importDeclarations`, `exports`, `vehicle`, `weapons`, `taxReturn`, `icmsUfDest`, `icms`, `ipi`, `importTax`) retornam 422 — emita uma NF-e (modelo 55).
+     * @param \EmitfyGenerated\Model\ProductEmitItem[] $items Mesmo item da NF-e: `cest` (uma vez, antes do CFOP), `nve`, `extipi`, `discount`, `insurance`, `other`, `orderNumber`/`orderItem` e `additionalInfo` saem no prod/det e entram nos totais (vSeg/vDesc/vOutro). Grupos exclusivos da NF-e (`importDeclarations`, `exports`, `vehicle`, `weapons`, `taxReturn`, `icmsUfDest`, `ipi`, `importTax`, `referencedDocument`, `icmsForecast`) retornam 422 — emita uma NF-e (modelo 55). `icms` é aceito para ICMS próprio e ST retido (CST 60 / CSOSN 500); ST de substituto (CST 10/30/70, CSOSN 201/202/203), partilha e repasse → 422. `ibsCbs` e `selectiveTax` seguem a tabela oficial (cClassTrib de NFC-e).
      *
      * @return self
      */

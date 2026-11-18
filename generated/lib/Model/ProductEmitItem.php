@@ -91,6 +91,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => '\EmitfyGenerated\Model\NfeItemIcms',
         'ipi' => '\EmitfyGenerated\Model\NfeItemIpi',
         'importTax' => '\EmitfyGenerated\Model\NfeItemImportTax',
+        'ibsCbs' => '\EmitfyGenerated\Model\NfeItemIbsCbs',
+        'selectiveTax' => '\EmitfyGenerated\Model\NfeItemSelectiveTax',
+        'netUnitValue' => 'float',
+        'netAmount' => 'float',
+        'simplesActivity' => 'string',
+        'usedMovableGood' => 'bool',
+        'zfmPresumedCreditType' => 'string',
+        'referencedDocument' => '\EmitfyGenerated\Model\ProductEmitItemReferencedDocument',
+        'itemTotal' => 'float',
+        'icmsForecast' => '\EmitfyGenerated\Model\ProductEmitItemIcmsForecast',
         'cest' => 'string',
         'fci' => 'string',
         'nve' => 'string[]',
@@ -156,6 +166,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => null,
         'ipi' => null,
         'importTax' => null,
+        'ibsCbs' => null,
+        'selectiveTax' => null,
+        'netUnitValue' => null,
+        'netAmount' => null,
+        'simplesActivity' => null,
+        'usedMovableGood' => null,
+        'zfmPresumedCreditType' => null,
+        'referencedDocument' => null,
+        'itemTotal' => null,
+        'icmsForecast' => null,
         'cest' => null,
         'fci' => null,
         'nve' => null,
@@ -219,6 +239,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => false,
         'ipi' => false,
         'importTax' => false,
+        'ibsCbs' => false,
+        'selectiveTax' => false,
+        'netUnitValue' => false,
+        'netAmount' => false,
+        'simplesActivity' => false,
+        'usedMovableGood' => false,
+        'zfmPresumedCreditType' => false,
+        'referencedDocument' => false,
+        'itemTotal' => false,
+        'icmsForecast' => false,
         'cest' => false,
         'fci' => false,
         'nve' => false,
@@ -362,6 +392,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => 'icms',
         'ipi' => 'ipi',
         'importTax' => 'importTax',
+        'ibsCbs' => 'ibsCbs',
+        'selectiveTax' => 'selectiveTax',
+        'netUnitValue' => 'netUnitValue',
+        'netAmount' => 'netAmount',
+        'simplesActivity' => 'simplesActivity',
+        'usedMovableGood' => 'usedMovableGood',
+        'zfmPresumedCreditType' => 'zfmPresumedCreditType',
+        'referencedDocument' => 'referencedDocument',
+        'itemTotal' => 'itemTotal',
+        'icmsForecast' => 'icmsForecast',
         'cest' => 'cest',
         'fci' => 'fci',
         'nve' => 'nve',
@@ -425,6 +465,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => 'setIcms',
         'ipi' => 'setIpi',
         'importTax' => 'setImportTax',
+        'ibsCbs' => 'setIbsCbs',
+        'selectiveTax' => 'setSelectiveTax',
+        'netUnitValue' => 'setNetUnitValue',
+        'netAmount' => 'setNetAmount',
+        'simplesActivity' => 'setSimplesActivity',
+        'usedMovableGood' => 'setUsedMovableGood',
+        'zfmPresumedCreditType' => 'setZfmPresumedCreditType',
+        'referencedDocument' => 'setReferencedDocument',
+        'itemTotal' => 'setItemTotal',
+        'icmsForecast' => 'setIcmsForecast',
         'cest' => 'setCest',
         'fci' => 'setFci',
         'nve' => 'setNve',
@@ -488,6 +538,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'icms' => 'getIcms',
         'ipi' => 'getIpi',
         'importTax' => 'getImportTax',
+        'ibsCbs' => 'getIbsCbs',
+        'selectiveTax' => 'getSelectiveTax',
+        'netUnitValue' => 'getNetUnitValue',
+        'netAmount' => 'getNetAmount',
+        'simplesActivity' => 'getSimplesActivity',
+        'usedMovableGood' => 'getUsedMovableGood',
+        'zfmPresumedCreditType' => 'getZfmPresumedCreditType',
+        'referencedDocument' => 'getReferencedDocument',
+        'itemTotal' => 'getItemTotal',
+        'icmsForecast' => 'getIcmsForecast',
         'cest' => 'getCest',
         'fci' => 'getFci',
         'nve' => 'getNve',
@@ -553,6 +613,27 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
+    public const SIMPLES_ACTIVITY__01 = '01';
+    public const SIMPLES_ACTIVITY__02 = '02';
+    public const SIMPLES_ACTIVITY__03 = '03';
+    public const SIMPLES_ACTIVITY__04 = '04';
+    public const SIMPLES_ACTIVITY__90 = '90';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getSimplesActivityAllowableValues()
+    {
+        return [
+            self::SIMPLES_ACTIVITY__01,
+            self::SIMPLES_ACTIVITY__02,
+            self::SIMPLES_ACTIVITY__03,
+            self::SIMPLES_ACTIVITY__04,
+            self::SIMPLES_ACTIVITY__90,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -602,6 +683,16 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('icms', $data ?? [], null);
         $this->setIfExists('ipi', $data ?? [], null);
         $this->setIfExists('importTax', $data ?? [], null);
+        $this->setIfExists('ibsCbs', $data ?? [], null);
+        $this->setIfExists('selectiveTax', $data ?? [], null);
+        $this->setIfExists('netUnitValue', $data ?? [], null);
+        $this->setIfExists('netAmount', $data ?? [], null);
+        $this->setIfExists('simplesActivity', $data ?? [], null);
+        $this->setIfExists('usedMovableGood', $data ?? [], null);
+        $this->setIfExists('zfmPresumedCreditType', $data ?? [], null);
+        $this->setIfExists('referencedDocument', $data ?? [], null);
+        $this->setIfExists('itemTotal', $data ?? [], null);
+        $this->setIfExists('icmsForecast', $data ?? [], null);
         $this->setIfExists('cest', $data ?? [], null);
         $this->setIfExists('fci', $data ?? [], null);
         $this->setIfExists('nve', $data ?? [], null);
@@ -712,6 +803,31 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if (!is_null($this->container['taxableUnit']) && (mb_strlen($this->container['taxableUnit']) > 6)) {
             $invalidProperties[] = "invalid value for 'taxableUnit', the character length must be smaller than or equal to 6.";
+        }
+
+        if (!is_null($this->container['netUnitValue']) && ($this->container['netUnitValue'] < 0)) {
+            $invalidProperties[] = "invalid value for 'netUnitValue', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['netAmount']) && ($this->container['netAmount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'netAmount', must be bigger than or equal to 0.";
+        }
+
+        $allowedValues = $this->getSimplesActivityAllowableValues();
+        if (!is_null($this->container['simplesActivity']) && !in_array($this->container['simplesActivity'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'simplesActivity', must be one of '%s'",
+                $this->container['simplesActivity'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['zfmPresumedCreditType']) && !preg_match("/^[0-4]$/", $this->container['zfmPresumedCreditType'])) {
+            $invalidProperties[] = "invalid value for 'zfmPresumedCreditType', must be conform to the pattern /^[0-4]$/.";
+        }
+
+        if (!is_null($this->container['itemTotal']) && ($this->container['itemTotal'] < 0)) {
+            $invalidProperties[] = "invalid value for 'itemTotal', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['nve']) && (count($this->container['nve']) > 8)) {
@@ -1700,6 +1816,303 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable importTax cannot be null');
         }
         $this->container['importTax'] = $importTax;
+
+        return $this;
+    }
+
+    /**
+     * Gets ibsCbs
+     *
+     * @return \EmitfyGenerated\Model\NfeItemIbsCbs|null
+     */
+    public function getIbsCbs()
+    {
+        return $this->container['ibsCbs'];
+    }
+
+    /**
+     * Sets ibsCbs
+     *
+     * @param \EmitfyGenerated\Model\NfeItemIbsCbs|null $ibsCbs ibsCbs
+     *
+     * @return self
+     */
+    public function setIbsCbs($ibsCbs)
+    {
+        if (is_null($ibsCbs)) {
+            throw new \InvalidArgumentException('non-nullable ibsCbs cannot be null');
+        }
+        $this->container['ibsCbs'] = $ibsCbs;
+
+        return $this;
+    }
+
+    /**
+     * Gets selectiveTax
+     *
+     * @return \EmitfyGenerated\Model\NfeItemSelectiveTax|null
+     */
+    public function getSelectiveTax()
+    {
+        return $this->container['selectiveTax'];
+    }
+
+    /**
+     * Sets selectiveTax
+     *
+     * @param \EmitfyGenerated\Model\NfeItemSelectiveTax|null $selectiveTax selectiveTax
+     *
+     * @return self
+     */
+    public function setSelectiveTax($selectiveTax)
+    {
+        if (is_null($selectiveTax)) {
+            throw new \InvalidArgumentException('non-nullable selectiveTax cannot be null');
+        }
+        $this->container['selectiveTax'] = $selectiveTax;
+
+        return $this;
+    }
+
+    /**
+     * Gets netUnitValue
+     *
+     * @return float|null
+     */
+    public function getNetUnitValue()
+    {
+        return $this->container['netUnitValue'];
+    }
+
+    /**
+     * Sets netUnitValue
+     *
+     * @param float|null $netUnitValue vUnComLiq (NT 2026.008 — produção em 14/12/2026). Sai com vProdLiq = netUnitValue × quantity (ou `netAmount`) e soma em vProdLiqTot. Se um item informar, todos informam. Antes da data de produção → 422.
+     *
+     * @return self
+     */
+    public function setNetUnitValue($netUnitValue)
+    {
+        if (is_null($netUnitValue)) {
+            throw new \InvalidArgumentException('non-nullable netUnitValue cannot be null');
+        }
+        if (($netUnitValue < 0)) {
+            throw new \InvalidArgumentException('invalid value for $netUnitValue when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['netUnitValue'] = $netUnitValue;
+
+        return $this;
+    }
+
+    /**
+     * Gets netAmount
+     *
+     * @return float|null
+     */
+    public function getNetAmount()
+    {
+        return $this->container['netAmount'];
+    }
+
+    /**
+     * Sets netAmount
+     *
+     * @param float|null $netAmount vProdLiq informado (default netUnitValue × quantity)
+     *
+     * @return self
+     */
+    public function setNetAmount($netAmount)
+    {
+        if (is_null($netAmount)) {
+            throw new \InvalidArgumentException('non-nullable netAmount cannot be null');
+        }
+        if (($netAmount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $netAmount when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['netAmount'] = $netAmount;
+
+        return $this;
+    }
+
+    /**
+     * Gets simplesActivity
+     *
+     * @return string|null
+     */
+    public function getSimplesActivity()
+    {
+        return $this->container['simplesActivity'];
+    }
+
+    /**
+     * Sets simplesActivity
+     *
+     * @param string|null $simplesActivity cAtivSN (NT 2026.005 — produção em 14/12/2026), só CRT 1/2/4
+     *
+     * @return self
+     */
+    public function setSimplesActivity($simplesActivity)
+    {
+        if (is_null($simplesActivity)) {
+            throw new \InvalidArgumentException('non-nullable simplesActivity cannot be null');
+        }
+        $allowedValues = $this->getSimplesActivityAllowableValues();
+        if (!in_array($simplesActivity, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'simplesActivity', must be one of '%s'",
+                    $simplesActivity,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['simplesActivity'] = $simplesActivity;
+
+        return $this;
+    }
+
+    /**
+     * Gets usedMovableGood
+     *
+     * @return bool|null
+     */
+    public function getUsedMovableGood()
+    {
+        return $this->container['usedMovableGood'];
+    }
+
+    /**
+     * Sets usedMovableGood
+     *
+     * @param bool|null $usedMovableGood indBemMovelUsado (bem móvel usado)
+     *
+     * @return self
+     */
+    public function setUsedMovableGood($usedMovableGood)
+    {
+        if (is_null($usedMovableGood)) {
+            throw new \InvalidArgumentException('non-nullable usedMovableGood cannot be null');
+        }
+        $this->container['usedMovableGood'] = $usedMovableGood;
+
+        return $this;
+    }
+
+    /**
+     * Gets zfmPresumedCreditType
+     *
+     * @return string|null
+     */
+    public function getZfmPresumedCreditType()
+    {
+        return $this->container['zfmPresumedCreditType'];
+    }
+
+    /**
+     * Sets zfmPresumedCreditType
+     *
+     * @param string|null $zfmPresumedCreditType tpCredPresIBSZFM
+     *
+     * @return self
+     */
+    public function setZfmPresumedCreditType($zfmPresumedCreditType)
+    {
+        if (is_null($zfmPresumedCreditType)) {
+            throw new \InvalidArgumentException('non-nullable zfmPresumedCreditType cannot be null');
+        }
+
+        if ((!preg_match("/^[0-4]$/", ObjectSerializer::toString($zfmPresumedCreditType)))) {
+            throw new \InvalidArgumentException("invalid value for \$zfmPresumedCreditType when calling ProductEmitItem., must conform to the pattern /^[0-4]$/.");
+        }
+
+        $this->container['zfmPresumedCreditType'] = $zfmPresumedCreditType;
+
+        return $this;
+    }
+
+    /**
+     * Gets referencedDocument
+     *
+     * @return \EmitfyGenerated\Model\ProductEmitItemReferencedDocument|null
+     */
+    public function getReferencedDocument()
+    {
+        return $this->container['referencedDocument'];
+    }
+
+    /**
+     * Sets referencedDocument
+     *
+     * @param \EmitfyGenerated\Model\ProductEmitItemReferencedDocument|null $referencedDocument referencedDocument
+     *
+     * @return self
+     */
+    public function setReferencedDocument($referencedDocument)
+    {
+        if (is_null($referencedDocument)) {
+            throw new \InvalidArgumentException('non-nullable referencedDocument cannot be null');
+        }
+        $this->container['referencedDocument'] = $referencedDocument;
+
+        return $this;
+    }
+
+    /**
+     * Gets itemTotal
+     *
+     * @return float|null
+     */
+    public function getItemTotal()
+    {
+        return $this->container['itemTotal'];
+    }
+
+    /**
+     * Sets itemTotal
+     *
+     * @param float|null $itemTotal vItem (valor total do item com IBS/CBS/IS). Se um item informar, todos informam; vNFTot = soma.
+     *
+     * @return self
+     */
+    public function setItemTotal($itemTotal)
+    {
+        if (is_null($itemTotal)) {
+            throw new \InvalidArgumentException('non-nullable itemTotal cannot be null');
+        }
+        if (($itemTotal < 0)) {
+            throw new \InvalidArgumentException('invalid value for $itemTotal when calling ProductEmitItem., must be bigger than or equal to 0.');
+        }
+
+        $this->container['itemTotal'] = $itemTotal;
+
+        return $this;
+    }
+
+    /**
+     * Gets icmsForecast
+     *
+     * @return \EmitfyGenerated\Model\ProductEmitItemIcmsForecast|null
+     */
+    public function getIcmsForecast()
+    {
+        return $this->container['icmsForecast'];
+    }
+
+    /**
+     * Sets icmsForecast
+     *
+     * @param \EmitfyGenerated\Model\ProductEmitItemIcmsForecast|null $icmsForecast icmsForecast
+     *
+     * @return self
+     */
+    public function setIcmsForecast($icmsForecast)
+    {
+        if (is_null($icmsForecast)) {
+            throw new \InvalidArgumentException('non-nullable icmsForecast cannot be null');
+        }
+        $this->container['icmsForecast'] = $icmsForecast;
 
         return $this;
     }

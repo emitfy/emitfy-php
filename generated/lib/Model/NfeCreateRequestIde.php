@@ -59,6 +59,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $openAPITypes = [
         'purpose' => 'string',
+        'creditType' => 'string',
+        'debitType' => 'string',
         'referencedKeys' => 'string[]',
         'references' => '\EmitfyGenerated\Model\NfeCreateRequestIdeReferencesInner[]',
         'departureAt' => '\DateTime',
@@ -80,6 +82,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $openAPIFormats = [
         'purpose' => null,
+        'creditType' => null,
+        'debitType' => null,
         'referencedKeys' => null,
         'references' => null,
         'departureAt' => 'date-time',
@@ -99,6 +103,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static array $openAPINullables = [
         'purpose' => false,
+        'creditType' => false,
+        'debitType' => false,
         'referencedKeys' => false,
         'references' => false,
         'departureAt' => false,
@@ -198,6 +204,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $attributeMap = [
         'purpose' => 'purpose',
+        'creditType' => 'creditType',
+        'debitType' => 'debitType',
         'referencedKeys' => 'referencedKeys',
         'references' => 'references',
         'departureAt' => 'departureAt',
@@ -217,6 +225,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $setters = [
         'purpose' => 'setPurpose',
+        'creditType' => 'setCreditType',
+        'debitType' => 'setDebitType',
         'referencedKeys' => 'setReferencedKeys',
         'references' => 'setReferences',
         'departureAt' => 'setDepartureAt',
@@ -236,6 +246,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
      */
     protected static $getters = [
         'purpose' => 'getPurpose',
+        'creditType' => 'getCreditType',
+        'debitType' => 'getDebitType',
         'referencedKeys' => 'getReferencedKeys',
         'references' => 'getReferences',
         'departureAt' => 'getDepartureAt',
@@ -293,6 +305,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     public const PURPOSE_COMPLEMENTARY = 'complementary';
     public const PURPOSE_ADJUSTMENT = 'adjustment';
     public const PURPOSE__RETURN = 'return';
+    public const PURPOSE_CREDIT = 'credit';
+    public const PURPOSE_DEBIT = 'debit';
     public const DESTINATION_TYPE_INTERNAL = 'internal';
     public const DESTINATION_TYPE_INTERSTATE = 'interstate';
     public const DESTINATION_TYPE_INTERNATIONAL = 'international';
@@ -309,6 +323,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
             self::PURPOSE_COMPLEMENTARY,
             self::PURPOSE_ADJUSTMENT,
             self::PURPOSE__RETURN,
+            self::PURPOSE_CREDIT,
+            self::PURPOSE_DEBIT,
         ];
     }
 
@@ -342,6 +358,8 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     public function __construct(?array $data = null)
     {
         $this->setIfExists('purpose', $data ?? [], null);
+        $this->setIfExists('creditType', $data ?? [], null);
+        $this->setIfExists('debitType', $data ?? [], null);
         $this->setIfExists('referencedKeys', $data ?? [], null);
         $this->setIfExists('references', $data ?? [], null);
         $this->setIfExists('departureAt', $data ?? [], null);
@@ -390,6 +408,14 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
             );
         }
 
+        if (!is_null($this->container['creditType']) && !preg_match("/^0[1-6]$/", $this->container['creditType'])) {
+            $invalidProperties[] = "invalid value for 'creditType', must be conform to the pattern /^0[1-6]$/.";
+        }
+
+        if (!is_null($this->container['debitType']) && !preg_match("/^0[1-8]$/", $this->container['debitType'])) {
+            $invalidProperties[] = "invalid value for 'debitType', must be conform to the pattern /^0[1-8]$/.";
+        }
+
         if (!is_null($this->container['references']) && (count($this->container['references']) > 999)) {
             $invalidProperties[] = "invalid value for 'references', number of items must be less than or equal to 999.";
         }
@@ -435,7 +461,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets purpose
      *
-     * @param string|null $purpose finNFe 1–4
+     * @param string|null $purpose finNFe 1–6. `credit` (5, nota de crédito): operationType incoming, `creditType` 01–06 e, nos tipos 01/03/04, exatamente uma referência. `debit` (6, nota de débito): saída, `debitType` 01–08. Nessas notas o Emitfy omite ICMS/IPI/II/PIS/COFINS (B25-80; exceções crédito 03/04/06 e débito 07; débito 06 mantém IPI e, até 2026, PIS/COFINS), exige `items[].ibsCbs` e recusa os grupos detalhados `icms`, `ipi`, `importTax` e `icmsUfDest`.
      *
      * @return self
      */
@@ -455,6 +481,70 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
             );
         }
         $this->container['purpose'] = $purpose;
+
+        return $this;
+    }
+
+    /**
+     * Gets creditType
+     *
+     * @return string|null
+     */
+    public function getCreditType()
+    {
+        return $this->container['creditType'];
+    }
+
+    /**
+     * Sets creditType
+     *
+     * @param string|null $creditType tpNFCredito (alias SEFAZ tpNFCredito)
+     *
+     * @return self
+     */
+    public function setCreditType($creditType)
+    {
+        if (is_null($creditType)) {
+            throw new \InvalidArgumentException('non-nullable creditType cannot be null');
+        }
+
+        if ((!preg_match("/^0[1-6]$/", ObjectSerializer::toString($creditType)))) {
+            throw new \InvalidArgumentException("invalid value for \$creditType when calling NfeCreateRequestIde., must conform to the pattern /^0[1-6]$/.");
+        }
+
+        $this->container['creditType'] = $creditType;
+
+        return $this;
+    }
+
+    /**
+     * Gets debitType
+     *
+     * @return string|null
+     */
+    public function getDebitType()
+    {
+        return $this->container['debitType'];
+    }
+
+    /**
+     * Sets debitType
+     *
+     * @param string|null $debitType tpNFDebito (alias SEFAZ tpNFDebito)
+     *
+     * @return self
+     */
+    public function setDebitType($debitType)
+    {
+        if (is_null($debitType)) {
+            throw new \InvalidArgumentException('non-nullable debitType cannot be null');
+        }
+
+        if ((!preg_match("/^0[1-8]$/", ObjectSerializer::toString($debitType)))) {
+            throw new \InvalidArgumentException("invalid value for \$debitType when calling NfeCreateRequestIde., must conform to the pattern /^0[1-8]$/.");
+        }
+
+        $this->container['debitType'] = $debitType;
 
         return $this;
     }

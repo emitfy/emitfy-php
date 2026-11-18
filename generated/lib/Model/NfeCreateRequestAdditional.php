@@ -60,7 +60,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => 'string',
         'fisco' => 'string',
         'taxpayerNotes' => '\EmitfyGenerated\Model\NfeCreateRequestAdditionalTaxpayerNotesInner[]',
-        'fiscoNotes' => '\EmitfyGenerated\Model\NfeCreateRequestAdditionalTaxpayerNotesInner[]'
+        'fiscoNotes' => '\EmitfyGenerated\Model\NfeCreateRequestAdditionalTaxpayerNotesInner[]',
+        'processReferences' => '\EmitfyGenerated\Model\NfeCreateRequestAdditionalProcessReferencesInner[]'
     ];
 
     /**
@@ -74,7 +75,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => null,
         'fisco' => null,
         'taxpayerNotes' => null,
-        'fiscoNotes' => null
+        'fiscoNotes' => null,
+        'processReferences' => null
     ];
 
     /**
@@ -86,7 +88,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => false,
         'fisco' => false,
         'taxpayerNotes' => false,
-        'fiscoNotes' => false
+        'fiscoNotes' => false,
+        'processReferences' => false
     ];
 
     /**
@@ -178,7 +181,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => 'complement',
         'fisco' => 'fisco',
         'taxpayerNotes' => 'taxpayerNotes',
-        'fiscoNotes' => 'fiscoNotes'
+        'fiscoNotes' => 'fiscoNotes',
+        'processReferences' => 'processReferences'
     ];
 
     /**
@@ -190,7 +194,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => 'setComplement',
         'fisco' => 'setFisco',
         'taxpayerNotes' => 'setTaxpayerNotes',
-        'fiscoNotes' => 'setFiscoNotes'
+        'fiscoNotes' => 'setFiscoNotes',
+        'processReferences' => 'setProcessReferences'
     ];
 
     /**
@@ -202,7 +207,8 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         'complement' => 'getComplement',
         'fisco' => 'getFisco',
         'taxpayerNotes' => 'getTaxpayerNotes',
-        'fiscoNotes' => 'getFiscoNotes'
+        'fiscoNotes' => 'getFiscoNotes',
+        'processReferences' => 'getProcessReferences'
     ];
 
     /**
@@ -266,6 +272,7 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
         $this->setIfExists('fisco', $data ?? [], null);
         $this->setIfExists('taxpayerNotes', $data ?? [], null);
         $this->setIfExists('fiscoNotes', $data ?? [], null);
+        $this->setIfExists('processReferences', $data ?? [], null);
     }
 
     /**
@@ -309,6 +316,10 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
 
         if (!is_null($this->container['fiscoNotes']) && (count($this->container['fiscoNotes']) > 10)) {
             $invalidProperties[] = "invalid value for 'fiscoNotes', number of items must be less than or equal to 10.";
+        }
+
+        if (!is_null($this->container['processReferences']) && (count($this->container['processReferences']) > 100)) {
+            $invalidProperties[] = "invalid value for 'processReferences', number of items must be less than or equal to 100.";
         }
 
         return $invalidProperties;
@@ -444,6 +455,36 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
             throw new \InvalidArgumentException('invalid value for $fiscoNotes when calling NfeCreateRequestAdditional., number of items must be less than or equal to 10.');
         }
         $this->container['fiscoNotes'] = $fiscoNotes;
+
+        return $this;
+    }
+
+    /**
+     * Gets processReferences
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestAdditionalProcessReferencesInner[]|null
+     */
+    public function getProcessReferences()
+    {
+        return $this->container['processReferences'];
+    }
+
+    /**
+     * Sets processReferences
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestAdditionalProcessReferencesInner[]|null $processReferences procRef — processo referenciado (só NF-e; NFC-e → 422)
+     *
+     * @return self
+     */
+    public function setProcessReferences($processReferences)
+    {
+        if (is_null($processReferences)) {
+            throw new \InvalidArgumentException('non-nullable processReferences cannot be null');
+        }
+        if ((count($processReferences) > 100)) {
+            throw new \InvalidArgumentException('invalid value for $processReferences when calling NfeCreateRequestAdditional., number of items must be less than or equal to 100.');
+        }
+        $this->container['processReferences'] = $processReferences;
 
         return $this;
     }

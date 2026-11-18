@@ -1829,7 +1829,7 @@ class NfeCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets farming
      *
-     * @param object|null $farming farming
+     * @param object|null $farming agropecuario (PL_010h) — `defensives` (até 20: number = nReceituario, taxId = CPF do responsável técnico) OU `transitGuide` (type 1–7, state, series?, number até 9 dígitos), nunca os dois. `amount` (qApl) não existe no leiaute → 422
      *
      * @return self
      */

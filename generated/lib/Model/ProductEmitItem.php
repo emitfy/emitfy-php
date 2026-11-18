@@ -121,6 +121,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => 'object',
         'weapons' => 'object[]',
         'fuel' => 'object',
+        'recopi' => 'string',
+        'packaging' => '\EmitfyGenerated\Model\ProductEmitItemPackaging',
+        'itemNotes' => '\EmitfyGenerated\Model\ProductEmitItemItemNotes',
         'taxReturn' => 'object',
         'additionalInfo' => 'string'
     ];
@@ -196,6 +199,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => null,
         'weapons' => null,
         'fuel' => null,
+        'recopi' => null,
+        'packaging' => null,
+        'itemNotes' => null,
         'taxReturn' => null,
         'additionalInfo' => null
     ];
@@ -269,6 +275,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => false,
         'weapons' => false,
         'fuel' => false,
+        'recopi' => false,
+        'packaging' => false,
+        'itemNotes' => false,
         'taxReturn' => false,
         'additionalInfo' => false
     ];
@@ -422,6 +431,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => 'medicine',
         'weapons' => 'weapons',
         'fuel' => 'fuel',
+        'recopi' => 'recopi',
+        'packaging' => 'packaging',
+        'itemNotes' => 'itemNotes',
         'taxReturn' => 'taxReturn',
         'additionalInfo' => 'additionalInfo'
     ];
@@ -495,6 +507,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => 'setMedicine',
         'weapons' => 'setWeapons',
         'fuel' => 'setFuel',
+        'recopi' => 'setRecopi',
+        'packaging' => 'setPackaging',
+        'itemNotes' => 'setItemNotes',
         'taxReturn' => 'setTaxReturn',
         'additionalInfo' => 'setAdditionalInfo'
     ];
@@ -568,6 +583,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         'medicine' => 'getMedicine',
         'weapons' => 'getWeapons',
         'fuel' => 'getFuel',
+        'recopi' => 'getRecopi',
+        'packaging' => 'getPackaging',
+        'itemNotes' => 'getItemNotes',
         'taxReturn' => 'getTaxReturn',
         'additionalInfo' => 'getAdditionalInfo'
     ];
@@ -713,6 +731,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('medicine', $data ?? [], null);
         $this->setIfExists('weapons', $data ?? [], null);
         $this->setIfExists('fuel', $data ?? [], null);
+        $this->setIfExists('recopi', $data ?? [], null);
+        $this->setIfExists('packaging', $data ?? [], null);
+        $this->setIfExists('itemNotes', $data ?? [], null);
         $this->setIfExists('taxReturn', $data ?? [], null);
         $this->setIfExists('additionalInfo', $data ?? [], null);
     }
@@ -860,6 +881,14 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if (!is_null($this->container['importDeclarations']) && (count($this->container['importDeclarations']) > 100)) {
             $invalidProperties[] = "invalid value for 'importDeclarations', number of items must be less than or equal to 100.";
+        }
+
+        if (!is_null($this->container['weapons']) && (count($this->container['weapons']) > 500)) {
+            $invalidProperties[] = "invalid value for 'weapons', number of items must be less than or equal to 500.";
+        }
+
+        if (!is_null($this->container['recopi']) && !preg_match("/^[0-9]{20}$/", $this->container['recopi'])) {
+            $invalidProperties[] = "invalid value for 'recopi', must be conform to the pattern /^[0-9]{20}$/.";
         }
 
         if (!is_null($this->container['additionalInfo']) && (mb_strlen($this->container['additionalInfo']) > 500)) {
@@ -2593,7 +2622,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets vehicle
      *
-     * @param object|null $vehicle vehicle
+     * @param object|null $vehicle NF-e — veicProd. Os 24 campos são obrigatórios (chassi 17 caracteres). Exclusivo com medicine/weapons/fuel/recopi
      *
      * @return self
      */
@@ -2620,7 +2649,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets medicine
      *
-     * @param object|null $medicine medicine
+     * @param object|null $medicine med — anvisaCode (11 ou 13 dígitos ou `ISENTO` + reasonExemption) e maxConsumerPrice (vPMC) obrigatórios
      *
      * @return self
      */
@@ -2647,7 +2676,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets weapons
      *
-     * @param object[]|null $weapons weapons
+     * @param object[]|null $weapons arma — kind (0 uso permitido, 1 uso restrito), serial, barrelSerial e description obrigatórios
      *
      * @return self
      */
@@ -2655,6 +2684,9 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         if (is_null($weapons)) {
             throw new \InvalidArgumentException('non-nullable weapons cannot be null');
+        }
+        if ((count($weapons) > 500)) {
+            throw new \InvalidArgumentException('invalid value for $weapons when calling ProductEmitItem., number of items must be less than or equal to 500.');
         }
         $this->container['weapons'] = $weapons;
 
@@ -2674,7 +2706,7 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets fuel
      *
-     * @param object|null $fuel fuel
+     * @param object|null $fuel comb — anpCode (9 dígitos), description e consumptionState obrigatórios; codif (até 21 dígitos), quantityTemp, CIDE (cideBase/cideRate/cideAmount juntos), `pump` (encerrante: nozzle, pump?, tank, startReading, endReading), `biodieselPercent` (pBio, >0 a 100) e `origins` (origComb, até 30: imported, stateCode IBGE, percent). NFC-e aceita.
      *
      * @return self
      */
@@ -2684,6 +2716,92 @@ class ProductEmitItem implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable fuel cannot be null');
         }
         $this->container['fuel'] = $fuel;
+
+        return $this;
+    }
+
+    /**
+     * Gets recopi
+     *
+     * @return string|null
+     */
+    public function getRecopi()
+    {
+        return $this->container['recopi'];
+    }
+
+    /**
+     * Sets recopi
+     *
+     * @param string|null $recopi NF-e — nRECOPI (papel imune). Exclusivo com vehicle/medicine/weapons/fuel. NFC-e → 422
+     *
+     * @return self
+     */
+    public function setRecopi($recopi)
+    {
+        if (is_null($recopi)) {
+            throw new \InvalidArgumentException('non-nullable recopi cannot be null');
+        }
+
+        if ((!preg_match("/^[0-9]{20}$/", ObjectSerializer::toString($recopi)))) {
+            throw new \InvalidArgumentException("invalid value for \$recopi when calling ProductEmitItem., must conform to the pattern /^[0-9]{20}$/.");
+        }
+
+        $this->container['recopi'] = $recopi;
+
+        return $this;
+    }
+
+    /**
+     * Gets packaging
+     *
+     * @return \EmitfyGenerated\Model\ProductEmitItemPackaging|null
+     */
+    public function getPackaging()
+    {
+        return $this->container['packaging'];
+    }
+
+    /**
+     * Sets packaging
+     *
+     * @param \EmitfyGenerated\Model\ProductEmitItemPackaging|null $packaging packaging
+     *
+     * @return self
+     */
+    public function setPackaging($packaging)
+    {
+        if (is_null($packaging)) {
+            throw new \InvalidArgumentException('non-nullable packaging cannot be null');
+        }
+        $this->container['packaging'] = $packaging;
+
+        return $this;
+    }
+
+    /**
+     * Gets itemNotes
+     *
+     * @return \EmitfyGenerated\Model\ProductEmitItemItemNotes|null
+     */
+    public function getItemNotes()
+    {
+        return $this->container['itemNotes'];
+    }
+
+    /**
+     * Sets itemNotes
+     *
+     * @param \EmitfyGenerated\Model\ProductEmitItemItemNotes|null $itemNotes itemNotes
+     *
+     * @return self
+     */
+    public function setItemNotes($itemNotes)
+    {
+        if (is_null($itemNotes)) {
+            throw new \InvalidArgumentException('non-nullable itemNotes cannot be null');
+        }
+        $this->container['itemNotes'] = $itemNotes;
 
         return $this;
     }

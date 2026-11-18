@@ -61,7 +61,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => 'string',
         'value' => 'float',
         'carrier' => '\EmitfyGenerated\Model\TransportCarrier',
-        'volumes' => '\EmitfyGenerated\Model\NfeCreateRequestTransportVolumesInner[]'
+        'volumes' => '\EmitfyGenerated\Model\NfeCreateRequestTransportVolumesInner[]',
+        'withholding' => '\EmitfyGenerated\Model\NfeCreateRequestTransportWithholding',
+        'trailers' => 'object[]',
+        'wagon' => 'string',
+        'ferry' => 'string'
     ];
 
     /**
@@ -75,7 +79,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => null,
         'value' => null,
         'carrier' => null,
-        'volumes' => null
+        'volumes' => null,
+        'withholding' => null,
+        'trailers' => null,
+        'wagon' => null,
+        'ferry' => null
     ];
 
     /**
@@ -87,7 +95,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => false,
         'value' => false,
         'carrier' => false,
-        'volumes' => false
+        'volumes' => false,
+        'withholding' => false,
+        'trailers' => false,
+        'wagon' => false,
+        'ferry' => false
     ];
 
     /**
@@ -179,7 +191,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => 'freightModality',
         'value' => 'value',
         'carrier' => 'carrier',
-        'volumes' => 'volumes'
+        'volumes' => 'volumes',
+        'withholding' => 'withholding',
+        'trailers' => 'trailers',
+        'wagon' => 'wagon',
+        'ferry' => 'ferry'
     ];
 
     /**
@@ -191,7 +207,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => 'setFreightModality',
         'value' => 'setValue',
         'carrier' => 'setCarrier',
-        'volumes' => 'setVolumes'
+        'volumes' => 'setVolumes',
+        'withholding' => 'setWithholding',
+        'trailers' => 'setTrailers',
+        'wagon' => 'setWagon',
+        'ferry' => 'setFerry'
     ];
 
     /**
@@ -203,7 +223,11 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         'freightModality' => 'getFreightModality',
         'value' => 'getValue',
         'carrier' => 'getCarrier',
-        'volumes' => 'getVolumes'
+        'volumes' => 'getVolumes',
+        'withholding' => 'getWithholding',
+        'trailers' => 'getTrailers',
+        'wagon' => 'getWagon',
+        'ferry' => 'getFerry'
     ];
 
     /**
@@ -290,6 +314,10 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
         $this->setIfExists('value', $data ?? [], null);
         $this->setIfExists('carrier', $data ?? [], null);
         $this->setIfExists('volumes', $data ?? [], null);
+        $this->setIfExists('withholding', $data ?? [], null);
+        $this->setIfExists('trailers', $data ?? [], null);
+        $this->setIfExists('wagon', $data ?? [], null);
+        $this->setIfExists('ferry', $data ?? [], null);
     }
 
     /**
@@ -338,6 +366,22 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
 
         if (!is_null($this->container['volumes']) && (count($this->container['volumes']) < 1)) {
             $invalidProperties[] = "invalid value for 'volumes', number of items must be greater than or equal to 1.";
+        }
+
+        if (!is_null($this->container['trailers']) && (count($this->container['trailers']) > 5)) {
+            $invalidProperties[] = "invalid value for 'trailers', number of items must be less than or equal to 5.";
+        }
+
+        if (!is_null($this->container['trailers']) && (count($this->container['trailers']) < 1)) {
+            $invalidProperties[] = "invalid value for 'trailers', number of items must be greater than or equal to 1.";
+        }
+
+        if (!is_null($this->container['wagon']) && (mb_strlen($this->container['wagon']) > 20)) {
+            $invalidProperties[] = "invalid value for 'wagon', the character length must be smaller than or equal to 20.";
+        }
+
+        if (!is_null($this->container['ferry']) && (mb_strlen($this->container['ferry']) > 20)) {
+            $invalidProperties[] = "invalid value for 'ferry', the character length must be smaller than or equal to 20.";
         }
 
         return $invalidProperties;
@@ -479,6 +523,128 @@ class NfeCreateRequestTransport implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('invalid length for $volumes when calling NfeCreateRequestTransport., number of items must be greater than or equal to 1.');
         }
         $this->container['volumes'] = $volumes;
+
+        return $this;
+    }
+
+    /**
+     * Gets withholding
+     *
+     * @return \EmitfyGenerated\Model\NfeCreateRequestTransportWithholding|null
+     */
+    public function getWithholding()
+    {
+        return $this->container['withholding'];
+    }
+
+    /**
+     * Sets withholding
+     *
+     * @param \EmitfyGenerated\Model\NfeCreateRequestTransportWithholding|null $withholding withholding
+     *
+     * @return self
+     */
+    public function setWithholding($withholding)
+    {
+        if (is_null($withholding)) {
+            throw new \InvalidArgumentException('non-nullable withholding cannot be null');
+        }
+        $this->container['withholding'] = $withholding;
+
+        return $this;
+    }
+
+    /**
+     * Gets trailers
+     *
+     * @return object[]|null
+     */
+    public function getTrailers()
+    {
+        return $this->container['trailers'];
+    }
+
+    /**
+     * Sets trailers
+     *
+     * @param object[]|null $trailers reboque — { plate, state?, rntc? }. Exclusivo com wagon/ferry
+     *
+     * @return self
+     */
+    public function setTrailers($trailers)
+    {
+        if (is_null($trailers)) {
+            throw new \InvalidArgumentException('non-nullable trailers cannot be null');
+        }
+        if ((count($trailers) > 5)) {
+            throw new \InvalidArgumentException('invalid value for $trailers when calling NfeCreateRequestTransport., number of items must be less than or equal to 5.');
+        }
+        if ((count($trailers) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $trailers when calling NfeCreateRequestTransport., number of items must be greater than or equal to 1.');
+        }
+        $this->container['trailers'] = $trailers;
+
+        return $this;
+    }
+
+    /**
+     * Gets wagon
+     *
+     * @return string|null
+     */
+    public function getWagon()
+    {
+        return $this->container['wagon'];
+    }
+
+    /**
+     * Sets wagon
+     *
+     * @param string|null $wagon vagao (ferroviário). Exclusivo com veículo/reboque/balsa
+     *
+     * @return self
+     */
+    public function setWagon($wagon)
+    {
+        if (is_null($wagon)) {
+            throw new \InvalidArgumentException('non-nullable wagon cannot be null');
+        }
+        if ((mb_strlen($wagon) > 20)) {
+            throw new \InvalidArgumentException('invalid length for $wagon when calling NfeCreateRequestTransport., must be smaller than or equal to 20.');
+        }
+
+        $this->container['wagon'] = $wagon;
+
+        return $this;
+    }
+
+    /**
+     * Gets ferry
+     *
+     * @return string|null
+     */
+    public function getFerry()
+    {
+        return $this->container['ferry'];
+    }
+
+    /**
+     * Sets ferry
+     *
+     * @param string|null $ferry balsa (aquaviário). Exclusivo com veículo/reboque/vagão
+     *
+     * @return self
+     */
+    public function setFerry($ferry)
+    {
+        if (is_null($ferry)) {
+            throw new \InvalidArgumentException('non-nullable ferry cannot be null');
+        }
+        if ((mb_strlen($ferry) > 20)) {
+            throw new \InvalidArgumentException('invalid length for $ferry when calling NfeCreateRequestTransport., must be smaller than or equal to 20.');
+        }
+
+        $this->container['ferry'] = $ferry;
 
         return $this;
     }

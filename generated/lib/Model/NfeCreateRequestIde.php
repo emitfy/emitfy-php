@@ -433,6 +433,14 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
             );
         }
 
+        if (!is_null($this->container['contingencyReason']) && (mb_strlen($this->container['contingencyReason']) > 256)) {
+            $invalidProperties[] = "invalid value for 'contingencyReason', the character length must be smaller than or equal to 256.";
+        }
+
+        if (!is_null($this->container['contingencyReason']) && (mb_strlen($this->container['contingencyReason']) < 15)) {
+            $invalidProperties[] = "invalid value for 'contingencyReason', the character length must be bigger than or equal to 15.";
+        }
+
         return $invalidProperties;
     }
 
@@ -715,7 +723,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets emissionType
      *
-     * @param string|null $emissionType Só `1`/`normal`. Contingência ainda não suportada → 422
+     * @param string|null $emissionType `1`/`normal`. `6`/`svcAn` (SVC-AN) e `7`/`svcRs` (SVC-RS) só com a flag `NFE_SVC_CONTINGENCY_ENABLED` (senão 422); a UF do emitente precisa usar aquele SVC. O XML sai com tpEmis/dhCont/xJust, mas a transmissão ao autorizador de contingência ainda não existe — a nota fica com erro de validação.
      *
      * @return self
      */
@@ -796,7 +804,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets contingencyStartedAt
      *
-     * @param \DateTime|null $contingencyStartedAt Contingência ainda não suportada → 422
+     * @param \DateTime|null $contingencyStartedAt dhCont — obrigatório com emissionType 6/7; não pode estar no futuro
      *
      * @return self
      */
@@ -823,7 +831,7 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets contingencyReason
      *
-     * @param string|null $contingencyReason Contingência ainda não suportada → 422
+     * @param string|null $contingencyReason xJust — obrigatório com emissionType 6/7
      *
      * @return self
      */
@@ -832,6 +840,13 @@ class NfeCreateRequestIde implements ModelInterface, ArrayAccess, \JsonSerializa
         if (is_null($contingencyReason)) {
             throw new \InvalidArgumentException('non-nullable contingencyReason cannot be null');
         }
+        if ((mb_strlen($contingencyReason) > 256)) {
+            throw new \InvalidArgumentException('invalid length for $contingencyReason when calling NfeCreateRequestIde., must be smaller than or equal to 256.');
+        }
+        if ((mb_strlen($contingencyReason) < 15)) {
+            throw new \InvalidArgumentException('invalid length for $contingencyReason when calling NfeCreateRequestIde., must be bigger than or equal to 15.');
+        }
+
         $this->container['contingencyReason'] = $contingencyReason;
 
         return $this;

@@ -62,7 +62,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => 'string',
         'numbering' => 'string',
         'netWeight' => 'float',
-        'grossWeight' => 'float'
+        'grossWeight' => 'float',
+        'seals' => 'string[]'
     ];
 
     /**
@@ -78,7 +79,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => null,
         'numbering' => null,
         'netWeight' => null,
-        'grossWeight' => null
+        'grossWeight' => null,
+        'seals' => null
     ];
 
     /**
@@ -92,7 +94,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => false,
         'numbering' => false,
         'netWeight' => false,
-        'grossWeight' => false
+        'grossWeight' => false,
+        'seals' => false
     ];
 
     /**
@@ -186,7 +189,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => 'brand',
         'numbering' => 'numbering',
         'netWeight' => 'netWeight',
-        'grossWeight' => 'grossWeight'
+        'grossWeight' => 'grossWeight',
+        'seals' => 'seals'
     ];
 
     /**
@@ -200,7 +204,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => 'setBrand',
         'numbering' => 'setNumbering',
         'netWeight' => 'setNetWeight',
-        'grossWeight' => 'setGrossWeight'
+        'grossWeight' => 'setGrossWeight',
+        'seals' => 'setSeals'
     ];
 
     /**
@@ -214,7 +219,8 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         'brand' => 'getBrand',
         'numbering' => 'getNumbering',
         'netWeight' => 'getNetWeight',
-        'grossWeight' => 'getGrossWeight'
+        'grossWeight' => 'getGrossWeight',
+        'seals' => 'getSeals'
     ];
 
     /**
@@ -280,6 +286,7 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         $this->setIfExists('numbering', $data ?? [], null);
         $this->setIfExists('netWeight', $data ?? [], null);
         $this->setIfExists('grossWeight', $data ?? [], null);
+        $this->setIfExists('seals', $data ?? [], null);
     }
 
     /**
@@ -331,6 +338,10 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
 
         if (!is_null($this->container['grossWeight']) && ($this->container['grossWeight'] < 0)) {
             $invalidProperties[] = "invalid value for 'grossWeight', must be bigger than or equal to 0.";
+        }
+
+        if (!is_null($this->container['seals']) && (count($this->container['seals']) > 5000)) {
+            $invalidProperties[] = "invalid value for 'seals', number of items must be less than or equal to 5000.";
         }
 
         return $invalidProperties;
@@ -530,6 +541,36 @@ class NfeCreateRequestTransportVolumesInner implements ModelInterface, ArrayAcce
         }
 
         $this->container['grossWeight'] = $grossWeight;
+
+        return $this;
+    }
+
+    /**
+     * Gets seals
+     *
+     * @return string[]|null
+     */
+    public function getSeals()
+    {
+        return $this->container['seals'];
+    }
+
+    /**
+     * Sets seals
+     *
+     * @param string[]|null $seals lacres/nLacre. Alias `lacres` (lista de textos ou de `{ nLacre }`)
+     *
+     * @return self
+     */
+    public function setSeals($seals)
+    {
+        if (is_null($seals)) {
+            throw new \InvalidArgumentException('non-nullable seals cannot be null');
+        }
+        if ((count($seals) > 5000)) {
+            throw new \InvalidArgumentException('invalid value for $seals when calling NfeCreateRequestTransportVolumesInner., number of items must be less than or equal to 5000.');
+        }
+        $this->container['seals'] = $seals;
 
         return $this;
     }

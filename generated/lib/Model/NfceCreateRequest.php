@@ -35,7 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfceCreateRequest Class Doc Comment
  *
  * @category Class
- * @description Com &#x60;issueMode: offlineContingency&#x60; a validação exige &#x60;contingency&#x60;, &#x60;accessKey&#x60; (44 dígitos, modelo 65, tpEmis 9), &#x60;number&#x60;, &#x60;series&#x60; e &#x60;issuedAt&#x60; (ou &#x60;issueDate&#x60;). Falha → 422 &#x60;VALIDATION_ERROR&#x60;.
+ * @description Com &#x60;issueMode: offlineContingency&#x60; a validação exige &#x60;contingency&#x60;, &#x60;accessKey&#x60; (44 dígitos, modelo 65, tpEmis 9), &#x60;number&#x60;, &#x60;series&#x60; e &#x60;issuedAt&#x60; (ou &#x60;issueDate&#x60;). Falha → 422 &#x60;VALIDATION_ERROR&#x60;. Leiaute NFC-e (fase 5): 422 só para o que o leiaute do modelo 65 não admite — indPres ≠ 1/4/5 (717), tPag 90 (899), frete/transportadora sem entrega a domicílio (753/754), retTransp/veículo/reboque/vagão/balsa (755–759), IE/SUFRAMA do consumidor (729/730) e endereço do consumidor em outra UF (707).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -59,6 +59,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $openAPITypes = [
         'paymentMethod' => 'string',
+        'payments' => '\EmitfyGenerated\Model\NfceCreateRequestPaymentsInner[]',
+        'change' => 'float',
+        'presenceType' => 'string',
+        'operationNature' => 'string',
+        'discount' => 'float',
+        'totals' => '\EmitfyGenerated\Model\NfceCreateRequestTotals',
+        'transport' => '\EmitfyGenerated\Model\NfceCreateRequestTransport',
+        'intermediary' => '\EmitfyGenerated\Model\NfceCreateRequestIntermediary',
+        'autXml' => '\EmitfyGenerated\Model\DfeAutXml[]',
         'items' => '\EmitfyGenerated\Model\ProductEmitItem[]',
         'recipient' => '\EmitfyGenerated\Model\NfceCreateRequestRecipient',
         'nature' => 'string',
@@ -86,6 +95,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $openAPIFormats = [
         'paymentMethod' => null,
+        'payments' => null,
+        'change' => null,
+        'presenceType' => null,
+        'operationNature' => null,
+        'discount' => null,
+        'totals' => null,
+        'transport' => null,
+        'intermediary' => null,
+        'autXml' => null,
         'items' => null,
         'recipient' => null,
         'nature' => null,
@@ -111,6 +129,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static array $openAPINullables = [
         'paymentMethod' => false,
+        'payments' => false,
+        'change' => false,
+        'presenceType' => false,
+        'operationNature' => false,
+        'discount' => false,
+        'totals' => false,
+        'transport' => false,
+        'intermediary' => false,
+        'autXml' => false,
         'items' => false,
         'recipient' => false,
         'nature' => false,
@@ -216,6 +243,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $attributeMap = [
         'paymentMethod' => 'paymentMethod',
+        'payments' => 'payments',
+        'change' => 'change',
+        'presenceType' => 'presenceType',
+        'operationNature' => 'operationNature',
+        'discount' => 'discount',
+        'totals' => 'totals',
+        'transport' => 'transport',
+        'intermediary' => 'intermediary',
+        'autXml' => 'autXml',
         'items' => 'items',
         'recipient' => 'recipient',
         'nature' => 'nature',
@@ -241,6 +277,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $setters = [
         'paymentMethod' => 'setPaymentMethod',
+        'payments' => 'setPayments',
+        'change' => 'setChange',
+        'presenceType' => 'setPresenceType',
+        'operationNature' => 'setOperationNature',
+        'discount' => 'setDiscount',
+        'totals' => 'setTotals',
+        'transport' => 'setTransport',
+        'intermediary' => 'setIntermediary',
+        'autXml' => 'setAutXml',
         'items' => 'setItems',
         'recipient' => 'setRecipient',
         'nature' => 'setNature',
@@ -266,6 +311,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $getters = [
         'paymentMethod' => 'getPaymentMethod',
+        'payments' => 'getPayments',
+        'change' => 'getChange',
+        'presenceType' => 'getPresenceType',
+        'operationNature' => 'getOperationNature',
+        'discount' => 'getDiscount',
+        'totals' => 'getTotals',
+        'transport' => 'getTransport',
+        'intermediary' => 'getIntermediary',
+        'autXml' => 'getAutXml',
         'items' => 'getItems',
         'recipient' => 'getRecipient',
         'nature' => 'getNature',
@@ -332,6 +386,9 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     public const PAYMENT_METHOD_CASH = 'cash';
     public const PAYMENT_METHOD_BANK_SLIP = 'bank_slip';
     public const PAYMENT_METHOD_OTHER = 'other';
+    public const PRESENCE_TYPE_PRESENTIAL = 'presential';
+    public const PRESENCE_TYPE_DELIVERY = 'delivery';
+    public const PRESENCE_TYPE_OUTSIDE_ESTABLISHMENT = 'outsideEstablishment';
     public const ISSUE_MODE_NORMAL = 'normal';
     public const ISSUE_MODE_OFFLINE_CONTINGENCY = 'offlineContingency';
     public const TRANSMIT_NOW = 'now';
@@ -352,6 +409,20 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             self::PAYMENT_METHOD_CASH,
             self::PAYMENT_METHOD_BANK_SLIP,
             self::PAYMENT_METHOD_OTHER,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPresenceTypeAllowableValues()
+    {
+        return [
+            self::PRESENCE_TYPE_PRESENTIAL,
+            self::PRESENCE_TYPE_DELIVERY,
+            self::PRESENCE_TYPE_OUTSIDE_ESTABLISHMENT,
         ];
     }
 
@@ -397,6 +468,15 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     public function __construct(?array $data = null)
     {
         $this->setIfExists('paymentMethod', $data ?? [], null);
+        $this->setIfExists('payments', $data ?? [], null);
+        $this->setIfExists('change', $data ?? [], null);
+        $this->setIfExists('presenceType', $data ?? [], 'presential');
+        $this->setIfExists('operationNature', $data ?? [], null);
+        $this->setIfExists('discount', $data ?? [], null);
+        $this->setIfExists('totals', $data ?? [], null);
+        $this->setIfExists('transport', $data ?? [], null);
+        $this->setIfExists('intermediary', $data ?? [], null);
+        $this->setIfExists('autXml', $data ?? [], null);
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
         $this->setIfExists('nature', $data ?? [], null);
@@ -442,9 +522,6 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         $invalidProperties = [];
 
-        if ($this->container['paymentMethod'] === null) {
-            $invalidProperties[] = "'paymentMethod' can't be null";
-        }
         $allowedValues = $this->getPaymentMethodAllowableValues();
         if (!is_null($this->container['paymentMethod']) && !in_array($this->container['paymentMethod'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -452,6 +529,35 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
                 $this->container['paymentMethod'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        if (!is_null($this->container['payments']) && (count($this->container['payments']) > 100)) {
+            $invalidProperties[] = "invalid value for 'payments', number of items must be less than or equal to 100.";
+        }
+
+        if (!is_null($this->container['change']) && ($this->container['change'] < 0)) {
+            $invalidProperties[] = "invalid value for 'change', must be bigger than or equal to 0.";
+        }
+
+        $allowedValues = $this->getPresenceTypeAllowableValues();
+        if (!is_null($this->container['presenceType']) && !in_array($this->container['presenceType'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'presenceType', must be one of '%s'",
+                $this->container['presenceType'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['operationNature']) && (mb_strlen($this->container['operationNature']) > 60)) {
+            $invalidProperties[] = "invalid value for 'operationNature', the character length must be smaller than or equal to 60.";
+        }
+
+        if (!is_null($this->container['operationNature']) && (mb_strlen($this->container['operationNature']) < 1)) {
+            $invalidProperties[] = "invalid value for 'operationNature', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['discount']) && ($this->container['discount'] < 0)) {
+            $invalidProperties[] = "invalid value for 'discount', must be bigger than or equal to 0.";
         }
 
         if ($this->container['items'] === null) {
@@ -525,7 +631,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets paymentMethod
      *
-     * @return string
+     * @return string|null
      */
     public function getPaymentMethod()
     {
@@ -535,7 +641,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets paymentMethod
      *
-     * @param string $paymentMethod paymentMethod
+     * @param string|null $paymentMethod Pagamento único com o total. Obrigatório quando não há `payments`
      *
      * @return self
      */
@@ -555,6 +661,277 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             );
         }
         $this->container['paymentMethod'] = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * Gets payments
+     *
+     * @return \EmitfyGenerated\Model\NfceCreateRequestPaymentsInner[]|null
+     */
+    public function getPayments()
+    {
+        return $this->container['payments'];
+    }
+
+    /**
+     * Sets payments
+     *
+     * @param \EmitfyGenerated\Model\NfceCreateRequestPaymentsInner[]|null $payments Pagamentos detalhados (`pag/detPag`), mesmo formato da NF-e: vários meios, troco, cartão/TEF/POS (`integration` tpIntegra, `cardTaxId` CNPJ da credenciadora, `cardBrand` tBand, `authorization` cAut, `receiverTaxId` CNPJReceb, `terminalId` idTermPag), `paidOn`, `payerTaxId`/`payerState`. Pix dinâmico: method 17 + integration 1 + cardTaxId (CNPJ do PSP) + authorization (E2E/txid); Pix estático: method 20. Sem pagamento (90) → 422 (rejeição 899).
+     *
+     * @return self
+     */
+    public function setPayments($payments)
+    {
+        if (is_null($payments)) {
+            throw new \InvalidArgumentException('non-nullable payments cannot be null');
+        }
+        if ((count($payments) > 100)) {
+            throw new \InvalidArgumentException('invalid value for $payments when calling NfceCreateRequest., number of items must be less than or equal to 100.');
+        }
+        $this->container['payments'] = $payments;
+
+        return $this;
+    }
+
+    /**
+     * Gets change
+     *
+     * @return float|null
+     */
+    public function getChange()
+    {
+        return $this->container['change'];
+    }
+
+    /**
+     * Sets change
+     *
+     * @param float|null $change Troco (vTroco) = soma(payments) − vNF. Sem troco sai `<vTroco>0.00</vTroco>`
+     *
+     * @return self
+     */
+    public function setChange($change)
+    {
+        if (is_null($change)) {
+            throw new \InvalidArgumentException('non-nullable change cannot be null');
+        }
+        if (($change < 0)) {
+            throw new \InvalidArgumentException('invalid value for $change when calling NfceCreateRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['change'] = $change;
+
+        return $this;
+    }
+
+    /**
+     * Gets presenceType
+     *
+     * @return string|null
+     */
+    public function getPresenceType()
+    {
+        return $this->container['presenceType'];
+    }
+
+    /**
+     * Sets presenceType
+     *
+     * @param string|null $presenceType indPres na NFC-e: 1 presencial, 4 entrega a domicílio, 5 fora do estabelecimento (MOC B25b-20). internet/telephone/others (2/3/9) → 422 (rejeição 717): emita NF-e.
+     *
+     * @return self
+     */
+    public function setPresenceType($presenceType)
+    {
+        if (is_null($presenceType)) {
+            throw new \InvalidArgumentException('non-nullable presenceType cannot be null');
+        }
+        $allowedValues = $this->getPresenceTypeAllowableValues();
+        if (!in_array($presenceType, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'presenceType', must be one of '%s'",
+                    $presenceType,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['presenceType'] = $presenceType;
+
+        return $this;
+    }
+
+    /**
+     * Gets operationNature
+     *
+     * @return string|null
+     */
+    public function getOperationNature()
+    {
+        return $this->container['operationNature'];
+    }
+
+    /**
+     * Sets operationNature
+     *
+     * @param string|null $operationNature natOp (alias `nature`)
+     *
+     * @return self
+     */
+    public function setOperationNature($operationNature)
+    {
+        if (is_null($operationNature)) {
+            throw new \InvalidArgumentException('non-nullable operationNature cannot be null');
+        }
+        if ((mb_strlen($operationNature) > 60)) {
+            throw new \InvalidArgumentException('invalid length for $operationNature when calling NfceCreateRequest., must be smaller than or equal to 60.');
+        }
+        if ((mb_strlen($operationNature) < 1)) {
+            throw new \InvalidArgumentException('invalid length for $operationNature when calling NfceCreateRequest., must be bigger than or equal to 1.');
+        }
+
+        $this->container['operationNature'] = $operationNature;
+
+        return $this;
+    }
+
+    /**
+     * Gets discount
+     *
+     * @return float|null
+     */
+    public function getDiscount()
+    {
+        return $this->container['discount'];
+    }
+
+    /**
+     * Sets discount
+     *
+     * @param float|null $discount Desconto da nota (rateado em vDesc)
+     *
+     * @return self
+     */
+    public function setDiscount($discount)
+    {
+        if (is_null($discount)) {
+            throw new \InvalidArgumentException('non-nullable discount cannot be null');
+        }
+        if (($discount < 0)) {
+            throw new \InvalidArgumentException('invalid value for $discount when calling NfceCreateRequest., must be bigger than or equal to 0.');
+        }
+
+        $this->container['discount'] = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Gets totals
+     *
+     * @return \EmitfyGenerated\Model\NfceCreateRequestTotals|null
+     */
+    public function getTotals()
+    {
+        return $this->container['totals'];
+    }
+
+    /**
+     * Sets totals
+     *
+     * @param \EmitfyGenerated\Model\NfceCreateRequestTotals|null $totals totals
+     *
+     * @return self
+     */
+    public function setTotals($totals)
+    {
+        if (is_null($totals)) {
+            throw new \InvalidArgumentException('non-nullable totals cannot be null');
+        }
+        $this->container['totals'] = $totals;
+
+        return $this;
+    }
+
+    /**
+     * Gets transport
+     *
+     * @return \EmitfyGenerated\Model\NfceCreateRequestTransport|null
+     */
+    public function getTransport()
+    {
+        return $this->container['transport'];
+    }
+
+    /**
+     * Sets transport
+     *
+     * @param \EmitfyGenerated\Model\NfceCreateRequestTransport|null $transport transport
+     *
+     * @return self
+     */
+    public function setTransport($transport)
+    {
+        if (is_null($transport)) {
+            throw new \InvalidArgumentException('non-nullable transport cannot be null');
+        }
+        $this->container['transport'] = $transport;
+
+        return $this;
+    }
+
+    /**
+     * Gets intermediary
+     *
+     * @return \EmitfyGenerated\Model\NfceCreateRequestIntermediary|null
+     */
+    public function getIntermediary()
+    {
+        return $this->container['intermediary'];
+    }
+
+    /**
+     * Sets intermediary
+     *
+     * @param \EmitfyGenerated\Model\NfceCreateRequestIntermediary|null $intermediary intermediary
+     *
+     * @return self
+     */
+    public function setIntermediary($intermediary)
+    {
+        if (is_null($intermediary)) {
+            throw new \InvalidArgumentException('non-nullable intermediary cannot be null');
+        }
+        $this->container['intermediary'] = $intermediary;
+
+        return $this;
+    }
+
+    /**
+     * Gets autXml
+     *
+     * @return \EmitfyGenerated\Model\DfeAutXml[]|null
+     */
+    public function getAutXml()
+    {
+        return $this->container['autXml'];
+    }
+
+    /**
+     * Sets autXml
+     *
+     * @param \EmitfyGenerated\Model\DfeAutXml[]|null $autXml autXml
+     *
+     * @return self
+     */
+    public function setAutXml($autXml)
+    {
+        if (is_null($autXml)) {
+            throw new \InvalidArgumentException('non-nullable autXml cannot be null');
+        }
+        $this->container['autXml'] = $autXml;
 
         return $this;
     }
@@ -630,7 +1007,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets nature
      *
-     * @param string|null $nature nature
+     * @param string|null $nature Alias de operationNature (natOp)
      *
      * @return self
      */
@@ -664,7 +1041,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets cfop
      *
-     * @param string|null $cfop cfop
+     * @param string|null $cfop CFOP padrão dos itens sem CFOP próprio
      *
      * @return self
      */
@@ -718,7 +1095,7 @@ class NfceCreateRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets additional
      *
-     * @param object|null $additional additional
+     * @param object|null $additional complement (infCpl), fisco (infAdFisco), taxpayerNotes (obsCont), fiscoNotes (obsFisco), processReferences (procRef)
      *
      * @return self
      */

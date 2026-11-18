@@ -63,7 +63,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => 'string',
         'cardBrand' => 'string',
         'authorization' => 'string',
-        'cardTaxId' => 'string'
+        'cardTaxId' => 'string',
+        'integration' => 'string',
+        'receiverTaxId' => 'string',
+        'terminalId' => 'string',
+        'paidOn' => '\DateTime',
+        'payerTaxId' => 'string',
+        'payerState' => 'string'
     ];
 
     /**
@@ -80,7 +86,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => null,
         'cardBrand' => null,
         'authorization' => null,
-        'cardTaxId' => null
+        'cardTaxId' => null,
+        'integration' => null,
+        'receiverTaxId' => null,
+        'terminalId' => null,
+        'paidOn' => 'date',
+        'payerTaxId' => null,
+        'payerState' => null
     ];
 
     /**
@@ -95,7 +107,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => false,
         'cardBrand' => false,
         'authorization' => false,
-        'cardTaxId' => false
+        'cardTaxId' => false,
+        'integration' => false,
+        'receiverTaxId' => false,
+        'terminalId' => false,
+        'paidOn' => false,
+        'payerTaxId' => false,
+        'payerState' => false
     ];
 
     /**
@@ -190,7 +208,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => 'description',
         'cardBrand' => 'cardBrand',
         'authorization' => 'authorization',
-        'cardTaxId' => 'cardTaxId'
+        'cardTaxId' => 'cardTaxId',
+        'integration' => 'integration',
+        'receiverTaxId' => 'receiverTaxId',
+        'terminalId' => 'terminalId',
+        'paidOn' => 'paidOn',
+        'payerTaxId' => 'payerTaxId',
+        'payerState' => 'payerState'
     ];
 
     /**
@@ -205,7 +229,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => 'setDescription',
         'cardBrand' => 'setCardBrand',
         'authorization' => 'setAuthorization',
-        'cardTaxId' => 'setCardTaxId'
+        'cardTaxId' => 'setCardTaxId',
+        'integration' => 'setIntegration',
+        'receiverTaxId' => 'setReceiverTaxId',
+        'terminalId' => 'setTerminalId',
+        'paidOn' => 'setPaidOn',
+        'payerTaxId' => 'setPayerTaxId',
+        'payerState' => 'setPayerState'
     ];
 
     /**
@@ -220,7 +250,13 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         'description' => 'getDescription',
         'cardBrand' => 'getCardBrand',
         'authorization' => 'getAuthorization',
-        'cardTaxId' => 'getCardTaxId'
+        'cardTaxId' => 'getCardTaxId',
+        'integration' => 'getIntegration',
+        'receiverTaxId' => 'getReceiverTaxId',
+        'terminalId' => 'getTerminalId',
+        'paidOn' => 'getPaidOn',
+        'payerTaxId' => 'getPayerTaxId',
+        'payerState' => 'getPayerState'
     ];
 
     /**
@@ -302,6 +338,12 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
         $this->setIfExists('cardBrand', $data ?? [], null);
         $this->setIfExists('authorization', $data ?? [], null);
         $this->setIfExists('cardTaxId', $data ?? [], null);
+        $this->setIfExists('integration', $data ?? [], null);
+        $this->setIfExists('receiverTaxId', $data ?? [], null);
+        $this->setIfExists('terminalId', $data ?? [], null);
+        $this->setIfExists('paidOn', $data ?? [], null);
+        $this->setIfExists('payerTaxId', $data ?? [], null);
+        $this->setIfExists('payerState', $data ?? [], null);
     }
 
     /**
@@ -353,6 +395,10 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
 
         if (!is_null($this->container['authorization']) && (mb_strlen($this->container['authorization']) > 128)) {
             $invalidProperties[] = "invalid value for 'authorization', the character length must be smaller than or equal to 128.";
+        }
+
+        if (!is_null($this->container['terminalId']) && (mb_strlen($this->container['terminalId']) > 40)) {
+            $invalidProperties[] = "invalid value for 'terminalId', the character length must be smaller than or equal to 40.";
         }
 
         return $invalidProperties;
@@ -577,6 +623,172 @@ class NfeCreateRequestPaymentsInner implements ModelInterface, ArrayAccess, \Jso
             throw new \InvalidArgumentException('non-nullable cardTaxId cannot be null');
         }
         $this->container['cardTaxId'] = $cardTaxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets integration
+     *
+     * @return string|null
+     */
+    public function getIntegration()
+    {
+        return $this->container['integration'];
+    }
+
+    /**
+     * Sets integration
+     *
+     * @param string|null $integration tpIntegra: 1/integrated/tef (TEF ou Pix dinâmico integrado) ou 2/notIntegrated/pos (padrão)
+     *
+     * @return self
+     */
+    public function setIntegration($integration)
+    {
+        if (is_null($integration)) {
+            throw new \InvalidArgumentException('non-nullable integration cannot be null');
+        }
+        $this->container['integration'] = $integration;
+
+        return $this;
+    }
+
+    /**
+     * Gets receiverTaxId
+     *
+     * @return string|null
+     */
+    public function getReceiverTaxId()
+    {
+        return $this->container['receiverTaxId'];
+    }
+
+    /**
+     * Sets receiverTaxId
+     *
+     * @param string|null $receiverTaxId CNPJReceb — CNPJ do beneficiário do pagamento (14 dígitos)
+     *
+     * @return self
+     */
+    public function setReceiverTaxId($receiverTaxId)
+    {
+        if (is_null($receiverTaxId)) {
+            throw new \InvalidArgumentException('non-nullable receiverTaxId cannot be null');
+        }
+        $this->container['receiverTaxId'] = $receiverTaxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets terminalId
+     *
+     * @return string|null
+     */
+    public function getTerminalId()
+    {
+        return $this->container['terminalId'];
+    }
+
+    /**
+     * Sets terminalId
+     *
+     * @param string|null $terminalId idTermPag — identificador do terminal/POS
+     *
+     * @return self
+     */
+    public function setTerminalId($terminalId)
+    {
+        if (is_null($terminalId)) {
+            throw new \InvalidArgumentException('non-nullable terminalId cannot be null');
+        }
+        if ((mb_strlen($terminalId) > 40)) {
+            throw new \InvalidArgumentException('invalid length for $terminalId when calling NfeCreateRequestPaymentsInner., must be smaller than or equal to 40.');
+        }
+
+        $this->container['terminalId'] = $terminalId;
+
+        return $this;
+    }
+
+    /**
+     * Gets paidOn
+     *
+     * @return \DateTime|null
+     */
+    public function getPaidOn()
+    {
+        return $this->container['paidOn'];
+    }
+
+    /**
+     * Sets paidOn
+     *
+     * @param \DateTime|null $paidOn dPag (AAAA-MM-DD)
+     *
+     * @return self
+     */
+    public function setPaidOn($paidOn)
+    {
+        if (is_null($paidOn)) {
+            throw new \InvalidArgumentException('non-nullable paidOn cannot be null');
+        }
+        $this->container['paidOn'] = $paidOn;
+
+        return $this;
+    }
+
+    /**
+     * Gets payerTaxId
+     *
+     * @return string|null
+     */
+    public function getPayerTaxId()
+    {
+        return $this->container['payerTaxId'];
+    }
+
+    /**
+     * Sets payerTaxId
+     *
+     * @param string|null $payerTaxId CNPJPag — CNPJ do pagador/transacional (14 dígitos
+     *
+     * @return self
+     */
+    public function setPayerTaxId($payerTaxId)
+    {
+        if (is_null($payerTaxId)) {
+            throw new \InvalidArgumentException('non-nullable payerTaxId cannot be null');
+        }
+        $this->container['payerTaxId'] = $payerTaxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets payerState
+     *
+     * @return string|null
+     */
+    public function getPayerState()
+    {
+        return $this->container['payerState'];
+    }
+
+    /**
+     * Sets payerState
+     *
+     * @param string|null $payerState UFPag (junto com payerTaxId)
+     *
+     * @return self
+     */
+    public function setPayerState($payerState)
+    {
+        if (is_null($payerState)) {
+            throw new \InvalidArgumentException('non-nullable payerState cannot be null');
+        }
+        $this->container['payerState'] = $payerState;
 
         return $this;
     }

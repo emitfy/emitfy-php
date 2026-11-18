@@ -35,7 +35,7 @@ use \EmitfyGenerated\ObjectSerializer;
  * NfceCreateRequestRecipient Class Doc Comment
  *
  * @category Class
- * @description Opcional (padrão consumidor final); todos os campos opcionais.
+ * @description Opcional (padrão consumidor final). CPF/CNPJ (&#x60;taxId&#x60;) ou estrangeiro (&#x60;foreignId&#x60;, idEstrangeiro; a operação continua interna). &#x60;address&#x60; é obrigatório na entrega a domicílio e precisa ser da UF do emitente. &#x60;stateRegistration&#x60;/&#x60;ieIndicator&#x60;/&#x60;suframa&#x60; → 422 (rejeições 729/730).
  * @package  EmitfyGenerated
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -59,6 +59,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static $openAPITypes = [
         'taxId' => 'string',
+        'foreignId' => 'string',
         'name' => 'string',
         'email' => 'string',
         'phone' => 'string',
@@ -74,6 +75,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static $openAPIFormats = [
         'taxId' => null,
+        'foreignId' => null,
         'name' => null,
         'email' => 'email',
         'phone' => null,
@@ -87,6 +89,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static array $openAPINullables = [
         'taxId' => false,
+        'foreignId' => false,
         'name' => false,
         'email' => false,
         'phone' => false,
@@ -180,6 +183,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static $attributeMap = [
         'taxId' => 'taxId',
+        'foreignId' => 'foreignId',
         'name' => 'name',
         'email' => 'email',
         'phone' => 'phone',
@@ -193,6 +197,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static $setters = [
         'taxId' => 'setTaxId',
+        'foreignId' => 'setForeignId',
         'name' => 'setName',
         'email' => 'setEmail',
         'phone' => 'setPhone',
@@ -206,6 +211,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
      */
     protected static $getters = [
         'taxId' => 'getTaxId',
+        'foreignId' => 'getForeignId',
         'name' => 'getName',
         'email' => 'getEmail',
         'phone' => 'getPhone',
@@ -270,6 +276,7 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
     public function __construct(?array $data = null)
     {
         $this->setIfExists('taxId', $data ?? [], null);
+        $this->setIfExists('foreignId', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('phone', $data ?? [], null);
@@ -305,6 +312,14 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
 
         if (!is_null($this->container['taxId']) && (mb_strlen($this->container['taxId']) < 1)) {
             $invalidProperties[] = "invalid value for 'taxId', the character length must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['foreignId']) && (mb_strlen($this->container['foreignId']) > 20)) {
+            $invalidProperties[] = "invalid value for 'foreignId', the character length must be smaller than or equal to 20.";
+        }
+
+        if (!is_null($this->container['foreignId']) && (mb_strlen($this->container['foreignId']) < 5)) {
+            $invalidProperties[] = "invalid value for 'foreignId', the character length must be bigger than or equal to 5.";
         }
 
         if (!is_null($this->container['name']) && (mb_strlen($this->container['name']) > 200)) {
@@ -358,6 +373,40 @@ class NfceCreateRequestRecipient implements ModelInterface, ArrayAccess, \JsonSe
         }
 
         $this->container['taxId'] = $taxId;
+
+        return $this;
+    }
+
+    /**
+     * Gets foreignId
+     *
+     * @return string|null
+     */
+    public function getForeignId()
+    {
+        return $this->container['foreignId'];
+    }
+
+    /**
+     * Sets foreignId
+     *
+     * @param string|null $foreignId foreignId
+     *
+     * @return self
+     */
+    public function setForeignId($foreignId)
+    {
+        if (is_null($foreignId)) {
+            throw new \InvalidArgumentException('non-nullable foreignId cannot be null');
+        }
+        if ((mb_strlen($foreignId) > 20)) {
+            throw new \InvalidArgumentException('invalid length for $foreignId when calling NfceCreateRequestRecipient., must be smaller than or equal to 20.');
+        }
+        if ((mb_strlen($foreignId) < 5)) {
+            throw new \InvalidArgumentException('invalid length for $foreignId when calling NfceCreateRequestRecipient., must be bigger than or equal to 5.');
+        }
+
+        $this->container['foreignId'] = $foreignId;
 
         return $this;
     }

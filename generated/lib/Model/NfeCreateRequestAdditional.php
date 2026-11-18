@@ -472,7 +472,7 @@ class NfeCreateRequestAdditional implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets processReferences
      *
-     * @param \EmitfyGenerated\Model\NfeCreateRequestAdditionalProcessReferencesInner[]|null $processReferences procRef — processo referenciado (só NF-e; NFC-e → 422)
+     * @param \EmitfyGenerated\Model\NfeCreateRequestAdditionalProcessReferencesInner[]|null $processReferences procRef — processo referenciado (NF-e e NFC-e)
      *
      * @return self
      */

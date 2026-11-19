@@ -80,6 +80,12 @@ class NfeApi
         'nfeCorrection' => [
             'application/json',
         ],
+        'nfeCorrectionXml' => [
+            'application/json',
+        ],
+        'nfeCorrectionsList' => [
+            'application/json',
+        ],
         'nfeCreate' => [
             'application/json',
         ],
@@ -789,6 +795,578 @@ class NfeApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation nfeCorrectionXml
+     *
+     * Download CC-e event XML
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id id (required)
+     * @param  int $sequence sequence (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionXml'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return string
+     */
+    public function nfeCorrectionXml($companyId, $id, $sequence, string $contentType = self::contentTypes['nfeCorrectionXml'][0])
+    {
+        list($response) = $this->nfeCorrectionXmlWithHttpInfo($companyId, $id, $sequence, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation nfeCorrectionXmlWithHttpInfo
+     *
+     * Download CC-e event XML
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  int $sequence (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionXml'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of string, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function nfeCorrectionXmlWithHttpInfo($companyId, $id, $sequence, string $contentType = self::contentTypes['nfeCorrectionXml'][0])
+    {
+        $request = $this->nfeCorrectionXmlRequest($companyId, $id, $sequence, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        'string',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                'string',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        'string',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation nfeCorrectionXmlAsync
+     *
+     * Download CC-e event XML
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  int $sequence (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionXml'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function nfeCorrectionXmlAsync($companyId, $id, $sequence, string $contentType = self::contentTypes['nfeCorrectionXml'][0])
+    {
+        return $this->nfeCorrectionXmlAsyncWithHttpInfo($companyId, $id, $sequence, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation nfeCorrectionXmlAsyncWithHttpInfo
+     *
+     * Download CC-e event XML
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  int $sequence (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionXml'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function nfeCorrectionXmlAsyncWithHttpInfo($companyId, $id, $sequence, string $contentType = self::contentTypes['nfeCorrectionXml'][0])
+    {
+        $returnType = 'string';
+        $request = $this->nfeCorrectionXmlRequest($companyId, $id, $sequence, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'nfeCorrectionXml'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  int $sequence (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionXml'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function nfeCorrectionXmlRequest($companyId, $id, $sequence, string $contentType = self::contentTypes['nfeCorrectionXml'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling nfeCorrectionXml'
+            );
+        }
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling nfeCorrectionXml'
+            );
+        }
+
+        // verify the required parameter 'sequence' is set
+        if ($sequence === null || (is_array($sequence) && count($sequence) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $sequence when calling nfeCorrectionXml'
+            );
+        }
+        if ($sequence > 20) {
+            throw new \InvalidArgumentException('invalid value for "$sequence" when calling NfeApi.nfeCorrectionXml, must be smaller than or equal to 20.');
+        }
+        if ($sequence < 1) {
+            throw new \InvalidArgumentException('invalid value for "$sequence" when calling NfeApi.nfeCorrectionXml, must be bigger than or equal to 1.');
+        }
+        
+
+        $resourcePath = '/companies/{companyId}/nfe/{id}/corrections/{sequence}/xml';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($sequence !== null) {
+            $resourcePath = str_replace(
+                '{sequence}',
+                ObjectSerializer::toPathValue($sequence),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation nfeCorrectionsList
+     *
+     * List NF-e correction letters (CC-e)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionsList'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function nfeCorrectionsList($companyId, $id, string $contentType = self::contentTypes['nfeCorrectionsList'][0])
+    {
+        $this->nfeCorrectionsListWithHttpInfo($companyId, $id, $contentType);
+    }
+
+    /**
+     * Operation nfeCorrectionsListWithHttpInfo
+     *
+     * List NF-e correction letters (CC-e)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionsList'] to see the possible values for this operation
+     *
+     * @throws \EmitfyGenerated\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function nfeCorrectionsListWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfeCorrectionsList'][0])
+    {
+        $request = $this->nfeCorrectionsListRequest($companyId, $id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation nfeCorrectionsListAsync
+     *
+     * List NF-e correction letters (CC-e)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function nfeCorrectionsListAsync($companyId, $id, string $contentType = self::contentTypes['nfeCorrectionsList'][0])
+    {
+        return $this->nfeCorrectionsListAsyncWithHttpInfo($companyId, $id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation nfeCorrectionsListAsyncWithHttpInfo
+     *
+     * List NF-e correction letters (CC-e)
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function nfeCorrectionsListAsyncWithHttpInfo($companyId, $id, string $contentType = self::contentTypes['nfeCorrectionsList'][0])
+    {
+        $returnType = '';
+        $request = $this->nfeCorrectionsListRequest($companyId, $id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'nfeCorrectionsList'
+     *
+     * @param  string $companyId UUID da empresa na Emitfy (campo &#x60;id&#x60; de &#x60;GET /companies&#x60;). Não é o CNPJ — CNPJ no path retorna 400 &#x60;INVALID_COMPANY_ID&#x60;. (required)
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['nfeCorrectionsList'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function nfeCorrectionsListRequest($companyId, $id, string $contentType = self::contentTypes['nfeCorrectionsList'][0])
+    {
+
+        // verify the required parameter 'companyId' is set
+        if ($companyId === null || (is_array($companyId) && count($companyId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $companyId when calling nfeCorrectionsList'
+            );
+        }
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling nfeCorrectionsList'
+            );
+        }
+
+
+        $resourcePath = '/companies/{companyId}/nfe/{id}/corrections';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($companyId !== null) {
+            $resourcePath = str_replace(
+                '{companyId}',
+                ObjectSerializer::toPathValue($companyId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            [],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Key');
+        if ($apiKey !== null) {
+            $headers['X-Api-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-Api-Secret');
+        if ($apiKey !== null) {
+            $headers['X-Api-Secret'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

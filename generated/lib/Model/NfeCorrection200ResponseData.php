@@ -58,10 +58,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static $openAPITypes = [
         'confirmed' => 'bool',
+        'status' => 'string',
+        'nSeqEvento' => 'int',
         'sequence' => 'int',
         'protocol' => 'string',
         'message' => 'string',
-        'cumulativeText' => 'string'
+        'cumulativeText' => 'string',
+        'xmlUrl' => 'string',
+        'pdfUrl' => 'string'
     ];
 
     /**
@@ -73,10 +77,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static $openAPIFormats = [
         'confirmed' => null,
+        'status' => null,
+        'nSeqEvento' => null,
         'sequence' => null,
         'protocol' => null,
         'message' => null,
-        'cumulativeText' => null
+        'cumulativeText' => null,
+        'xmlUrl' => null,
+        'pdfUrl' => null
     ];
 
     /**
@@ -86,10 +94,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static array $openAPINullables = [
         'confirmed' => false,
+        'status' => false,
+        'nSeqEvento' => false,
         'sequence' => false,
         'protocol' => false,
         'message' => false,
-        'cumulativeText' => false
+        'cumulativeText' => false,
+        'xmlUrl' => false,
+        'pdfUrl' => false
     ];
 
     /**
@@ -179,10 +191,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static $attributeMap = [
         'confirmed' => 'confirmed',
+        'status' => 'status',
+        'nSeqEvento' => 'nSeqEvento',
         'sequence' => 'sequence',
         'protocol' => 'protocol',
         'message' => 'message',
-        'cumulativeText' => 'cumulativeText'
+        'cumulativeText' => 'cumulativeText',
+        'xmlUrl' => 'xmlUrl',
+        'pdfUrl' => 'pdfUrl'
     ];
 
     /**
@@ -192,10 +208,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static $setters = [
         'confirmed' => 'setConfirmed',
+        'status' => 'setStatus',
+        'nSeqEvento' => 'setNSeqEvento',
         'sequence' => 'setSequence',
         'protocol' => 'setProtocol',
         'message' => 'setMessage',
-        'cumulativeText' => 'setCumulativeText'
+        'cumulativeText' => 'setCumulativeText',
+        'xmlUrl' => 'setXmlUrl',
+        'pdfUrl' => 'setPdfUrl'
     ];
 
     /**
@@ -205,10 +225,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
      */
     protected static $getters = [
         'confirmed' => 'getConfirmed',
+        'status' => 'getStatus',
+        'nSeqEvento' => 'getNSeqEvento',
         'sequence' => 'getSequence',
         'protocol' => 'getProtocol',
         'message' => 'getMessage',
-        'cumulativeText' => 'getCumulativeText'
+        'cumulativeText' => 'getCumulativeText',
+        'xmlUrl' => 'getXmlUrl',
+        'pdfUrl' => 'getPdfUrl'
     ];
 
     /**
@@ -253,6 +277,7 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
     }
 
     public const CONFIRMED_TRUE = 'true';
+    public const STATUS_REGISTERED = 'registered';
 
     /**
      * Gets allowable values of the enum
@@ -263,6 +288,18 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
     {
         return [
             self::CONFIRMED_TRUE,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_REGISTERED,
         ];
     }
 
@@ -282,10 +319,14 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
     public function __construct(?array $data = null)
     {
         $this->setIfExists('confirmed', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('nSeqEvento', $data ?? [], null);
         $this->setIfExists('sequence', $data ?? [], null);
         $this->setIfExists('protocol', $data ?? [], null);
         $this->setIfExists('message', $data ?? [], null);
         $this->setIfExists('cumulativeText', $data ?? [], null);
+        $this->setIfExists('xmlUrl', $data ?? [], null);
+        $this->setIfExists('pdfUrl', $data ?? [], null);
     }
 
     /**
@@ -322,6 +363,31 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
                 $this->container['confirmed'],
                 implode("', '", $allowedValues)
             );
+        }
+
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'status', must be one of '%s'",
+                $this->container['status'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if (!is_null($this->container['nSeqEvento']) && ($this->container['nSeqEvento'] > 20)) {
+            $invalidProperties[] = "invalid value for 'nSeqEvento', must be smaller than or equal to 20.";
+        }
+
+        if (!is_null($this->container['nSeqEvento']) && ($this->container['nSeqEvento'] < 1)) {
+            $invalidProperties[] = "invalid value for 'nSeqEvento', must be bigger than or equal to 1.";
+        }
+
+        if (!is_null($this->container['sequence']) && ($this->container['sequence'] > 20)) {
+            $invalidProperties[] = "invalid value for 'sequence', must be smaller than or equal to 20.";
+        }
+
+        if (!is_null($this->container['sequence']) && ($this->container['sequence'] < 1)) {
+            $invalidProperties[] = "invalid value for 'sequence', must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -377,6 +443,77 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
     }
 
     /**
+     * Gets status
+     *
+     * @return string|null
+     */
+    public function getStatus()
+    {
+        return $this->container['status'];
+    }
+
+    /**
+     * Sets status
+     *
+     * @param string|null $status status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
+        }
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'status', must be one of '%s'",
+                    $status,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
+
+        return $this;
+    }
+
+    /**
+     * Gets nSeqEvento
+     *
+     * @return int|null
+     */
+    public function getNSeqEvento()
+    {
+        return $this->container['nSeqEvento'];
+    }
+
+    /**
+     * Sets nSeqEvento
+     *
+     * @param int|null $nSeqEvento nSeqEvento
+     *
+     * @return self
+     */
+    public function setNSeqEvento($nSeqEvento)
+    {
+        if (is_null($nSeqEvento)) {
+            throw new \InvalidArgumentException('non-nullable nSeqEvento cannot be null');
+        }
+        if (($nSeqEvento > 20)) {
+            throw new \InvalidArgumentException('invalid value for $nSeqEvento when calling NfeCorrection200ResponseData., must be smaller than or equal to 20.');
+        }
+        if (($nSeqEvento < 1)) {
+            throw new \InvalidArgumentException('invalid value for $nSeqEvento when calling NfeCorrection200ResponseData., must be bigger than or equal to 1.');
+        }
+
+        $this->container['nSeqEvento'] = $nSeqEvento;
+
+        return $this;
+    }
+
+    /**
      * Gets sequence
      *
      * @return int|null
@@ -398,6 +535,13 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
         if (is_null($sequence)) {
             throw new \InvalidArgumentException('non-nullable sequence cannot be null');
         }
+        if (($sequence > 20)) {
+            throw new \InvalidArgumentException('invalid value for $sequence when calling NfeCorrection200ResponseData., must be smaller than or equal to 20.');
+        }
+        if (($sequence < 1)) {
+            throw new \InvalidArgumentException('invalid value for $sequence when calling NfeCorrection200ResponseData., must be bigger than or equal to 1.');
+        }
+
         $this->container['sequence'] = $sequence;
 
         return $this;
@@ -480,6 +624,60 @@ class NfeCorrection200ResponseData implements ModelInterface, ArrayAccess, \Json
             throw new \InvalidArgumentException('non-nullable cumulativeText cannot be null');
         }
         $this->container['cumulativeText'] = $cumulativeText;
+
+        return $this;
+    }
+
+    /**
+     * Gets xmlUrl
+     *
+     * @return string|null
+     */
+    public function getXmlUrl()
+    {
+        return $this->container['xmlUrl'];
+    }
+
+    /**
+     * Sets xmlUrl
+     *
+     * @param string|null $xmlUrl Caminho autenticado do XML do evento
+     *
+     * @return self
+     */
+    public function setXmlUrl($xmlUrl)
+    {
+        if (is_null($xmlUrl)) {
+            throw new \InvalidArgumentException('non-nullable xmlUrl cannot be null');
+        }
+        $this->container['xmlUrl'] = $xmlUrl;
+
+        return $this;
+    }
+
+    /**
+     * Gets pdfUrl
+     *
+     * @return string|null
+     */
+    public function getPdfUrl()
+    {
+        return $this->container['pdfUrl'];
+    }
+
+    /**
+     * Sets pdfUrl
+     *
+     * @param string|null $pdfUrl Sempre null — a CC-e não tem DANFE/PDF próprio
+     *
+     * @return self
+     */
+    public function setPdfUrl($pdfUrl)
+    {
+        if (is_null($pdfUrl)) {
+            throw new \InvalidArgumentException('non-nullable pdfUrl cannot be null');
+        }
+        $this->container['pdfUrl'] = $pdfUrl;
 
         return $this;
     }
